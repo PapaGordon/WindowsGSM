@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Made by PapaGordon
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Management;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WindowsGSM.Functions
 {
-    static class ProcessManagement
+    public static class ProcessManagement
     {
         internal const int CTRL_C_EVENT = 0;
         [DllImport("kernel32.dll")]

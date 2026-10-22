@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0-windows8.0</TargetFramework>
     <OutputType>WinExe</OutputType>
@@ -19,8 +19,8 @@
     <WebPage>publish.htm</WebPage>
 	<IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.25.0</ApplicationVersion>
-    <Version>1.25.0</Version>
+    <ApplicationVersion>1.25.3.0</ApplicationVersion>
+    <Version>1.25.3.0</Version>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -308,7 +308,6 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.13.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="8.0.2" />
     <PackageReference Include="System.CodeDom" Version="10.0.0-preview.1.25080.5" />
-    <PackageReference Include="Discord.Net.WebSocket" Version="3.17.1" />
     <PackageReference Include="MahApps.Metro" Version="3.0.0-alpha0513" />
 	 <PackageReference Include="LiveCharts.Wpf" Version="0.9.7.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />

@@ -1,11 +1,25 @@
-﻿![Screenshot](https://windowsgsm.com/carousel/windowsgsm-desktop.png)
+﻿# WindowsGSM - MeFriendos
+
+Our WindowsGSM build, based on [Raziel7893/WindowsGSM](https://github.com/Raziel7893/WindowsGSM).
+
+[Download the latest release](https://github.com/PapaGordon/WindowsGSM/releases/latest) | [Changelog](CHANGELOG.md) | [Development](DEVELOPMENT.md)
+
+The Windows x64 release includes the .NET runtime. Stop WindowsGSM before replacing `WindowsGSM.exe`. Keep your existing server, plugin and configuration folders.
+
+This build includes a per-server **Auto Firewall** switch. Its state is saved for each server and applied when you change the switch and before startup. Turn it off if you manage the server's port rules yourself.
+
+Our development branch is `main`. The existing upstream pull request stays on `master`; normal pushes to `main` do not update that request. Upstream changes can still be fetched and merged when needed.
+
+---
+
+![Screenshot](https://windowsgsm.com/carousel/windowsgsm-desktop.png)
 
 [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/WindowsGSM/WindowsGSM/)
 [![Build status](https://ci.appveyor.com/api/projects/status/ttaomnayo3gidf2g?svg=true)](https://ci.appveyor.com/project/WindowsGSM/windowsgsm)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/35390bff1d4140da806eaff186cfbf5c)](https://www.codacy.com/gh/WindowsGSM/WindowsGSM?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=WindowsGSM/WindowsGSM&amp;utm_campaign=Badge_Grade)
 [![GitHub license](https://img.shields.io/github/license/WindowsGSM/WindowsGSM.svg)](https://github.com/WindowsGSM/WindowsGSM/blob/master/LICENSE)
-[![GitHub release](https://img.shields.io/github/release/WindowsGSM/WindowsGSM.svg)](https://github.com/WindowsGSM/WindowsGSM/releases/)
-[![Github all releases](https://img.shields.io/github/downloads/WindowsGSM/WindowsGSM/total.svg)](https://github.com/WindowsGSM/WindowsGSM/releases/)
+[![GitHub release](https://img.shields.io/github/release/PapaGordon/WindowsGSM.svg)](https://github.com/PapaGordon/WindowsGSM/releases/)
+[![Github all releases](https://img.shields.io/github/downloads/PapaGordon/WindowsGSM/total.svg)](https://github.com/PapaGordon/WindowsGSM/releases/)
 [![Discord Shield](https://discordapp.com/api/guilds/590590698907107340/widget.png?style=shield)](https://discord.gg/bGc7t2R)
 
 ## Changelog against original windowsgsm

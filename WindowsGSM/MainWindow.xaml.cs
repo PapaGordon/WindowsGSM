@@ -1,4 +1,5 @@
-﻿using ControlzEx.Theming;
+﻿// Made by PapaGordon
+using ControlzEx.Theming;
 using LiveCharts;
 using LiveCharts.Wpf;
 using MahApps.Metro.Controls;
@@ -244,7 +245,7 @@ namespace WindowsGSM
             InitializeComponent();
             this.SourceInitialized += new EventHandler(OnSourceInitialized);
 
-            Title = $"WindowsGSM {WGSM_VERSION}";
+            Title = $"WindowsGSM {WGSM_VERSION} - MeFriendos";
 
             //Close SplashScreen
             splashScreen.Close(new TimeSpan(0, 0, 1));
@@ -3551,7 +3552,7 @@ namespace WindowsGSM
 
         private void Help_ReportIssue_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://github.com/raziel7893/WindowsGSM/issues") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://github.com/PapaGordon/WindowsGSM/issues") { UseShellExecute = true });
         }
 
         private async void Help_SoftwareUpdates_Click(object sender, RoutedEventArgs e)
@@ -3573,14 +3574,14 @@ namespace WindowsGSM
                 return;
             }
 
-            await this.ShowMessageAsync("Software Updates", $"Version {latestVersion} is available, please update manually by replacing the exe found in https://github.com/Raziel7893/WindowsGSM/releases");
+            await this.ShowMessageAsync("Software Updates", $"Version {latestVersion} is available, please update manually by replacing the exe found in https://github.com/PapaGordon/WindowsGSM/releases");
         }
 
         private async Task<string> GetLatestVersion()
         {
             try
             {
-                var webRequest = WebRequest.Create("https://api.github.com/repos/Raziel7893/WindowsGSM/releases/latest") as HttpWebRequest;
+                var webRequest = WebRequest.Create("https://api.github.com/repos/PapaGordon/WindowsGSM/releases/latest") as HttpWebRequest;
                 webRequest.Method = "GET";
                 webRequest.UserAgent = "Anything";
                 webRequest.ServicePoint.Expect100Continue = false;
