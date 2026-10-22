@@ -14,16 +14,16 @@ Our development branch is `main`. The existing upstream pull request stays on `m
 
 ![Screenshot](https://windowsgsm.com/carousel/windowsgsm-desktop.png)
 
-[![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/WindowsGSM/WindowsGSM/)
-[![Build status](https://ci.appveyor.com/api/projects/status/ttaomnayo3gidf2g?svg=true)](https://ci.appveyor.com/project/WindowsGSM/windowsgsm)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/35390bff1d4140da806eaff186cfbf5c)](https://www.codacy.com/gh/WindowsGSM/WindowsGSM?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=WindowsGSM/WindowsGSM&amp;utm_campaign=Badge_Grade)
-[![GitHub license](https://img.shields.io/github/license/WindowsGSM/WindowsGSM.svg)](https://github.com/WindowsGSM/WindowsGSM/blob/master/LICENSE)
+[![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/PapaGordon/WindowsGSM)
+[![Build status](https://github.com/PapaGordon/WindowsGSM/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/PapaGordon/WindowsGSM/actions/workflows/build.yml)
+[![GitHub license](https://img.shields.io/github/license/PapaGordon/WindowsGSM.svg)](https://github.com/PapaGordon/WindowsGSM/blob/main/LICENSE)
 [![GitHub release](https://img.shields.io/github/release/PapaGordon/WindowsGSM.svg)](https://github.com/PapaGordon/WindowsGSM/releases/)
 [![Github all releases](https://img.shields.io/github/downloads/PapaGordon/WindowsGSM/total.svg)](https://github.com/PapaGordon/WindowsGSM/releases/)
-[![Discord Shield](https://discordapp.com/api/guilds/590590698907107340/widget.png?style=shield)](https://discord.gg/bGc7t2R)
+[![MeFriendos Discord](https://img.shields.io/badge/Discord-MeFriendos-5865F2?logo=discord&logoColor=white)](https://discord.gg/vNJPTWY3UW)
 
-## Changelog against original windowsgsm
-https://github.com/Raziel7893/WindowsGSM/blob/master/ChangesFromBase.md
+## Changelog
+
+Our changes are in [CHANGELOG.md](CHANGELOG.md). Earlier changes from the Raziel fork are in [ChangesFromBase.md](ChangesFromBase.md).
 
 # What is WindowsGSM?
 WindowsGSM is a powerful tool to manage game servers. Equipped with a GUI for server admins to install, import, start, stop, restart, update, and automate multiple servers with a push of a button.
@@ -120,8 +120,10 @@ Allow support more game servers by installing plugins!
   * Github: <https://github.com/WindowsGSM/Documentation>
 
 ## Community
-  * Steam: <https://steamcommunity.com/groups/WindowsGSM>
-  * Discord: <https://discord.gg/bGc7t2R>
+  * MeFriendos: <https://mefriendos.de/>
+  * Discord: <https://discord.gg/vNJPTWY3UW>
+  * Upstream community: [WindowsGSM Discord](https://discord.gg/bGc7t2R)
+  * Original WindowsGSM Steam group: <https://steamcommunity.com/groups/WindowsGSM>
 
 ## Authors & Credits
   * **TatLead** - *Initial work* - [BattlefieldDuck](https://github.com/BattlefieldDuck)
@@ -144,7 +146,7 @@ For the Programm in general have a look over at its patreon:
 
 
 ### License
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/WindowsGSM/WindowsGSM/blob/master/LICENSE) file for details
+This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.
 
 ## Stargazers over time
-[![Stargazers over time](https://starchart.cc/WindowsGSM/WindowsGSM.svg)](https://starchart.cc/WindowsGSM/WindowsGSM)
+[![Stargazers over time](https://starchart.cc/PapaGordon/WindowsGSM.svg)](https://starchart.cc/PapaGordon/WindowsGSM)
