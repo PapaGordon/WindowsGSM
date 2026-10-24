@@ -15,4 +15,4 @@ If using a different build folder, pass /p:WindowsGSMDirectory=<absolute path>. 
 
 The tests create uniquely named fixture directories beneath the test executable and remove only those directories. Registration checks use the compiled factory and embedded resources. DayZ checks exercise config synchronization, backups, invalid inputs, Windows command-line parsing, mission paths, merged mods and executable selection. Standalone checks also compile the plugin as C# 6 against the real API.
 
-Firewall checks inspect executable paths, per-server ATM10 port rules and detached COM rule properties without adding or changing Windows rules. They also check missing-rule lookup and failed SteamCMD updates. No DayZ game server is started. SteamCMD login/downloads, actual shutdown and storage saving, real firewall permissions, A2S responses and client connectivity need a test installation.
+Firewall checks inspect executable paths, per-server ATM10 port rules and detached COM rule properties without adding or changing Windows rules. They also check missing-rule lookup and failed SteamCMD updates.

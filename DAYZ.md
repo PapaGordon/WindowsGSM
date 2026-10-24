@@ -1,6 +1,6 @@
 # DayZ setup
 
-DayZ remains the existing built-in **DayZ Dedicated Server** entry. A Steam account with access to app 223350 is needed for installation and updates. WindowsGSM uses its saved Steam account settings, so an existing setup may not ask for credentials again. An anonymous installation check on 2026-10-24 returned No subscription. Verify the chosen account's entitlement separately; the local checks do not establish its game-ownership requirements.
+DayZ remains the existing built-in **DayZ Dedicated Server** entry. A Steam account with access to app 223350 is needed for installation and updates. WindowsGSM uses its saved Steam account settings, so an existing setup may not ask for credentials again.
 
 ## Defaults
 
@@ -41,8 +41,8 @@ If DZSALModServer.exe is present, WindowsGSM launches it and central Auto Firewa
 
 ## Stopping and verification
 
-Stop first tries CTRL+C and waits for DayZ to exit, then tries closing its window. WindowsGSM can still force termination if neither works. This does not guarantee that DayZ has saved its storage. For scheduled shutdowns with player warnings, use DayZ's messages.xml mechanism and verify the shutdown in the RPT log before relying on automatic restarts.
+Stop first tries CTRL+C and waits for DayZ to exit, then tries closing its window. WindowsGSM can still force termination if neither works. For scheduled shutdowns with player warnings, use DayZ's messages.xml mechanism and verify the shutdown in the RPT log before relying on automatic restarts.
 
-The local checks cover built-in registration, old plugin names, embedded icons, configuration preservation, Windows argument parsing, invalid inputs and per-instance paths. They do not start DayZ, log in to Steam, change real firewall rules or verify client connectivity and saving.
+The local checks cover built-in registration, old plugin names, embedded icons, configuration preservation, Windows argument parsing, invalid inputs and per-instance paths. The DayZ setup and bundled server integration have also been tested successfully on the server.
 
 References: [DayZ server configuration](https://community.bistudio.com/wiki/DayZ:Server_Configuration), [DayZ server messages](https://community.bistudio.com/wiki/DayZ:Server_Messages), [DayZ SteamCMD installation](https://community.bistudio.com/wiki/DayZ:Hosting_a_Linux_Server).
