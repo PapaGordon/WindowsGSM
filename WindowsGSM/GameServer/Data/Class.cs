@@ -5,6 +5,12 @@ namespace WindowsGSM.GameServer.Data
 {
     static class Class
     {
+        internal static bool SupportsConsoleInput(object server)
+        {
+            var setting = server?.GetType().GetField("AllowsConsoleInput");
+            return setting == null || setting.FieldType != typeof(bool) || (bool)setting.GetValue(server);
+        }
+
         public static dynamic Get(string serverGame, ServerConfig serverData = null, List<PluginMetadata> pluginList = null)
         {
             var builtIn = BuiltInServers.Get(serverGame, serverData);

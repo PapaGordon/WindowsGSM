@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows8.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableNETAnalyzers>false</EnableNETAnalyzers>
+    <WindowsGSMDirectory Condition="'$(WindowsGSMDirectory)' == ''">$(MSBuildThisFileDirectory)..\..\WindowsGSM\bin\Release\net8.0-windows8.0</WindowsGSMDirectory>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="ConsoleRegression.cs" />
+    <ProjectReference Include="Fixture\WindowFixture.csproj" ReferenceOutputAssembly="false" />
+    <Reference Include="WindowsGSM"><HintPath>$(WindowsGSMDirectory)\WindowsGSM.dll</HintPath></Reference>
+    <Reference Include="Microsoft.CodeAnalysis"><HintPath>$(WindowsGSMDirectory)\Microsoft.CodeAnalysis.dll</HintPath></Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp"><HintPath>$(WindowsGSMDirectory)\Microsoft.CodeAnalysis.CSharp.dll</HintPath></Reference>
+    <Reference Include="System.Configuration.ConfigurationManager"><HintPath>$(WindowsGSMDirectory)\System.Configuration.ConfigurationManager.dll</HintPath></Reference>
+    <Reference Include="System.CodeDom"><HintPath>$(WindowsGSMDirectory)\System.CodeDom.dll</HintPath></Reference>
+    <Reference Include="System.Diagnostics.EventLog"><HintPath>$(WindowsGSMDirectory)\System.Diagnostics.EventLog.dll</HintPath></Reference>
+    <Reference Include="System.Security.Cryptography.ProtectedData"><HintPath>$(WindowsGSMDirectory)\System.Security.Cryptography.ProtectedData.dll</HintPath></Reference>
+  </ItemGroup>
+  <Target Name="CopyFixture" AfterTargets="Build">
+    <ItemGroup><FixtureFiles Include="$(MSBuildThisFileDirectory)Fixture\bin\$(Configuration)\$(TargetFramework)\*.*" /></ItemGroup>
+    <Copy SourceFiles="@(FixtureFiles)" DestinationFolder="$(OutDir)Fixture" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

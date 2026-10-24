@@ -39,10 +39,16 @@ The built-in Manage Addons selection and an explicit -mod list are combined into
 
 If DZSALModServer.exe is present, WindowsGSM launches it and central Auto Firewall handles both the launcher and DayZServer_x64.exe. Removing the launcher restores the native executable. The per-server firewall switch also removes both automatic rules when disabled.
 
+## Console
+
+Enable **Embed Console** and restart the DayZ server to show its RPT output inside WindowsGSM. The plugin follows the active DayZ RPT under the configured -profiles folder. It handles partial writes, UTF-8 text, log changes and the final shutdown output. Old log sessions are skipped.
+
+RPT mode adds -doLogs when missing. Remove -noLogs if present. This view displays logs only; command entry is disabled. Use **Toggle Console** to show or hide the native DayZ window.
+
 ## Stopping and verification
 
 Stop first tries CTRL+C and waits for DayZ to exit, then tries closing its window. WindowsGSM can still force termination if neither works. For scheduled shutdowns with player warnings, use DayZ's messages.xml mechanism and verify the shutdown in the RPT log before relying on automatic restarts.
 
-The local checks cover built-in registration, old plugin names, embedded icons, configuration preservation, Windows argument parsing, invalid inputs and per-instance paths. The DayZ setup and bundled server integration have also been tested successfully on the server.
+The local checks cover built-in registration, old plugin names, embedded icons, configuration preservation, Windows argument parsing, invalid inputs and per-instance paths. The DayZ setup and bundled server integration have also been tested successfully on the server. The tests/DayZConsole fixtures cover RPT output and hidden-window handling for the built-in server and standalone plugin.
 
 References: [DayZ server configuration](https://community.bistudio.com/wiki/DayZ:Server_Configuration), [DayZ server messages](https://community.bistudio.com/wiki/DayZ:Server_Messages), [DayZ SteamCMD installation](https://community.bistudio.com/wiki/DayZ:Hosting_a_Linux_Server).

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.25.4.1 - 2026-10-24
+
+- Adds embedded DayZ console output from the current RPT file in the configured profile folder.
+- Follows new log lines, rotation and shutdown output without replaying older sessions.
+- Fixes native DayZ window detection and keeps Toggle Console working when the window starts hidden.
+- Stops waiting indefinitely for a native window and keeps the saved visibility setting.
+- Disables command entry for the DayZ log view.
+
 ## 1.25.4.0 - 2026-10-24
 
 - Builds in Arma 3, ATM10, Enshrouded, Farming Simulator 22/25, Project Zomboid, SCP: Secret Laboratory and Valheim, including their icons.

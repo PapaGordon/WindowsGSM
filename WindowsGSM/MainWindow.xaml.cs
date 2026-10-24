@@ -1266,6 +1266,11 @@ namespace WindowsGSM
                 button_Status.Background = (GetServerMetadata(row.ID).ServerStatus == ServerStatus.Started) ? System.Windows.Media.Brushes.LimeGreen : System.Windows.Media.Brushes.Orange;
 
                 var gameServer = GameServer.Data.Class.Get(row.Game, pluginList: PluginsList);
+                if (!GameServer.Data.Class.SupportsConsoleInput(gameServer))
+                {
+                    textbox_servercommand.IsEnabled = false;
+                    button_servercommand.IsEnabled = false;
+                }
                 switch_embedconsole.IsEnabled = gameServer.AllowsEmbedConsole;
                 switch_embedconsole.IsOn = gameServer.AllowsEmbedConsole ? GetServerMetadata(row.ID).EmbedConsole : false;
                 Button_AutoScroll.Content = GetServerMetadata(row.ID).AutoScroll ? "✔️ AUTO SCROLL" : "❌ AUTO SCROLL";
@@ -2022,6 +2027,33 @@ namespace WindowsGSM
             }
         }
 
+        private static async Task RegisterNativeWindow(Process process, string serverId, string title)
+        {
+            if (process.StartInfo.CreateNoWindow) return;
+            var metadata = _serverMetadata[int.Parse(serverId)];
+            try
+            {
+                for (int attempt = 0; attempt < 60 && !process.HasExited; attempt++)
+                {
+                    if (metadata.Process != process) return;
+                    process.Refresh();
+                    IntPtr window = metadata.MainWindow;
+                    if (window == IntPtr.Zero) window = process.MainWindowHandle;
+                    if (window != IntPtr.Zero)
+                    {
+                        metadata.MainWindow = window;
+                        ServerCache.SaveWindowsIntPtr(serverId, window);
+                        SetWindowText(window, title);
+                        ShowWindow(window, metadata.ShowConsole ? WindowShowStyle.ShowNormal : WindowShowStyle.Hide);
+                        return;
+                    }
+                    await Task.Delay(250);
+                }
+            }
+            catch (InvalidOperationException) { }
+            catch (System.ComponentModel.Win32Exception) { }
+        }
+
         public async Task<dynamic> Server_BeginStart(ServerTable server)
         {
             dynamic gameServer = GameServer.Data.Class.Get(server.Game, new ServerConfig(server.ID), PluginsList);
@@ -2040,6 +2072,8 @@ namespace WindowsGSM
                 return null;
             }
 
+            _serverMetadata[int.Parse(server.ID)].MainWindow = IntPtr.Zero;
+            ServerCache.SaveWindowsIntPtr(server.ID, IntPtr.Zero);
             gameServer.AllowsEmbedConsole = GetServerMetadata(server.ID).EmbedConsole;
             Process p = await gameServer.Start();
 
@@ -2057,34 +2091,7 @@ namespace WindowsGSM
             _serverMetadata[int.Parse(server.ID)].Process = p;
             p.Exited += (sender, e) => OnGameServerExited(server);
 
-            var task = Task.Run(() =>
-            {
-                try
-                {
-                    if (!p.StartInfo.CreateNoWindow)
-                    {
-                        while (!p.HasExited && !ShowWindow(p.MainWindowHandle, WindowShowStyle.Minimize))
-                        {
-                            Thread.Sleep(500);
-                            //Debug.WriteLine("Try Setting ShowMinNoActivate Console Window");
-                        }
-                        Debug.WriteLine("Set ShowMinNoActivate Console Window");
-
-                        //Save MainWindow
-                        _serverMetadata[int.Parse(server.ID)].MainWindow = p.MainWindowHandle;
-                    }
-
-                    p.WaitForInputIdle();
-
-                    ShowWindow(p.MainWindowHandle, WindowShowStyle.Hide);
-                    Thread.Sleep(500);
-                    ShowWindow(p.MainWindowHandle, _serverMetadata[int.Parse(server.ID)].ShowConsole ? WindowShowStyle.ShowNormal : WindowShowStyle.Hide);
-                }
-                catch
-                {
-                    Debug.WriteLine("No Window require to hide");
-                }
-            });
+            var task = RegisterNativeWindow(p, server.ID, server.Name);
 
             //An error may occur on ShowWindow if not adding this
             if (p == null || p.HasExited)
@@ -2115,7 +2122,6 @@ namespace WindowsGSM
             // Save Cache
             ServerCache.SavePID(server.ID, p.Id);
             ServerCache.SaveProcessName(server.ID, p.ProcessName);
-            ServerCache.SaveWindowsIntPtr(server.ID, GetServerMetadata(server.ID).MainWindow);
 
             SetWindowText(p.MainWindowHandle, server.Name);
 
@@ -3231,6 +3237,9 @@ namespace WindowsGSM
             int.TryParse(server.ID, out var id);
             if (p == null) { return ""; }
 
+            var gameServer = GameServer.Data.Class.Get(server.Game, pluginList: PluginsList);
+            if (!GameServer.Data.Class.SupportsConsoleInput(gameServer))
+                return "This server console only displays logs.";
             textbox_servercommand.Focusable = false;
             _serverMetadata[id].ServerConsole.StartRecorder();
             _serverMetadata[id].ServerConsole.Input(p, command, GetServerMetadata(server.ID).MainWindow);

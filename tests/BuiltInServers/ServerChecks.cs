@@ -138,8 +138,8 @@ internal static class ServerChecks
         Check(args.Contains("-port=2402") && args.Contains("-ip=0.0.0.0"), "Game port and bind address reach Windows arguments");
         Check(args.Contains("-config=" + path) && args.Contains("-profiles=" + Path.Combine(root, "profile")), "Config and profile paths survive Windows quoting");
         Check(args.Contains("-mission=" + Path.Combine(root, "mpmissions", settings.ServerMap)), "WGSM map selects the installed mission");
-        Check(!start.RedirectStandardInput && !start.RedirectStandardOutput && !start.UseShellExecute && !start.CreateNoWindow,
-            "DayZ keeps a native console and avoids unsupported stdin/output redirection");
+        Check(!start.RedirectStandardInput && !start.RedirectStandardOutput && !start.UseShellExecute && !start.CreateNoWindow && start.WindowStyle == ProcessWindowStyle.Minimized,
+            "DayZ keeps a discoverable minimized native window without stdin/output redirection");
         DateTime unchanged = File.GetLastWriteTimeUtc(path);
         Prepare(dayz);
         Check(File.GetLastWriteTimeUtc(path) == unchanged && !File.Exists(path + ".bak"), "Unchanged DayZ settings do not rewrite the file");
