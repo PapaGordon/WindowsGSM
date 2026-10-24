@@ -19,8 +19,8 @@
     <WebPage>publish.htm</WebPage>
 	<IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.25.3.0</ApplicationVersion>
-    <Version>1.25.3.0</Version>
+    <ApplicationVersion>1.25.4.0</ApplicationVersion>
+    <Version>1.25.4.0</Version>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -332,5 +332,20 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Games\arma3.png" />
+    <Resource Include="Images\Games\atm10.png" />
+    <Resource Include="Images\Games\enshrouded.png" />
+    <Resource Include="Images\Games\fs22.png" />
+    <Resource Include="Images\Games\fs25.png" />
+    <Resource Include="Images\Games\pz.png" />
+    <Resource Include="Images\Games\scpsl.png" />
+    <Resource Include="Images\Games\valheim.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\licenses\WindowsGSM.*.txt">
+      <LogicalName>WindowsGSM.Licenses.%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

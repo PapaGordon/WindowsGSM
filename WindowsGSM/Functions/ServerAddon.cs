@@ -12,7 +12,7 @@ namespace WindowsGSM.Functions
         public ServerAddon(string serverId, string serverGame)
         {
             _serverId = serverId;
-            _serverGame = serverGame;
+            _serverGame = GameServer.Data.BuiltInServers.GetName(serverGame);
             _gameServer = GameServer.Data.Class.Get(serverGame);
         }
 
@@ -195,7 +195,7 @@ namespace WindowsGSM.Functions
                 return true;
             }
 
-            return serverGame == GameServer.DAYZ.FullName;
+            return GameServer.Data.BuiltInServers.GetName(serverGame) == GameServer.DAYZ.FullName;
         }
     }
 }

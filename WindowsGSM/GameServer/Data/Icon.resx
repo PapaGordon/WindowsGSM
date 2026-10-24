@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -254,5 +254,29 @@
   </data>
   <data name="Zombie Panic Source Dedicated Server" xml:space="preserve">
     <value>Images/Games/zps.png</value>
+  </data>
+  <data name="Arma 3 Dedicated Server" xml:space="preserve">
+    <value>Images/Games/arma3.png</value>
+  </data>
+  <data name="Minecraft: All the Mods 10 (ATM10)" xml:space="preserve">
+    <value>Images/Games/atm10.png</value>
+  </data>
+  <data name="Enshrouded Dedicated Server" xml:space="preserve">
+    <value>Images/Games/enshrouded.png</value>
+  </data>
+  <data name="Farming Simulator 22 Dedicated Server" xml:space="preserve">
+    <value>Images/Games/fs22.png</value>
+  </data>
+  <data name="Farming Simulator 25 Dedicated Server" xml:space="preserve">
+    <value>Images/Games/fs25.png</value>
+  </data>
+  <data name="Project Zomboid Dedicated Server" xml:space="preserve">
+    <value>Images/Games/pz.png</value>
+  </data>
+  <data name="SCP: Secret Laboratory Dedicated Server" xml:space="preserve">
+    <value>Images/Games/scpsl.png</value>
+  </data>
+  <data name="Valheim Dedicated Server" xml:space="preserve">
+    <value>Images/Games/valheim.png</value>
   </data>
 </root>

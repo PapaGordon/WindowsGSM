@@ -63,7 +63,7 @@ namespace WindowsGSM.Functions
 
         public static bool? IsDayZSALModServerExists(Functions.ServerTable server)
         {
-            if (server.Game != GameServer.DAYZ.FullName)
+            if (GameServer.Data.BuiltInServers.GetName(server.Game) != GameServer.DAYZ.FullName)
             {
                 // Game Type not supported
                 return null;

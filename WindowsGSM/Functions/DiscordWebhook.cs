@@ -212,11 +212,12 @@ namespace WindowsGSM.Functions
         {
             try
             {
-                return @"https://github.com/WindowsGSM/WindowsGSM/raw/master/WindowsGSM/" + GameServer.Data.Icon.ResourceManager.GetString(serverGame);
+                string icon = GameServer.Data.Icon.ResourceManager.GetString(GameServer.Data.BuiltInServers.GetName(serverGame)) ?? "Images/WindowsGSM.png";
+                return "https://raw.githubusercontent.com/PapaGordon/WindowsGSM/main/WindowsGSM/" + icon;
             }
             catch
             {
-                return @"https://github.com/WindowsGSM/WindowsGSM/raw/master/WindowsGSM/Images/WindowsGSM.png";
+                return "https://raw.githubusercontent.com/PapaGordon/WindowsGSM/main/WindowsGSM/Images/WindowsGSM.png";
             }
         }
 

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace WindowsGSM
 {
-    class WindowsFirewall
+    partial class WindowsFirewall
     {
         private readonly string Name;
         private readonly string Path;

@@ -525,7 +525,7 @@ namespace WindowsGSM
             int pluginLoaded = 0;
             PluginsList.ForEach(delegate (PluginMetadata plugin)
             {
-                if (plugin.IsLoaded)
+                if (plugin.IsLoaded && !GameServer.Data.BuiltInServers.Contains(plugin.FullName))
                 {
                     pluginLoaded++;
                     sortedList.Add(plugin.FullName, plugin.GameImage == PluginManagement.DefaultPluginImage ? plugin.GameImage.Replace("pack://application:,,,", "/WindowsGSM;component") : plugin.GameImage);
@@ -815,7 +815,7 @@ namespace WindowsGSM
 
                 try
                 {
-                    string icon = GameServer.Data.Icon.ResourceManager.GetString(serverConfig.ServerGame);
+                    string icon = GameServer.Data.Icon.ResourceManager.GetString(GameServer.Data.BuiltInServers.GetName(serverConfig.ServerGame));
                     if (icon == null)
                     {
                         PluginsList.ForEach(delegate (PluginMetadata plugin)
@@ -3968,20 +3968,26 @@ namespace WindowsGSM
             await metadata.FirewallLock.WaitAsync();
             try
             {
-                if (string.IsNullOrWhiteSpace(startPath))
+                bool success = true;
+                foreach (string programPath in ServerFirewall.GetProgramPaths(server.ID, server.Game, startPath, metadata.AutoFirewall))
                 {
-                    return true;
+                    var firewall = new WindowsFirewall(Path.GetFileName(programPath), programPath);
+                    if (!await firewall.SetEnabled(metadata.AutoFirewall))
+                    {
+                        Log(server.ID, $"[ERROR] Auto Firewall: {firewall.Error}");
+                        success = false;
+                    }
                 }
-
-                string programPath = ServerPath.GetServersServerFiles(server.ID, startPath);
-                var firewall = new WindowsFirewall(Path.GetFileName(programPath), programPath);
-                if (await firewall.SetEnabled(metadata.AutoFirewall))
+                foreach (var rule in ServerFirewall.GetPortRules(new ServerConfig(server.ID), metadata.AutoFirewall))
                 {
-                    return true;
+                    var firewall = new WindowsFirewall(rule.Name, string.Empty);
+                    if (!await firewall.SetPortEnabled(rule, metadata.AutoFirewall))
+                    {
+                        Log(server.ID, $"[ERROR] Auto Firewall: {firewall.Error}");
+                        success = false;
+                    }
                 }
-
-                Log(server.ID, $"[ERROR] Auto Firewall: {firewall.Error}");
-                return false;
+                return success;
             }
             catch (Exception ex)
             {

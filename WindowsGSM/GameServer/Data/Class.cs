@@ -7,6 +7,9 @@ namespace WindowsGSM.GameServer.Data
     {
         public static dynamic Get(string serverGame, ServerConfig serverData = null, List<PluginMetadata> pluginList = null)
         {
+            var builtIn = BuiltInServers.Get(serverGame, serverData);
+            if (builtIn != null) return builtIn;
+
             switch (serverGame)
             {
                 case CSGO.FullName: return new CSGO(serverData);

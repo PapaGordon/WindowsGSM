@@ -1,4 +1,4 @@
-﻿# WindowsGSM - MeFriendos
+# WindowsGSM - MeFriendos
 
 Our WindowsGSM build, based on [Raziel7893/WindowsGSM](https://github.com/Raziel7893/WindowsGSM).
 
@@ -7,6 +7,10 @@ Our WindowsGSM build, based on [Raziel7893/WindowsGSM](https://github.com/Raziel
 The Windows x64 release includes the .NET runtime. Stop WindowsGSM before replacing `WindowsGSM.exe`. Keep your existing server, plugin and configuration folders.
 
 This build includes a per-server **Auto Firewall** switch. Its state is saved for each server and applied when you change the switch and before startup. Turn it off if you manage the server's port rules yourself.
+
+Arma 3, ATM10, Enshrouded, Farming Simulator 22/25, Project Zomboid, SCP: Secret Laboratory and Valheim are built in. They appear in Install and Import without an extra plugin download. The [standalone plugins](BUNDLED-SERVERS.md) remain available for other WindowsGSM builds. Existing server configurations with our old plugin names still work.
+
+DayZ uses the existing built-in entry, with synchronized name, slots and query port, mission selection and local default configuration. See [DayZ setup](DAYZ.md).
 
 Our development branch is `main`. The existing upstream pull request stays on `master`; normal pushes to `main` do not update that request. Upstream changes can still be fetched and merged when needed.
 
@@ -30,6 +34,14 @@ WindowsGSM is a powerful tool to manage game servers. Equipped with a GUI for se
 
 |               | 🎮 Game Server  | Supported | Query |
 | ------------- | --------------- | --------- | ----- |
+| ![logo](WindowsGSM/Images/Games/arma3.png?raw=true) | Arma 3 Dedicated Server |✅| A2S |
+| ![logo](WindowsGSM/Images/Games/atm10.png?raw=true) | Minecraft: All the Mods 10 (ATM10) |✅| UT3 |
+| ![logo](WindowsGSM/Images/Games/enshrouded.png?raw=true) | Enshrouded Dedicated Server |✅| A2S |
+| ![logo](WindowsGSM/Images/Games/fs22.png?raw=true) | Farming Simulator 22 Dedicated Server |✅| |
+| ![logo](WindowsGSM/Images/Games/fs25.png?raw=true) | Farming Simulator 25 Dedicated Server |✅| |
+| ![logo](WindowsGSM/Images/Games/pz.png?raw=true) | Project Zomboid Dedicated Server |✅| A2S |
+| ![logo](WindowsGSM/Images/Games/scpsl.png?raw=true) | SCP: Secret Laboratory Dedicated Server |✅| |
+| ![logo](WindowsGSM/Images/Games/valheim.png?raw=true) | Valheim Dedicated Server |✅| A2S |
 | ![logo](WindowsGSM/Images/Games/7dtd.png?raw=true)   | 7 Days to Die Dedicated Server                    |✅|      |
 | ![logo](WindowsGSM/Images/Games/arkse.png?raw=true)  | ARK: Survival Evolved Dedicated Server            |✅| A2S  |
 | ![logo](WindowsGSM/Images/Games/avorion.png?raw=true)| Avorion Dedicated Server                          |✅|      |
@@ -77,6 +89,14 @@ WindowsGSM is a powerful tool to manage game servers. Equipped with a GUI for se
 
 |               | 🎮 Game Server  | Plugin supported | Query |
 | ------------- | --------------- | --------- | ----- |
+| ![logo](WindowsGSM/Images/Games/arma3.png?raw=true) | Arma 3 Dedicated Server |✅| A2S |
+| ![logo](WindowsGSM/Images/Games/atm10.png?raw=true) | Minecraft: All the Mods 10 (ATM10) |✅| UT3 |
+| ![logo](WindowsGSM/Images/Games/enshrouded.png?raw=true) | Enshrouded Dedicated Server |✅| A2S |
+| ![logo](WindowsGSM/Images/Games/fs22.png?raw=true) | Farming Simulator 22 Dedicated Server |✅| |
+| ![logo](WindowsGSM/Images/Games/fs25.png?raw=true) | Farming Simulator 25 Dedicated Server |✅| |
+| ![logo](WindowsGSM/Images/Games/pz.png?raw=true) | Project Zomboid Dedicated Server |✅| A2S |
+| ![logo](WindowsGSM/Images/Games/scpsl.png?raw=true) | SCP: Secret Laboratory Dedicated Server |✅| |
+| ![logo](WindowsGSM/Images/Games/valheim.png?raw=true) | Valheim Dedicated Server |✅| A2S |
 | <img src="https://github.com/DevVault/WindowsGSM.ARMA2/blob/master/ARMA2.cs/ARMA2.png?raw=true" width="16" height="16"/>   | Arma2   |✅| A2S     |
 | <img src="https://github.com/DevVault/WindowsGSM.ARMA2/blob/master/ARMA2OA.cs/ARMA2OA.png?raw=true" width="16" height="16"/>   | Arma2: OA   |✅| A2S     |
 | ![logo](https://github.com/1stian/imgrepo/blob/master/WindowsGSMrepo/arma3.png?raw=true)   | Arma3   |✅|      |
