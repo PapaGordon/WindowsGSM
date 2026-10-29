@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.IO.Compression;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Resources;
 using System.Threading.Tasks;
@@ -39,6 +40,26 @@ internal static class StartupHook
             if (!File.Exists(Path.Combine(stage, "mods", older)) || !File.Exists(Path.Combine(stage, "mods", newer)))
                 throw new Exception("A pack-supplied CC:Tweaked candidate was removed.");
             Console.WriteLine("PASS Published ATM10 preserves both pack-supplied CC:Tweaked candidates for NeoForge discovery.");
+            string relative = "config/neovitae/materials.json", oldMaterials = "[{\"name\":\"iron\"},{\"name\":\"titanium\"}]", newMaterials = "[{\"name\":\"iron\"}]";
+            foreach (string directory in new[] { source, previous, stage }) Directory.CreateDirectory(Path.Combine(directory, "config", "neovitae"));
+            File.WriteAllText(Path.Combine(source, relative), newMaterials);
+            File.WriteAllText(Path.Combine(previous, relative), oldMaterials);
+            File.WriteAllText(Path.Combine(stage, relative), oldMaterials);
+            File.WriteAllText(Path.Combine(stage, "config", "other.cfg"), "keep preferences");
+            File.WriteAllText(Path.Combine(source, "startserver.bat"), "fixture launcher");
+            string archive = Path.Combine(fixture, "ServerFiles-8.3.zip");
+            ZipFile.CreateFromDirectory(source, archive);
+            var current = type.GetMethod("IsPackCurrent", BindingFlags.Instance | BindingFlags.NonPublic);
+            if ((bool)current.Invoke(server, new object[] { stage, archive, "8.3", "8.3" })) throw new Exception("Published EXE skips same-version registry repair.");
+            string backup = Path.Combine(fixture, "backup"); Directory.CreateDirectory(backup);
+            var conflicts = new List<string> { relative + " (existing file kept)" };
+            type.GetMethod("SynchronizePackRegistries", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(server, new object[] { source, stage, backup, conflicts });
+            if (File.ReadAllText(Path.Combine(stage, relative)) != newMaterials || File.ReadAllText(Path.Combine(previous, relative)) != oldMaterials
+                || File.ReadAllText(Path.Combine(stage, "config", "other.cfg")) != "keep preferences" || conflicts.Count != 0)
+                throw new Exception("Published EXE does not synchronize only the pack registry definition.");
+            Console.WriteLine("PASS Published ATM10 synchronizes the material registry while keeping previous files and other preferences.");
+            if (!(bool)current.Invoke(server, new object[] { stage, archive, "8.3", "8.3" })) throw new Exception("Matching registries trigger needless reinstall.");
+            Console.WriteLine("PASS Published ATM10 repairs same-version registry differences and skips an already matching pack.");
         }
         finally { if (Directory.Exists(fixture)) Directory.Delete(fixture, true); }
     }

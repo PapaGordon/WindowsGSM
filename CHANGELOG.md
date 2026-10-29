@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.25.4.6 - 2026-10-30
+
+- Synchronizes ATM10's pack-defined config/neovitae/materials.json instead of keeping an old registry definition as a server preference. This fixes the reproduced extra-material registry mismatch when joining.
+- Allows a manual same-version update to repair this file even when the server already reports 8.3. Matching files still skip the reinstall.
+- Keeps previous registry definitions in the full update backup and documents the official material removals and their world impact.
+
 ## 1.25.4.5 - 2026-10-30
 
 - Fixes the ATM10 update check rejecting both CC:Tweaked versions shipped in the server pack. Pack-supplied candidates stay unchanged and NeoForge handles version selection.
