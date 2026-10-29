@@ -1,0 +1,5 @@
+ATM10 native artwork by the All the Mods Team.
+Source: https://github.com/AllTheMods/ATM-10/blob/main/kubejs/assets/atm/textures/logo.png
+Included unchanged to identify the ATM10 server entry.
+Artwork and trademarks remain with their original owners. No affiliation or endorsement is implied.
+DayZ keeps its existing native DayZ wordmark; the standalone README now uses the game image instead of the author image.

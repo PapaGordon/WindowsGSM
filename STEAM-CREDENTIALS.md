@@ -4,7 +4,7 @@ You no longer have to leave the Steam password readable in `bin/steamcmd/userDat
 
 ## The easy way
 
-1. Download the **WindowsGSM-v1.25.4.2-win-x64.zip** release. The EXE alone does not include the setup helper.
+1. Download the **WindowsGSM-v1.25.4.3-win-x64.zip** release. The EXE alone does not include the setup helper.
 2. Quit WindowsGSM before replacing its EXE. Extract the ZIP into your WindowsGSM folder. Keep your existing `servers`, `configs`, `plugins` and `bin` folders. The ZIP contains no Steam account file or server data to overwrite.
 3. Log into Windows as the same user that normally runs WindowsGSM. If WGSM runs under another service or scheduled-task account, the helper must run under that account too, with its user profile loaded.
 4. Double-click **Encrypt-SteamPassword.cmd** in the WindowsGSM folder.
@@ -38,7 +38,9 @@ Replace `YourSteamLogin` with your Steam login name and adjust the path if neede
 
 This protects against someone simply opening or copying the account file. It does not protect against an administrator or software running as your Windows user. WGSM still passes the decrypted password to SteamCMD as a process argument, which suitably privileged processes can read while SteamCMD runs. Do not share process listings or logs containing those arguments.
 
-Use the new WGSM version before encrypting the file. Older WGSM builds and third-party plugins that read `steamPass` themselves cannot use the encrypted field. Our current DayZ plugin uses WGSM's installer for server updates and needs no separate credential reader. The older DayZAuto example is a different plugin.
+Use a WGSM version with encrypted-password support before converting the file. Older WGSM builds and third-party plugins that read `steamPass` themselves cannot use the encrypted field. Our account-based Arma 3, DayZ and Farming Simulator 22/25 plugins use the central WGSM installer and accept the encrypted login on v1.25.4.2 or newer. Anonymous SteamCMD servers do not need the password; Minecraft and ATM10 do not use SteamCMD.
+
+The DayZAuto source supplied in our v1.25.4.3 plugin SDK also uses the central credential reader. Older copies of that example still read only plaintext and need updating separately. This does not change the built-in DayZ module into a Workshop updater.
 
 Steam Guard can still interrupt an unattended update. Also, DayZ server updates and Workshop mod updates are separate: the current built-in DayZ module does not automatically download Workshop mods.
 

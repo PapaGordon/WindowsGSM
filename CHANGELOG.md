@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.25.4.3 - 2026-10-29
+
+- Fixes ATM10's stale BCC pack identity and refreshes the installed version after updates instead of logging the earlier web result.
+- Preserves additional ATM10 mod JARs with a SHA-256 pack ownership inventory; first-time migration needs the previous original server ZIP.
+- Stops ATM10 updates before activation on unresolved file or mod-ID collisions.
+- Uses the native ATM10 logo and keeps the native DayZ game image.
+- Checks encrypted login compatibility for the built-in account-based servers and all current standalone MeFriendos plugins.
+- Updates the DayZAuto SDK example to use the central credential reader and stop before a Workshop download when login data is unreadable.
+- Recognizes the standalone Minecraft_NeoForge filename alongside the earlier NeoForge identifier, without duplicate server choices.
+- Documents anonymous SteamCMD downloads separately from account login and links the new standalone NeoForge plugin.
+
 ## 1.25.4.2 - 2026-10-29
 
 - Supports optional Windows user-bound DPAPI encryption for the saved Steam password, with a setup script.

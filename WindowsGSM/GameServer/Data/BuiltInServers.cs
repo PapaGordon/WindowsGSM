@@ -9,12 +9,14 @@ namespace WindowsGSM.GameServer.Data
         private sealed class Entry
         {
             internal readonly string Name, FileName;
+            internal readonly string[] PreviousFileNames;
             internal readonly Func<ServerConfig, object> Create;
-            internal Entry(string name, string fileName, Func<ServerConfig, object> create)
+            internal Entry(string name, string fileName, Func<ServerConfig, object> create, params string[] previousFileNames)
             {
                 Name = name;
                 FileName = fileName;
                 Create = create;
+                PreviousFileNames = previousFileNames;
             }
         }
 
@@ -24,7 +26,7 @@ namespace WindowsGSM.GameServer.Data
             new Entry(MC.FullName, "Minecraft_Java.cs", data => new MC(data)),
             new Entry("Arma 3 Dedicated Server", "ARMA3.cs", data => new Bundled.ARMA3(data)),
             new Entry("Minecraft: All the Mods 10 (ATM10)", "ATM10.cs", data => new Bundled.ATM10(data)),
-            new Entry(Bundled.NeoForge.ServerName, "NeoForge.cs", data => new Bundled.NeoForge(data)),
+            new Entry(Bundled.NeoForge.ServerName, "Minecraft_NeoForge.cs", data => new Bundled.NeoForge(data), "NeoForge.cs"),
             new Entry("Enshrouded Dedicated Server", "Enshrouded.cs", data => new Bundled.Enshrouded(data)),
             new Entry("Farming Simulator 22 Dedicated Server", "FarmingSimulator22.cs", data => new Bundled.FarmingSimulator22(data)),
             new Entry("Farming Simulator 25 Dedicated Server", "FarmingSimulator25.cs", data => new Bundled.FarmingSimulator25(data)),
@@ -36,7 +38,11 @@ namespace WindowsGSM.GameServer.Data
         internal static string GetName(string name)
         {
             foreach (var entry in Entries)
+            {
                 if (name == entry.Name || name == entry.Name + " [" + entry.FileName + "]") return entry.Name;
+                foreach (string fileName in entry.PreviousFileNames)
+                    if (name == entry.Name + " [" + fileName + "]") return entry.Name;
+            }
             return name;
         }
 

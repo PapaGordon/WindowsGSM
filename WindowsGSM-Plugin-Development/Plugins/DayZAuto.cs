@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+// Made by PapaGordon
+using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
 using WindowsGSM.GameServer.Engine;
@@ -189,8 +190,9 @@ namespace WindowsGSM.Plugins
                 return;
             }
 
-            StringBuilder sb = new StringBuilder();
-            sb.Append($"{GetLogin()}");
+            string login = GetLogin();
+            if (string.IsNullOrWhiteSpace(login)) return;
+            StringBuilder sb = new StringBuilder(login);
             foreach (var mod in mods)
             {
                 if (!string.IsNullOrEmpty(mod.Key) && !string.IsNullOrEmpty(mod.Value))
@@ -258,37 +260,12 @@ namespace WindowsGSM.Plugins
 
         private string GetLogin()
         {
-            string _installPath = ServerPath.GetBin("steamcmd");
-            string _userDataPath = Path.Combine(_installPath, "userData.txt");
-
-            string steamUser = null, steamPass = null;
-
-            if (File.Exists(_userDataPath))
-            {
-                string[] lines = File.ReadAllLines(_userDataPath);
-
-                foreach (string line in lines)
-                {
-                    if (line[0] == '/' && line[1] == '/')
-                    {
-                        continue;
-                    }
-
-                    string[] keyvalue = line.Split(new char[] { '=' }, 2);
-                    if (keyvalue[0] == "steamUser")
-                    {
-                        steamUser = keyvalue[1].Trim('\"');
-                    }
-                    else if (keyvalue[0] == "steamPass")
-                    {
-                        steamPass = keyvalue[1].Trim('\"');
-                    }
-                }
-            }
+            var credentials = WindowsGSM.Installer.SteamCredentials.Read(ServerPath.GetBin("steamcmd", "userData.txt"));
+            string steamUser = credentials.Item1, steamPass = credentials.Item2;
 
             if (string.IsNullOrWhiteSpace(steamUser) || string.IsNullOrWhiteSpace(steamPass))
             {
-                Error = "Can not receive Userlogin!";
+                Error = "Steam credentials missing or unreadable. Encrypted credentials require the Windows user that saved them.";
                 return null;
             }
 

@@ -111,6 +111,7 @@ internal static class NeoForgeChecks
         File.WriteAllText(Path.Combine(root, "custom-world", "level.dat"), "world-data");
         Directory.CreateDirectory(Path.Combine(root, "mods"));
         File.WriteAllText(Path.Combine(root, "mods", "my-mod.jar"), "mod-data");
+        File.WriteAllText(Path.Combine(root, "mods", "another-additional-mod.jar"), "additional-mod-data");
         Directory.CreateDirectory(Path.Combine(root, "config"));
         File.WriteAllText(Path.Combine(root, "config", "custom.toml"), "private-config");
         try { await Prepare(server, root, "21.1.10", stage => Task.FromResult(false)); throw new Exception("Failed installer accepted"); }
@@ -123,6 +124,7 @@ internal static class NeoForgeChecks
         Check(File.ReadAllText(Path.Combine(root, "mods", "my-mod.jar")) == "mod-data" && File.ReadAllText(Path.Combine(root, "custom-world", "level.dat")) == "world-data",
             "Existing mods and world data survive activation");
         Check(File.ReadAllText(Path.Combine(root, "config", "custom.toml")) == "private-config", "Custom configuration survives activation");
+        Check(File.ReadAllText(Path.Combine(root, "mods", "another-additional-mod.jar")) == "additional-mod-data", "Multiple additional NeoForge mods survive a runtime update unchanged");
         Check(!Directory.Exists(Path.Combine(root, "libraries", "net", "neoforged", "neoforge", "21.1.9")), "Old runtime libraries cannot shadow the selected version");
         Check(File.ReadAllText(Path.Combine(backup, ".wgsm-neoforge-version.txt")) == "21.1.9", "Previous server files remain in the backup");
         using (server.Lock(root)) Reject(() => { using (server.Lock(root)) { } }, "Concurrent operations cannot acquire the same lock");

@@ -2367,11 +2367,13 @@ namespace WindowsGSM
 
             if (p == null && string.IsNullOrEmpty(gameServer.Error)) // Update success (non-steamcmd server)
             {
+                remoteVersion = ServerUpdateVersion.InstalledOrReported(gameServer, remoteVersion);
                 Log(server.ID, $"Server: Updated {(validate ? "Validate " : string.Empty)}({remoteVersion})");
             }
             else if (p != null) // p stores process of steamcmd
             {
                 await Task.Run(() => { p.WaitForExit(); });
+                remoteVersion = ServerUpdateVersion.InstalledOrReported(gameServer, remoteVersion);
                 Log(server.ID, $"Server: Updated {(validate ? "Validate " : string.Empty)}({remoteVersion})");
             }
             else
@@ -2957,10 +2959,11 @@ namespace WindowsGSM
                         SetServerStatus(server, "Updating");
 
                         //Update the server
-                        await gameServer.Update();
+                        await ServerUpdateVersion.WaitForCompletion((Task)gameServer.Update());
 
                         if (string.IsNullOrWhiteSpace(gameServer.Error))
                         {
+                            remoteVersion = ServerUpdateVersion.InstalledOrReported(gameServer, remoteVersion);
                             Log(server.ID, $"Server: Updated ({remoteVersion})");
 
                             if (GetServerMetadata(serverId).DiscordAlert && GetServerMetadata(serverId).AutoUpdateAlert)
