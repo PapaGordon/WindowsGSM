@@ -261,6 +261,9 @@
   <data name="Minecraft: All the Mods 10 (ATM10)" xml:space="preserve">
     <value>Images/Games/atm10.png</value>
   </data>
+  <data name="Minecraft: NeoForge" xml:space="preserve">
+    <value>Images/Games/neoforged.ico</value>
+  </data>
   <data name="Enshrouded Dedicated Server" xml:space="preserve">
     <value>Images/Games/enshrouded.png</value>
   </data>

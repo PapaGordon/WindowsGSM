@@ -25,12 +25,12 @@ namespace WindowsGSM.GameServer.Bundled
             color = "#7AC943"
         };
 
-        private readonly ServerConfig _serverData;
+        protected readonly ServerConfig _serverData;
         public string Error, Notice;
 
         public ATM10(ServerConfig serverData) { _serverData = serverData; }
 
-        public string StartPath => "startserver.bat";
+        public virtual string StartPath => "startserver.bat";
         public string FullName = "Minecraft: All the Mods 10 (ATM10)";
         public bool AllowsEmbedConsole = true;
         public int PortIncrements = 1;
@@ -343,7 +343,7 @@ namespace WindowsGSM.GameServer.Bundled
             return GetLocalBuild();
         }
 
-        private string FindJava21()
+        protected virtual string FindJava21()
         {
             // 1) Prefer JAVA_HOME when it points to Java 21+.
             string javaHome = Environment.GetEnvironmentVariable("JAVA_HOME");
@@ -591,7 +591,7 @@ namespace WindowsGSM.GameServer.Bundled
                 .FirstOrDefault();
         }
 
-        private string FindWinArgsPath(string root)
+        protected virtual string FindWinArgsPath(string root)
         {
             try
             {
@@ -800,13 +800,13 @@ namespace WindowsGSM.GameServer.Bundled
             return new UpdateResult { BackupPath = backup, Conflicts = conflicts.Count };
         }
 
-        private string RecoveryMarker(string root)
+        protected virtual string RecoveryMarker(string root)
         {
             return Path.Combine(Path.GetDirectoryName(Path.GetFullPath(root).TrimEnd(Path.DirectorySeparatorChar)),
                 ".wgsm-atm10-update-recovery.txt");
         }
 
-        private FileStream AcquireUpdateLock(string root)
+        protected virtual FileStream AcquireUpdateLock(string root)
         {
             string parent = Path.GetDirectoryName(Path.GetFullPath(root).TrimEnd(Path.DirectorySeparatorChar));
             FileStream updateLock;
@@ -828,7 +828,7 @@ namespace WindowsGSM.GameServer.Bundled
             return updateLock;
         }
 
-        private void PublishPreparedUpdate(string root, string stage, string backup)
+        protected void PublishPreparedUpdate(string root, string stage, string backup)
         {
             string previous = Path.Combine(backup, "serverfiles");
             string marker = RecoveryMarker(root);
@@ -1012,7 +1012,7 @@ namespace WindowsGSM.GameServer.Bundled
             }
         }
 
-        private void ValidateTree(string root)
+        protected void ValidateTree(string root)
         {
             if ((File.GetAttributes(root) & FileAttributes.ReparsePoint) != 0)
                 throw new IOException("Linked files or directories need a manual update: " + root);
@@ -1041,7 +1041,7 @@ namespace WindowsGSM.GameServer.Bundled
             File.Delete(path);
         }
 
-        private void DeleteWritableDirectory(string path)
+        protected void DeleteWritableDirectory(string path)
         {
             ValidateTree(path);
             foreach (string file in Directory.GetFiles(path)) DeleteWritableFile(file);
@@ -1050,7 +1050,7 @@ namespace WindowsGSM.GameServer.Bundled
             Directory.Delete(path);
         }
 
-        private void CopyDirectoryContents(string source, string destination, bool overwrite,
+        protected void CopyDirectoryContents(string source, string destination, bool overwrite,
             bool keepJvmArgs = false)
         {
             Directory.CreateDirectory(destination);
@@ -1066,12 +1066,12 @@ namespace WindowsGSM.GameServer.Bundled
                 CopyDirectoryContents(dir, Path.Combine(destination, Path.GetFileName(dir)), overwrite);
         }
 
-        private void EnsureServerProperties()
+        protected void EnsureServerProperties()
         {
             EnsureServerProperties(ServerPath.GetServersServerFiles(_serverData.ServerID));
         }
 
-        private void EnsureServerProperties(string root)
+        protected void EnsureServerProperties(string root)
         {
             Directory.CreateDirectory(root);
             string path = Path.Combine(root, "server.properties");
@@ -1086,7 +1086,7 @@ namespace WindowsGSM.GameServer.Bundled
                 line.StartsWith("motd=", StringComparison.OrdinalIgnoreCase));
 
             if (!hasMotd)
-                SetProperty(lines, "motd", "Minecraft: All the Mods 10 (ATM10)");
+                SetProperty(lines, "motd", FullName);
 
             SetProperty(lines, "server-port", _serverData.ServerPort);
             SetProperty(lines, "enable-query", "true");

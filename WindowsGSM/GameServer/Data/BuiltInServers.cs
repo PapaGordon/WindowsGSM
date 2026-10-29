@@ -21,8 +21,10 @@ namespace WindowsGSM.GameServer.Data
         private static readonly Entry[] Entries =
         {
             new Entry(DAYZ.FullName, "DayZ.cs", data => new DAYZ(data)),
+            new Entry(MC.FullName, "Minecraft_Java.cs", data => new MC(data)),
             new Entry("Arma 3 Dedicated Server", "ARMA3.cs", data => new Bundled.ARMA3(data)),
             new Entry("Minecraft: All the Mods 10 (ATM10)", "ATM10.cs", data => new Bundled.ATM10(data)),
+            new Entry(Bundled.NeoForge.ServerName, "NeoForge.cs", data => new Bundled.NeoForge(data)),
             new Entry("Enshrouded Dedicated Server", "Enshrouded.cs", data => new Bundled.Enshrouded(data)),
             new Entry("Farming Simulator 22 Dedicated Server", "FarmingSimulator22.cs", data => new Bundled.FarmingSimulator22(data)),
             new Entry("Farming Simulator 25 Dedicated Server", "FarmingSimulator25.cs", data => new Bundled.FarmingSimulator25(data)),

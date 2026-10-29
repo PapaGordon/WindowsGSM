@@ -1,8 +1,8 @@
-﻿using System;
+// Made by PapaGordon
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -64,34 +64,8 @@ namespace WindowsGSM.Installer
             }
             else
             {
-                string steamUser = null, steamPass = null;
-
-                if (File.Exists(_userDataPath))
-                {
-                    string[] lines = File.ReadAllLines(_userDataPath);
-
-                    foreach (string line in lines)
-                    {
-                        if (line[0] == '/' && line[1] == '/')
-                        {
-                            continue;
-                        }
-
-                        string[] keyvalue = line.Split(new char[] { '=' }, 2);
-                        if (keyvalue[0] == "steamUser")
-                        {
-                            steamUser = keyvalue[1].Trim('\"');
-                        }
-                        else if (keyvalue[0] == "steamPass")
-                        {
-                            steamPass = keyvalue[1].Trim('\"');
-                        }
-                    }
-                }
-                else
-                {
-                    CreateUserDataTxtIfNotExist();
-                }
+                CreateUserDataTxtIfNotExist();
+                var (steamUser, steamPass) = GetSteamUsernamePassword();
 
                 if (string.IsNullOrWhiteSpace(steamUser) || string.IsNullOrWhiteSpace(steamPass))
                 {
@@ -163,24 +137,7 @@ namespace WindowsGSM.Installer
         // New parameter script
         private static (string, string) GetSteamUsernamePassword()
         {
-            if (!File.Exists(_userDataPath))
-            {
-                return (null, null);
-            }
-
-            string username = null, password = null;
-            foreach (var line in File.ReadAllLines(_userDataPath).ToList())
-            {
-                if (line[0] == '/' && line[1] == '/') { continue; } // Skip the line if it is a comment line
-                var keyValue = line.Split(new[] { '=' }, 2);
-                switch (keyValue[0])
-                {
-                    case "steamUser": username = keyValue[1].Substring(1, keyValue[1].Length - 2); break;
-                    case "steamPass": password = keyValue[1].Substring(1, keyValue[1].Length - 2); break;
-                }
-            }
-
-            return (username, password);
+            return SteamCredentials.Read(_userDataPath);
         }
 
         public async Task<Process> Run()
@@ -198,16 +155,8 @@ namespace WindowsGSM.Installer
 
             if (_param == null)
             {
-                Error = "Steam account is not set";
+                Error = "Steam credentials missing or unreadable. Encrypted credentials require the Windows user that saved them.";
                 return null;
-            }
-
-            //Console.WriteLine($"SteamCMD Param: {_param}");
-
-            var firewall = new WindowsFirewall(_exeFile, exePath);
-            if (!await firewall.IsRuleExist())
-            {
-                await firewall.AddRule();
             }
 
             if (string.IsNullOrWhiteSpace(_param) || !_param.Contains("-overrideminos"))
@@ -253,7 +202,7 @@ namespace WindowsGSM.Installer
             string param = GetParameter(ServerPath.GetServersServerFiles(serverId), appId, validate, loginAnonymous, modName, custom);
             if (param == null)
             {
-                return (null, "Steam account not set up");
+                return (null, "Steam account credentials missing or unreadable. Encrypted credentials require the Windows user that saved them.");
             }
 
             string exePath = Path.Combine(_installPath, _exeFile);
@@ -403,12 +352,6 @@ namespace WindowsGSM.Installer
                 }
             }
 
-            WindowsFirewall firewall = new WindowsFirewall("steamcmd.exe", exePath);
-            if (!await firewall.IsRuleExist())
-            {
-                await firewall.AddRule();
-            }
-
             // Removes appinfo.vdf as a fix for not always getting up to date version info from SteamCMD.
             await Task.Run(() =>
             {
@@ -467,6 +410,7 @@ namespace WindowsGSM.Installer
                     textwriter.WriteLine("// For security and compatibility reasons, WindowsGSM suggests you to create a new steam account.");
                     textwriter.WriteLine("// More info: (https://docs.windowsgsm.com/installer/steamcmd)");
                     textwriter.WriteLine("// ");
+                    textwriter.WriteLine("// Use tools/Set-SteamCredentials.ps1 for an encrypted password (see STEAM-CREDENTIALS.md).");
                     textwriter.WriteLine("// Username and password - No Steam Guard             (Supported + Auto update supported) (Recommended)");
                     textwriter.WriteLine("// Username and password - Steam Guard via Email      (Supported + Auto update supported)");
                     textwriter.WriteLine("// Username and password - Steam Guard via Smartphone (Supported + Auto update NOT supported)");

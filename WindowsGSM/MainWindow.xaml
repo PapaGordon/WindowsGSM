@@ -1,4 +1,4 @@
-﻿<mah:MetroWindow x:Class="WindowsGSM.MainWindow"
+<mah:MetroWindow x:Class="WindowsGSM.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -767,7 +767,7 @@
                   <mah:ToggleSwitch x:Name="switch_backuponstart" OnContent="" OffContent="" Margin="422,97,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Toggled="Button_BackupOnStart_Click" Width="44" Height="30"/>
 
                   <Label Content="Auto Firewall" HorizontalAlignment="Left" Margin="5,155,0,0" VerticalAlignment="Top"/>
-                  <mah:ToggleSwitch x:Name="switch_autofirewall" OnContent="" OffContent="" Margin="100,153,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Toggled="Button_AutoFirewall_Click" Width="44" Height="30" ToolTip="Automatically allow the server application through Windows Firewall. Turning this off removes its automatic application rule to configure any required ports manually."/>
+                  <mah:ToggleSwitch x:Name="switch_autofirewall" OnContent="" OffContent="" Margin="100,153,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Toggled="Button_AutoFirewall_Click" Width="44" Height="30" ToolTip="Manage this server's automatic Windows Firewall application and port rules. Turning this off removes those automatic rules and prevents new automatic allowances. Manual rules remain unchanged."/>
 
                   <Label x:Name="label_discordalert" Content="Discord Alert" HorizontalAlignment="Left" Margin="5,70,0,0" VerticalAlignment="Top"/>
                   <mah:ToggleSwitch x:Name="switch_discordalert" Margin="99,68,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Toggled="Button_DiscordAlert_Click" Width="44" Height="30"/>

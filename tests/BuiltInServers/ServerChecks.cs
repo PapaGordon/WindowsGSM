@@ -303,6 +303,63 @@ internal static class ServerChecks
         }
     }
 
+    private static void CheckVanilla(string id)
+    {
+        const string name = "Minecraft: Java Edition Server";
+        object vanilla = Create(name, Settings(id));
+        Type type = vanilla.GetType();
+        Check(type.FullName == "WindowsGSM.GameServer.MC", "Vanilla retains the standard built-in Minecraft entry");
+        Check(Create(name + " [Minecraft_Java.cs]").GetType() == type, "Standalone Vanilla identifiers resolve to the built-in module");
+        Check((bool)Catalog.GetMethod("Contains", BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, new object[] { name + " [Minecraft_Java.cs]" }), "Vanilla plugin duplicates are hidden in the selector");
+        Check((string)type.GetProperty("StartPath").GetValue(vanilla) == "server.jar", "Vanilla exposes the installed server JAR");
+        string root = ServerPath.GetServersServerFiles(id);
+        Directory.CreateDirectory(root);
+        string props = Path.Combine(root, "server.properties");
+        File.WriteAllText(props, "motd=My Vanilla server\nlevel-name=My world\nonline-mode=true\nrcon.password=keep-this\n");
+        type.GetMethod("CreateServerCFG").Invoke(vanilla, null);
+        string text = File.ReadAllText(props);
+        Check(text.Contains("motd=My Vanilla server") && text.Contains("level-name=My world") && text.Contains("rcon.password=keep-this"), "Built-in Vanilla retains MOTD, world and private settings");
+        Check(text.Contains("query.port=2405") && text.Contains("server-port=2402") && text.Contains("max-players=42"), "Built-in Vanilla applies the actual WindowsGSM ports and slots");
+        type.GetField("AllowsEmbedConsole").SetValue(vanilla, true);
+        using (var p = (Process)type.GetMethod("CreateServerProcess", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(vanilla, new object[] { root, @"C:\Java JDK\bin\java.exe" }))
+            Check(p.StartInfo.RedirectStandardInput && p.StartInfo.RedirectStandardOutput && p.StartInfo.CreateNoWindow && p.StartInfo.Arguments.Contains("-jar server.jar nogui"), "Built-in Vanilla follows the embedded console contract");
+        var planner = Fork.GetType("WindowsGSM.Functions.ServerFirewall", true);
+        var settings = Settings(id);
+        settings.ServerGame = name + " [Minecraft_Java.cs]";
+        settings.ServerPort = "25565";
+        settings.ServerQueryPort = "25566";
+        var portMethod = planner.GetMethod("GetPortRules", BindingFlags.NonPublic | BindingFlags.Static);
+        Func<object, string, object> field = (rule, key) => rule.GetType().GetField(key, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(rule);
+        var rules = ((IEnumerable)portMethod.Invoke(null, new object[] { settings, true })).Cast<object>().ToArray();
+        Check(rules.Length == 2 && (int)field(rules[0], "Protocol") == 6 && (string)field(rules[0], "LocalPorts") == "25565" && (int)field(rules[1], "Protocol") == 17 && (string)field(rules[1], "LocalPorts") == "25566", "Vanilla has central TCP game and UDP query rules");
+        var programMethod = planner.GetMethod("GetProgramPaths", BindingFlags.NonPublic | BindingFlags.Static);
+        Check(!((IEnumerable<string>)programMethod.Invoke(null, new object[] { id, settings.ServerGame, "server.jar", true })).Any(), "Vanilla does not authorize server.jar or a shared Java executable globally");
+        settings.ServerID += "-other";
+        var other = ((IEnumerable)portMethod.Invoke(null, new object[] { settings, true })).Cast<object>().ToArray();
+        Check((string)field(rules[0], "Name") != (string)field(other[0], "Name"), "Vanilla firewall names are scoped to each server instance");
+        settings.ServerQueryPort = "invalid";
+        try { ((IEnumerable)portMethod.Invoke(null, new object[] { settings, true })).Cast<object>().ToArray(); throw new Exception("Invalid Vanilla port accepted"); }
+        catch (InvalidOperationException) { Check(true, "Vanilla rejects invalid firewall ports"); }
+        Check(((IEnumerable)portMethod.Invoke(null, new object[] { settings, false })).Cast<object>().Count() == 2, "Vanilla firewall disable works even with an invalid saved port");
+    }
+
+    private static void CheckVanillaPlugin(string path)
+    {
+        var references = ((string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES")).Split(Path.PathSeparator)
+            .Concat(new[] { Fork.Location }).Distinct(StringComparer.OrdinalIgnoreCase).Select(p => MetadataReference.CreateFromFile(p));
+        var syntax = CSharpSyntaxTree.ParseText(File.ReadAllText(path), new CSharpParseOptions(LanguageVersion.CSharp6));
+        var compilation = CSharpCompilation.Create("VanillaStandaloneChecks", new[] { syntax }, references,
+            new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+        using (var stream = new MemoryStream())
+        {
+            var result = compilation.Emit(stream);
+            if (!result.Success) throw new Exception(string.Join(Environment.NewLine, result.Diagnostics));
+            Check(true, "Standalone Vanilla compiles as C# 6 against the actual WindowsGSM API");
+            Type type = Assembly.Load(stream.ToArray()).GetType("WindowsGSM.Plugins.Minecraft_Java", true);
+            dynamic plugin = Activator.CreateInstance(type, new object[] { null });
+            Check(plugin.FullName == "Minecraft: Java Edition Server" && plugin.Plugin.name == "WindowsGSM.Minecraft_Java", "Vanilla metadata matches the real plugin loader");
+        }
+    }
     private static int Main(string[] args)
     {
         string id = "dayz-check-" + Guid.NewGuid().ToString("N");
@@ -310,6 +367,8 @@ internal static class ServerChecks
         try
         {
             CheckCatalog();
+            CheckVanilla(id);
+            if (args.Length > 1) CheckVanillaPlugin(args[1]);
             CheckFirewallIntegration(id);
             CheckFailedSteamUpdate(id).GetAwaiter().GetResult();
             CheckDayZ(id, secondId, data => Create("DayZ Dedicated Server", data)).GetAwaiter().GetResult();

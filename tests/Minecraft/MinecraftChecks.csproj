@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>6</LangVersion>
+    <EnableNETAnalyzers>false</EnableNETAnalyzers>
+    <NoWarn>CS1998;SYSLIB0014</NoWarn>
+    <PluginSource Condition="'$(PluginSource)' == ''">../../WindowsGSM/GameServer/MC.cs</PluginSource>
+    <DefineConstants>$(DefineConstants);BUILTIN</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(PluginSource)" Link="Minecraft_Java.cs" />
+    <Reference Include="Newtonsoft.Json"><HintPath>$(MSBuildSDKsPath)/../Newtonsoft.Json.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>

@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.25.4.2 - 2026-10-29
+
+- Supports optional Windows user-bound DPAPI encryption for the saved Steam password, with a setup script.
+- Adds Minecraft: NeoForge beside ATM10, using official installers, version selection within a chosen Minecraft family and per-server firewall rules.
+- Gives NeoForge its own official fox icon, with the original artwork credits and license.
+- Stages NeoForge updates with a full backup while preserving worlds, mods, configuration and JVM arguments.
+
+- Removes unconditional SteamCMD firewall allowances from installation and version checks; all server rules follow Auto Firewall.
+- Downloads the Vanilla JAR without requiring Java first and preserves the original installation error.
+- Reworks the built-in Vanilla Minecraft server and keeps the existing Java Edition server name.
+- Validates Mojang downloads before replacing the runtime, keeps previous runtime files and recovers failed activations.
+- Reads versions directly from the server JAR and supports exact stable release pins.
+- Detects each release's required 64-bit Java version and preserves existing RAM parameters and server settings.
+- Uses central per-server TCP game and UDP query rules for Vanilla instead of adding a global Java firewall exception.
+- Recognizes the standalone Minecraft_Java plugin identifier and adds Vanilla filesystem/compiler/firewall checks.
+
 ## 1.25.4.1 - 2026-10-24
 
 - Adds embedded DayZ console output from the current RPT file in the configured profile folder.

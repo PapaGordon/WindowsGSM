@@ -1,4 +1,4 @@
-﻿// Made by PapaGordon
+// Made by PapaGordon
 using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
@@ -51,7 +51,7 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.25.4.1")]
-[assembly: AssemblyFileVersion("1.25.4.1")]
+[assembly: AssemblyVersion("1.25.4.2")]
+[assembly: AssemblyFileVersion("1.25.4.2")]
 [assembly: NeutralResourcesLanguage("en")]
 

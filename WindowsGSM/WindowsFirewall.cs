@@ -1,4 +1,5 @@
-﻿using NetFwTypeLib;
+// Made by PapaGordon
+using NetFwTypeLib;
 using System;
 using System.Threading.Tasks;
 
@@ -15,33 +16,6 @@ namespace WindowsGSM
             Name = name;
             Path = path;
         }
-
-        public async Task<bool> IsRuleExist()
-        {
-            return await Task.Run(() =>
-            {
-                try
-                {
-                    INetFwMgr netFwMgr = (INetFwMgr)Activator.CreateInstance(Type.GetTypeFromProgID("HNetCfg.FwMgr"));
-
-                    foreach (INetFwAuthorizedApplication app in netFwMgr.LocalPolicy.CurrentProfile.AuthorizedApplications)
-                    {
-                        if (app.ProcessImageFileName.ToLower() == Path.ToLower())
-                        {
-                            return true;
-                        }
-                    }
-                }
-                catch
-                {
-                    return false;
-                }
-
-                return false;
-            });
-        }
-
-        public Task<bool> AddRule() => SetEnabled(true);
 
         public async Task<bool> SetEnabled(bool enabled)
         {

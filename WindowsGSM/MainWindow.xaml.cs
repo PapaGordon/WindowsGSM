@@ -1,4 +1,4 @@
-﻿// Made by PapaGordon
+// Made by PapaGordon
 using ControlzEx.Theming;
 using LiveCharts;
 using LiveCharts.Wpf;
@@ -3977,26 +3977,26 @@ namespace WindowsGSM
             await metadata.FirewallLock.WaitAsync();
             try
             {
-                bool success = true;
-                foreach (string programPath in ServerFirewall.GetProgramPaths(server.ID, server.Game, startPath, metadata.AutoFirewall))
+                var settings = new ServerConfig(server.ID)
                 {
-                    var firewall = new WindowsFirewall(Path.GetFileName(programPath), programPath);
-                    if (!await firewall.SetEnabled(metadata.AutoFirewall))
+                    ServerGame = server.Game,
+                    AutoFirewall = metadata.AutoFirewall
+                };
+                return await ServerFirewall.Synchronize(settings, startPath,
+                    async (programPath, enabled) =>
                     {
-                        Log(server.ID, $"[ERROR] Auto Firewall: {firewall.Error}");
-                        success = false;
-                    }
-                }
-                foreach (var rule in ServerFirewall.GetPortRules(new ServerConfig(server.ID), metadata.AutoFirewall))
-                {
-                    var firewall = new WindowsFirewall(rule.Name, string.Empty);
-                    if (!await firewall.SetPortEnabled(rule, metadata.AutoFirewall))
+                        var firewall = new WindowsFirewall(Path.GetFileName(programPath), programPath);
+                        bool success = await firewall.SetEnabled(enabled);
+                        if (!success) Log(server.ID, $"[ERROR] Auto Firewall: {firewall.Error}");
+                        return success;
+                    },
+                    async (rule, enabled) =>
                     {
-                        Log(server.ID, $"[ERROR] Auto Firewall: {firewall.Error}");
-                        success = false;
-                    }
-                }
-                return success;
+                        var firewall = new WindowsFirewall(rule.Name, string.Empty);
+                        bool success = await firewall.SetPortEnabled(rule, enabled);
+                        if (!success) Log(server.ID, $"[ERROR] Auto Firewall: {firewall.Error}");
+                        return success;
+                    });
             }
             catch (Exception ex)
             {

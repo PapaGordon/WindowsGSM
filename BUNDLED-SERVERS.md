@@ -2,7 +2,7 @@
 
 These servers are compiled into WindowsGSM. No files in the plugins folder are needed to install, import or run them. Their standalone repositories remain separate and usable on compatible WindowsGSM versions, including builds that do not use this fork.
 
-The sources in WindowsGSM/GameServer/Bundled are snapshots of the repositories below. Only their namespace changes to WindowsGSM.GameServer.Bundled. Keep both copies in sync when changing server behavior. The original license notices are in licenses/WindowsGSM.*.txt and are embedded in the compiled assembly.
+The imported sources in WindowsGSM/GameServer/Bundled use the WindowsGSM.GameServer.Bundled namespace. Keep the standalone copies in sync when changing their server behavior. The built-in ATM10 copy also exposes runtime helpers for the separate NeoForge module; its own server-pack workflow stays the same. The original license notices are in licenses/WindowsGSM.*.txt and are embedded in the compiled assembly.
 
 | Server | Standalone repository | Imported revision |
 | --- | --- | --- |
@@ -16,6 +16,10 @@ The sources in WindowsGSM/GameServer/Bundled are snapshots of the repositories b
 | Valheim Dedicated Server | [WindowsGSM.Valheim-MeFriendos](https://github.com/PapaGordon/WindowsGSM.Valheim-MeFriendos) | `3536aa02111167377f8864eb050cee400df0978f` |
 
 Existing servergame values such as `Enshrouded Dedicated Server [Enshrouded.cs]` resolve to the built-in implementation. WindowsGSM does not rewrite the configuration. Installed copies remain visible in plugin management, but duplicate choices are hidden in Install and Import. Other third-party plugins still load as before.
+
+DayZ is already a built-in entry. Its implementation matches [WindowsGSM.DayZ 0.1.1](https://github.com/PapaGordon/WindowsGSM.DayZ), including RPT output, native console handling and configuration synchronization. Old `DayZ Dedicated Server [DayZ.cs]` identifiers resolve to that same entry. See [DAYZ.md](DAYZ.md) for setup and the separate Workshop-update limitation.
+
+**Minecraft: NeoForge** is an additional built-in module without an ATM10 pack or CurseForge dependency. ATM10 remains a separate choice. See [NEOFORGE.md](NEOFORGE.md) for version selection, Java, import and update backups. See [STEAM-CREDENTIALS.md](STEAM-CREDENTIALS.md) for optional Steam password encryption.
 
 ATM10 still needs a server pack from CurseForge. Place it in the WindowsGSM root or the serverfiles folder. Farming Simulator still needs the matching game license and dedicated-server setup. Valheim still requires changing its placeholder password. These requirements are the same as in the standalone plugins.
 
