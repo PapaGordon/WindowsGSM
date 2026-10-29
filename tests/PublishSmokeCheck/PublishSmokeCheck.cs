@@ -42,7 +42,7 @@ internal static class StartupHook
             Console.WriteLine("PASS The official NeoForge icon decodes through WPF and its artwork credit is embedded.");
             Type manager = app.GetType("WindowsGSM.Functions.PluginManagement", true);
             object instance = Activator.CreateInstance(manager);
-            foreach (string file in new[] { "DayZ", "ATM10", "Minecraft_Java", "Minecraft_NeoForge" })
+            foreach (string file in new[] { "DayZ", "ARMA3", "ATM10", "Minecraft_Java", "Minecraft_NeoForge" })
             {
                 string plugin = Path.Combine(root, "plugins", file + ".cs", file + ".cs");
                 Task task = (Task)manager.GetMethod("LoadPlugin").Invoke(instance, new object[] { plugin, false });

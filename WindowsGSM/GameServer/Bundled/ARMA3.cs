@@ -69,8 +69,8 @@ namespace WindowsGSM.GameServer.Bundled
             name = "WindowsGSM.ARMA3",
             author = "MeFriendos",
             description = "WindowsGSM plugin for Arma 3 Dedicated Server (MeFriendos build)",
-            version = "0.1.3",
-            url = "https://github.com/PapaGordon/WindowsGSM.ARMA3-MeFriendos",
+            version = "0.1.4",
+            url = "https://github.com/PapaGordon/WindowsGSM.ARMA3",
             color = "#9eff99"
         };
 
@@ -928,6 +928,7 @@ namespace WindowsGSM.GameServer.Bundled
         // - Start server function, return its Process to WindowsGSM
         public async Task<Process> Start()
         {
+            Error = null;
             string exePath = ServerPath.GetServersServerFiles(_serverData.ServerID, StartPath);
             if (!File.Exists(exePath))
             {
@@ -941,6 +942,17 @@ namespace WindowsGSM.GameServer.Bundled
             param.Append(string.IsNullOrWhiteSpace(_serverData.ServerParam) ? string.Empty : $" {_serverData.ServerParam}");
 
             string commandLine = param.ToString();
+            try
+            {
+                var workshop = await WorkshopUpdater.Update(ServerPath.GetServersServerFiles(_serverData.ServerID),
+                    ServerPath.GetServersConfigs(_serverData.ServerID), ServerPath.GetBin("steamcmd"), "107410");
+                commandLine = WorkshopUpdater.MergeArguments(commandLine, workshop);
+            }
+            catch (Exception e)
+            {
+                Error = e.Message;
+                return null;
+            }
             string rptDirectory = null;
             Dictionary<string, long> rptSnapshot = null;
             ServerConsole serverConsole = null;

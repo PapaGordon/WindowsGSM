@@ -63,7 +63,7 @@ namespace WindowsGSM.GameServer
             catch (Exception e) { Error = e.Message; }
         }
 
-        public Task<Process> Start()
+        public async Task<Process> Start()
         {
             Error = null;
             Notice = null;
@@ -74,6 +74,9 @@ namespace WindowsGSM.GameServer
                     throw new FileNotFoundException("DayZServer_x64.exe not found.", executable);
 
                 var startInfo = PrepareStart();
+                var workshop = await WorkshopUpdater.Update(startInfo.WorkingDirectory,
+                    ServerPath.GetServersConfigs(_serverData.ServerID), ServerPath.GetBin("steamcmd"), "221100");
+                startInfo.Arguments = WorkshopUpdater.MergeArguments(startInfo.Arguments, workshop);
                 startInfo.FileName = ServerPath.GetServersServerFiles(_serverData.ServerID, StartPath);
                 string profiles = ResolvePath(startInfo.WorkingDirectory,
                     GetOption(SplitArguments(_serverData.ServerParam ?? string.Empty), "profiles") ?? "profile");
@@ -91,12 +94,12 @@ namespace WindowsGSM.GameServer
                         Task.Run(() => FollowRptLog(process, profiles, snapshot, line => AddEmbeddedConsoleLine(console, line)));
                 }
 #pragma warning restore 4014
-                return Task.FromResult(process);
+                return process;
             }
             catch (Exception e)
             {
                 Error = e.Message;
-                return Task.FromResult<Process>(null);
+                return null;
             }
         }
 

@@ -1,5 +1,7 @@
 # DayZ setup
 
+For optional Workshop downloads before each start, see [Workshop updates](WORKSHOP.md). Steam subscriptions alone do not update the server's mod folders.
+
 DayZ remains the existing built-in **DayZ Dedicated Server** entry. A Steam account with access to app 223350 is needed for installation and updates. WindowsGSM uses its saved Steam account settings, so an existing setup may not ask for credentials again.
 
 ## Defaults

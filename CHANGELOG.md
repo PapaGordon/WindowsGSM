@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.25.4.4 - 2026-10-29
+
+- Replaces leftover older ATM10 JARs when all their mod IDs are supplied by the incoming pack, fixing the reported CC:Tweaked 1.113.1 / 1.120.2 conflict. Additional mods with separate IDs are kept; overlapping bundles with extra IDs still stop the update.
+- Adds optional DayZ and Arma 3 Workshop downloads before each start through per-server WorkshopMods.cfg files.
+- Stages all configured mod folders, checks per-item download success, manages signing keys and restores previous files on activation failure.
+- Includes Workshop setup and interrupted-deployment recovery instructions.
+
 ## 1.25.4.3 - 2026-10-29
 
 - Fixes ATM10's stale BCC pack identity and refreshes the installed version after updates instead of logging the earlier web result.

@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0-windows8.0</TargetFramework><UseWPF>true</UseWPF><EnableNETAnalyzers>false</EnableNETAnalyzers></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../WindowsGSM/GameServer/Engine/WorkshopUpdater.cs" Link="WorkshopUpdater.cs" />
+    <Reference Include="WindowsGSM"><HintPath>../../WindowsGSM/bin/Release/net8.0-windows8.0/WindowsGSM.dll</HintPath></Reference>
+    <Reference Include="System.Security.Cryptography.ProtectedData"><HintPath>../../WindowsGSM/bin/Release/net8.0-windows8.0/System.Security.Cryptography.ProtectedData.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>

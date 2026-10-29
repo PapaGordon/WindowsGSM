@@ -10,7 +10,7 @@ This build includes a per-server **Auto Firewall** switch. Its state is saved fo
 
 Arma 3, ATM10, Enshrouded, Farming Simulator 22/25, Project Zomboid, SCP: Secret Laboratory and Valheim are built in. They appear in Install and Import without an extra plugin download. The [standalone plugins](BUNDLED-SERVERS.md) remain available for other WindowsGSM builds. Existing server configurations with our old plugin names still work.
 
-DayZ uses the existing built-in entry, with synchronized name, slots and query port, mission selection and local default configuration. See [DayZ setup](DAYZ.md).
+DayZ uses the existing built-in entry, with synchronized name, slots and query port, mission selection and local default configuration. See [DayZ setup](DAYZ.md). DayZ and Arma 3 can also [update configured Workshop mods before starting](WORKSHOP.md).
 
 **Minecraft: Java Edition Server** now uses our [Vanilla module](MINECRAFT.md). **Minecraft: NeoForge** is available as a separate entry without a modpack; [ATM10 stays separate](NEOFORGE.md). A [standalone NeoForge plugin](https://github.com/PapaGordon/WindowsGSM.Minecraft_NeoForge) is also available for other compatible WGSM hosts.
 
