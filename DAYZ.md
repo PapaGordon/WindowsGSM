@@ -37,7 +37,7 @@ Custom paths work, including paths with spaces:
 
 A custom config must already exist. Give custom configs their own filename: SteamCMD validation can replace the shipped serverDZ.cfg. A mission folder must exist under mpmissions. For example, set Map to dayzOffline.enoch to select the installed Livonia mission. The launch mission takes precedence over the existing template value in the config.
 
-The built-in Manage Addons selection and an explicit -mod list are combined into one argument, keeping their order and removing duplicates. -serverMod stays separate. Install the mod files and their signing keys yourself; there is no automatic Workshop downloader.
+The built-in Manage Addons selection and an explicit -mod list are combined into one argument, keeping their order and removing duplicates. -serverMod stays separate. Install the mod files and signing keys yourself, or use the optional [Workshop updater](WORKSHOP.md) to manage listed mods before each start.
 
 If DZSALModServer.exe is present, WindowsGSM launches it and central Auto Firewall handles both the launcher and DayZServer_x64.exe. Removing the launcher restores the native executable. The per-server firewall switch also removes both automatic rules when disabled.
 
