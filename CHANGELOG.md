@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.25.4.5 - 2026-10-30
+
+- Fixes the ATM10 update check rejecting both CC:Tweaked versions shipped in the server pack. Pack-supplied candidates stay unchanged and NeoForge handles version selection.
+- Keeps conflict protection for overlapping additional mod bundles and preserves separate additional mods.
+- Tests both CC:Tweaked update cases directly inside the final self-contained EXE as well as source fixtures.
+
 ## 1.25.4.4 - 2026-10-29
 
 - Replaces leftover older ATM10 JARs when all their mod IDs are supplied by the incoming pack, fixing the reported CC:Tweaked 1.113.1 / 1.120.2 conflict. Additional mods with separate IDs are kept; overlapping bundles with extra IDs still stop the update.

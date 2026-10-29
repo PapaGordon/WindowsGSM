@@ -1,6 +1,7 @@
 // Made by PapaGordon
 using System;
 using System.IO;
+using System.IO.Compression;
 using System.Collections;
 using System.Reflection;
 using System.Resources;
@@ -9,6 +10,39 @@ using System.Windows.Media.Imaging;
 
 internal static class StartupHook
 {
+    private static void CheckAtmUpdate(Assembly app, string root)
+    {
+        string fixture = Path.Combine(root, "atm-update-check-" + Guid.NewGuid().ToString("N"));
+        string source = Path.Combine(fixture, "pack"), previous = Path.Combine(fixture, "previous"), stage = Path.Combine(fixture, "stage");
+        string older = "cc-tweaked-1.21.1-forge-1.113.1.jar", newer = "cc-tweaked-1.21.1-forge-1.120.2.jar";
+        try
+        {
+            foreach (string directory in new[] { source, previous, stage }) Directory.CreateDirectory(Path.Combine(directory, "mods"));
+            foreach (string jar in new[] { Path.Combine(previous, "mods", older), Path.Combine(source, "mods", newer) })
+            using (var zip = ZipFile.Open(jar, ZipArchiveMode.Create))
+            using (var writer = new StreamWriter(zip.CreateEntry("META-INF/neoforge.mods.toml").Open()))
+                writer.Write("[[mods]]\nmodId=\"computercraft\"\nversion=\"fixture\"\n");
+            File.Copy(Path.Combine(previous, "mods", older), Path.Combine(stage, "mods", older));
+            File.WriteAllText(Path.Combine(stage, "mods", "MyExtra.jar"), "separate additional mod");
+            Directory.CreateDirectory(Path.Combine(previous, ".wgsm-atm10-config-defaults"));
+            File.WriteAllText(Path.Combine(previous, ".wgsm-atm10-config-defaults", "pack-mods.sha256"), "version\t8.3\n");
+            Type type = app.GetType("WindowsGSM.GameServer.Bundled.ATM10", true);
+            object config = Activator.CreateInstance(app.GetType("WindowsGSM.Functions.ServerConfig", true), "packed-atm-fixture");
+            object server = Activator.CreateInstance(type, config);
+            type.GetMethod("MergePackMods", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(server, new object[] { source, previous, stage });
+            if (File.Exists(Path.Combine(stage, "mods", older)) || !File.Exists(Path.Combine(stage, "mods", newer))
+                || !File.Exists(Path.Combine(stage, "mods", "MyExtra.jar")) || !File.Exists(Path.Combine(previous, "mods", older)))
+                throw new Exception("Published ATM10 does not replace the old CC:Tweaked JAR while preserving additional/live files.");
+            Console.WriteLine("PASS Published WGSM " + app.GetName().Version + " replaces legacy CC:Tweaked 1.113.1 with 1.120.2 and keeps additional mods.");
+            File.Copy(Path.Combine(previous, "mods", older), Path.Combine(source, "mods", older));
+            type.GetMethod("MergePackMods", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(server, new object[] { source, previous, stage });
+            if (!File.Exists(Path.Combine(stage, "mods", older)) || !File.Exists(Path.Combine(stage, "mods", newer)))
+                throw new Exception("A pack-supplied CC:Tweaked candidate was removed.");
+            Console.WriteLine("PASS Published ATM10 preserves both pack-supplied CC:Tweaked candidates for NeoForge discovery.");
+        }
+        finally { if (Directory.Exists(fixture)) Directory.Delete(fixture, true); }
+    }
+
     public static void Initialize()
     {
         try
@@ -16,6 +50,7 @@ internal static class StartupHook
             Assembly app = Assembly.GetEntryAssembly();
             if (app.GetName().Name != "WindowsGSM") throw new Exception("Wrong entry assembly.");
             string root = Path.GetDirectoryName(Environment.ProcessPath);
+            CheckAtmUpdate(app, root);
             Directory.CreateDirectory(Path.Combine(root, "logs"));
             var factory = app.GetType("WindowsGSM.GameServer.Data.Class", true).GetMethod("Get", BindingFlags.Public | BindingFlags.Static);
             string[] names = { "DayZ Dedicated Server", "Minecraft: Java Edition Server", "Minecraft: NeoForge", "Arma 3 Dedicated Server", "Minecraft: All the Mods 10 (ATM10)",
