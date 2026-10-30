@@ -15,9 +15,6 @@ DayZ uses the existing built-in entry, with synchronized name, slots and query p
 **Minecraft: Java Edition Server** now uses our [Vanilla module](MINECRAFT.md). **Minecraft: NeoForge** is available as a separate entry without a modpack; [ATM10 stays separate](NEOFORGE.md). A [standalone NeoForge plugin](https://github.com/PapaGordon/WindowsGSM.Minecraft_NeoForge) is also available for other compatible WGSM hosts.
 
 You can save the Steam password encrypted for your Windows user. The release ZIP includes `Encrypt-SteamPassword.cmd` and the setup script. Follow the [password setup steps](STEAM-CREDENTIALS.md) after updating WindowsGSM.
-
-Our development branch is `main`. The existing upstream pull request stays on `master`; normal pushes to `main` do not update that request. Upstream changes can still be fetched and merged when needed.
-
 ---
 
 ![Screenshot](https://windowsgsm.com/carousel/windowsgsm-desktop.png)
