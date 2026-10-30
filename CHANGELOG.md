@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Uses the original Project Zomboid and SCP: Secret Laboratory game icons.
+
 ## 1.25.4.6 - 2026-10-30
 
 - Synchronizes ATM10's pack-defined config/neovitae/materials.json instead of keeping an old registry definition as a server preference. This fixes the reproduced extra-material registry mismatch when joining.
