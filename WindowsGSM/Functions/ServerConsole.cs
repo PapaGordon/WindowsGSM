@@ -44,9 +44,15 @@ namespace WindowsGSM.Functions
 
         public async void AddOutput(object sender, DataReceivedEventArgs args)
         {
+            AddOutputLine(args.Data);
+        }
+
+        // Made by PapaGordon: native logs and redirected streams share the same output path.
+        public void AddOutputLine(string line)
+        {
             System.Windows.Application.Current?.Dispatcher.Invoke(() =>
             {
-                MainWindow._serverMetadata[int.Parse(_serverId)].ServerConsole.Add(args.Data);
+                MainWindow._serverMetadata[int.Parse(_serverId)].ServerConsole.Add(line);
             });
         }
 

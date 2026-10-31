@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows8.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <WindowsGSMDirectory Condition="'$(WindowsGSMDirectory)' == ''">$(MSBuildThisFileDirectory)..\..\WindowsGSM\bin\Release\net8.0-windows8.0</WindowsGSMDirectory>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="SourceConsoleChecks.cs" />
+    <ProjectReference Include="Probe\ConsoleProbe.csproj" ReferenceOutputAssembly="false" />
+    <Reference Include="WindowsGSM"><HintPath>$(WindowsGSMDirectory)\WindowsGSM.dll</HintPath></Reference>
+    <Reference Include="System.Configuration.ConfigurationManager"><HintPath>$(WindowsGSMDirectory)\System.Configuration.ConfigurationManager.dll</HintPath></Reference>
+    <Reference Include="System.CodeDom"><HintPath>$(WindowsGSMDirectory)\System.CodeDom.dll</HintPath></Reference>
+    <Reference Include="System.Diagnostics.EventLog"><HintPath>$(WindowsGSMDirectory)\System.Diagnostics.EventLog.dll</HintPath></Reference>
+    <Reference Include="System.Security.Cryptography.ProtectedData"><HintPath>$(WindowsGSMDirectory)\System.Security.Cryptography.ProtectedData.dll</HintPath></Reference>
+  </ItemGroup>
+  <Target Name="CopyProbe" AfterTargets="Build">
+    <ItemGroup><ProbeFiles Include="$(MSBuildThisFileDirectory)Probe\bin\$(Configuration)\$(TargetFramework)\*.*" /></ItemGroup>
+    <Copy SourceFiles="@(ProbeFiles)" DestinationFolder="$(OutDir)Probe" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

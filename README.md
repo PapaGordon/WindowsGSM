@@ -136,6 +136,12 @@ Allow support more game servers by installing plugins!
 
 ![Screenshot Plugins](https://windowsgsm.com/assets/images/WindowsGSM-Plugins-v1.21.0.png)
 
+### Embedded Source console
+
+Source servers, including Garry's Mod, keep their own Windows console when Embed Console is enabled. WGSM adds `-condebug` and shows new lines from the game's `console.log` or `console.txt`. This avoids the input-handle error that could crash Garry's Mod after loading. Commands still go to the native window.
+
+Keep the default log filename for embedded output. Old entries stay in the file and are skipped on restart. You can archive the log while the server is stopped.
+
 ## Documentation
   * Website: <https://docs.windowsgsm.com/>
   * Github: <https://github.com/WindowsGSM/Documentation>

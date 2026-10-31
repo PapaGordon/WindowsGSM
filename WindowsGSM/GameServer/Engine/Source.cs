@@ -3,19 +3,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-/// <summary>
-/// 
-/// Notes:
-/// srcds.exe works almost perfect on WindowsGSM.
-/// The one that cause it not perfect is RedirectStandardInput=true will cause an Engine Error - CTextConsoleWin32::GetLine: !GetNumberOfConsoleInputEvents
-/// Therefore, SendKeys Input Method is used.
-/// 
-/// RedirectStandardInput:  NO WORKING
-/// RedirectStandardOutput: YES (Used)
-/// RedirectStandardError:  YES (Used)
-/// SendKeys Input Method:  YES (Used)
-/// 
-/// </summary>
+// Made by PapaGordon
 
 namespace WindowsGSM.GameServer.Engine
 {
@@ -68,47 +56,28 @@ namespace WindowsGSM.GameServer.Engine
             sb.Append(string.IsNullOrWhiteSpace(serverData.ServerMap) ? string.Empty : $" +map {serverData.ServerMap}");
             string param = sb.ToString();
 
-            Process p;
-            if (!AllowsEmbedConsole)
+            // Redirecting even stdout passes WGSM's input handle to SRCDS.
+            // A GUI process has no console input buffer, so SRCDS fails after loading.
+            string root = Functions.ServerPath.GetServersServerFiles(serverData.ServerID);
+            var consoleLog = AllowsEmbedConsole ? new SourceConsoleLog(Path.Combine(root, Game)) : null;
+            if (AllowsEmbedConsole) param += " -condebug";
+            var p = new Process
             {
-                p = new Process
+                StartInfo =
                 {
-                    StartInfo =
-                    {
-                        FileName = srcdsPath,
-                        Arguments = param,
-                        WindowStyle = ProcessWindowStyle.Minimized,
-                        UseShellExecute = false,
-                    },
-                    EnableRaisingEvents = true
-                };
-                p.Start();
-            }
-            else
+                    WorkingDirectory = root,
+                    FileName = srcdsPath,
+                    Arguments = param,
+                    WindowStyle = ProcessWindowStyle.Minimized,
+                    UseShellExecute = false
+                },
+                EnableRaisingEvents = true
+            };
+            p.Start();
+            if (consoleLog != null)
             {
-                p = new Process
-                {
-                    StartInfo =
-                    {
-                        FileName = srcdsPath,
-                        Arguments = param,
-                        WindowStyle = ProcessWindowStyle.Minimized,
-                        UseShellExecute = false,
-                        StandardOutputEncoding = Encoding.UTF8,
-                        StandardErrorEncoding = Encoding.UTF8, 
-                        //StandardInputEncoding = Encoding.UTF8,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        //RedirectStandardInput = true
-                    },
-                    EnableRaisingEvents = true
-                };
                 var serverConsole = new Functions.ServerConsole(serverData.ServerID);
-                p.OutputDataReceived += serverConsole.AddOutput;
-                p.ErrorDataReceived += serverConsole.AddOutput;
-                p.Start();
-                p.BeginOutputReadLine();
-                p.BeginErrorReadLine();
+                _ = Task.Run(() => consoleLog.Follow(p, serverConsole.AddOutputLine));
             }
 
             return p;

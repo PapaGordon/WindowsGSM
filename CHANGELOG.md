@@ -1,7 +1,8 @@
 # Changelog
 
-## Unreleased
+## 1.25.4.7 - 2026-11-01
 
+- Keeps Source servers on a native Windows console and reads embedded output from their console log, avoiding Garry's Mod's GetNumberOfConsoleInputEvents crash after initialization.
 - Uses the original Project Zomboid and SCP: Secret Laboratory game icons.
 
 ## 1.25.4.6 - 2026-10-30

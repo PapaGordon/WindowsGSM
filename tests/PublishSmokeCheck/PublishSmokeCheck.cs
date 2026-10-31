@@ -6,11 +6,57 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Resources;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 internal static class StartupHook
 {
+    private static void CheckGameIcons(Assembly app)
+    {
+        var artwork = new Dictionary<string, byte[]>(StringComparer.OrdinalIgnoreCase);
+        using (var stream = app.GetManifestResourceStream("WindowsGSM.g.resources"))
+        using (var resources = new ResourceReader(stream))
+        {
+            foreach (DictionaryEntry resource in resources)
+            {
+                string path = (string)resource.Key;
+                if (!path.StartsWith("images/games/", StringComparison.OrdinalIgnoreCase)) continue;
+                using (var copy = new MemoryStream())
+                {
+                    ((Stream)resource.Value).CopyTo(copy);
+                    artwork.Add(path, copy.ToArray());
+                }
+            }
+        }
+        string manifest = Environment.GetEnvironmentVariable("WGSM_ICON_MANIFEST");
+        if (!string.IsNullOrEmpty(manifest))
+            foreach (string line in File.ReadLines(manifest))
+            {
+                string[] item = line.Split('\t');
+                if (item.Length != 2 || !artwork.TryGetValue(item[0], out var bytes)
+                    || Convert.ToHexString(SHA256.HashData(bytes)) != item[1])
+                    throw new Exception("Packaged icon differs from the checked source: " + item[0]);
+            }
+        int count = 0;
+        using (var stream = app.GetManifestResourceStream("WindowsGSM.GameServer.Data.Icon.resources"))
+        using (var mappings = new ResourceReader(stream))
+        {
+            foreach (DictionaryEntry mapping in mappings)
+            {
+                string path = (string)mapping.Value;
+                if (!artwork.TryGetValue(path, out var bytes)) throw new Exception("Missing game icon: " + mapping.Key);
+                using (var image = new MemoryStream(bytes))
+                {
+                    var decoder = BitmapDecoder.Create(image, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+                    if (decoder.Frames.Count == 0 || decoder.Frames[0].PixelWidth == 0) throw new Exception("Invalid game icon: " + mapping.Key);
+                }
+                count++;
+            }
+        }
+        Console.WriteLine("PASS All " + count + " game-icon mappings decode from the final EXE; " + artwork.Count + " embedded game images checked.");
+    }
+
     private static void CheckAtmUpdate(Assembly app, string root)
     {
         string fixture = Path.Combine(root, "atm-update-check-" + Guid.NewGuid().ToString("N"));
@@ -71,6 +117,7 @@ internal static class StartupHook
             Assembly app = Assembly.GetEntryAssembly();
             if (app.GetName().Name != "WindowsGSM") throw new Exception("Wrong entry assembly.");
             string root = Path.GetDirectoryName(Environment.ProcessPath);
+            CheckGameIcons(app);
             CheckAtmUpdate(app, root);
             Directory.CreateDirectory(Path.Combine(root, "logs"));
             var factory = app.GetType("WindowsGSM.GameServer.Data.Class", true).GetMethod("Get", BindingFlags.Public | BindingFlags.Static);
