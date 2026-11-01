@@ -35,79 +35,79 @@ WindowsGSM is a powerful tool to manage game servers. Equipped with a GUI for se
 
 |               | 🎮 Game Server  | Supported | Query |
 | ------------- | --------------- | --------- | ----- |
-| ![logo](WindowsGSM/Images/Games/arma3.png?raw=true) | Arma 3 Dedicated Server |✅| A2S |
-| ![logo](WindowsGSM/Images/Games/atm10.png?raw=true) | Minecraft: All the Mods 10 (ATM10) |✅| UT3 |
-| ![logo](WindowsGSM/Images/Games/enshrouded.png?raw=true) | Enshrouded Dedicated Server |✅| A2S |
-| ![logo](WindowsGSM/Images/Games/fs22.png?raw=true) | Farming Simulator 22 Dedicated Server |✅| |
-| ![logo](WindowsGSM/Images/Games/fs25.png?raw=true) | Farming Simulator 25 Dedicated Server |✅| |
-| ![logo](WindowsGSM/Images/Games/pz.png?raw=true) | Project Zomboid Dedicated Server |✅| A2S |
-| ![logo](WindowsGSM/Images/Games/scpsl.png?raw=true) | SCP: Secret Laboratory Dedicated Server |✅| |
-| ![logo](WindowsGSM/Images/Games/valheim.png?raw=true) | Valheim Dedicated Server |✅| A2S |
-| ![logo](WindowsGSM/Images/Games/7dtd.png?raw=true)   | 7 Days to Die Dedicated Server                    |✅|      |
-| ![logo](WindowsGSM/Images/Games/arkse.png?raw=true)  | ARK: Survival Evolved Dedicated Server            |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/avorion.png?raw=true)| Avorion Dedicated Server                          |✅|      |
-| ![logo](WindowsGSM/Images/Games/bt.png?raw=true)     | Barotrauma Dedicated Server                       |✅|      |
-| ![logo](WindowsGSM/Images/Games/bw.png?raw=true)     | BlackWake Dedicated Server                        |✅|      |
-| ![logo](WindowsGSM/Images/Games/ce.png?raw=true)     | Conan Exiles Dedicated Server                     |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/cs.png?raw=true)     | Counter-Strike: 1.6 Dedicated Server              |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/cscz.png?raw=true)   | Counter-Strike: Condition Zero Dedicated Server   |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/csgo.png?raw=true)   | Counter-Strike: Global Offensive Dedicated Server |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/css.png?raw=true)    | Counter-Strike: Source Dedicated Server           |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/dod.png?raw=true)    | Day of Defeat Dedicated Server                    |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/dods.png?raw=true)   | Day of Defeat: Source Dedicated Server            |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/dayz.png?raw=true)   | DayZ Dedicated Server                             |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/dmc.png?raw=true)    | Deathmatch Classic Dedicated Server               |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/eco.png?raw=true)    | Eco Dedicated Server                              |✅|      |
-| ![logo](WindowsGSM/Images/Games/egs.png?raw=true)    | Empyrion - Galactic Survival Dedicated Server     |✅|      |
-| ![logo](WindowsGSM/Images/Games/gmod.png?raw=true)   | Garry's Mod Dedicated Server                      |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/gta5.png?raw=true)   | Grand Theft Auto V Dedicated Server ([FiveM](https://github.com/citizenfx/fivem))|✅| FIVEM |
-| ![logo](WindowsGSM/Images/Games/hl2dm.png?raw=true)  | Half-Life 2: Deathmatch Dedicated Server          |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/hlof.png?raw=true)   | Half-Life: Opposing Force Dedicated Server        |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/heat.png?raw=true)   | Heat Dedicated Server                             |✅|      |
-| ![logo](WindowsGSM/Images/Games/ins.png?raw=true)    | Insurgency Dedicated Server                       |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/inss.png?raw=true)   | Insurgency: Sandstorm Dedicated Server            |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/l4d2.png?raw=true)   | Left 4 Dead 2 Dedicated Server                    |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/mcbe.png?raw=true)   | Minecraft: Bedrock Edition Server                 |✅|      |
-| ![logo](WindowsGSM/Images/Games/mc.png?raw=true)     | Minecraft: Java Edition Server                    |✅| UT3  |
-| ![logo](WindowsGSM/Images/Games/mcpe.png?raw=true)   | Minecraft: Pocket Edition Server ([PocketMine-MP](https://github.com/pmmp/PocketMine-MP)) |✅| UT3  |
-| ![logo](WindowsGSM/Images/Games/mordhau.png?raw=true)| Mordhau Dedicated Server                          |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/nmrih.png?raw=true)  | No More Room in Hell Dedicated Server             |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/onset.png?raw=true)  | Onset Dedicated Server                            |✅|      |
-| ![logo](WindowsGSM/Images/Games/olow.png?raw=true)   | Outlaws of the Old West Dedicated Server          |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/ps.png?raw=true)     | Post Scriptum Dedicated Server                    |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/rok.png?raw=true)    | Reign Of Kings Dedicated Server                   |✅|      |
-| ![logo](WindowsGSM/Images/Games/rcc.png?raw=true)    | Ricochet Dedicated Server                         |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/rcc.png?raw=true)    | Risk of Rain 2 Dedicated Server                   |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/rust.png?raw=true)   | Rust Dedicated Server                             |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/se.png?raw=true)     | Space Engineers Dedicated Server                  |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/sq.png?raw=true)     | Squad Dedicated Server                            |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/sw.png?raw=true)     | Stormworks Dedicated Server                       |✅|      |
-| ![logo](WindowsGSM/Images/Games/tf2.png?raw=true)    | Team Fortress 2 Dedicated Server                  |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/tfc.png?raw=true)    | Team Fortress Classic Dedicated Server            |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/tf.png?raw=true)     | The Forest Dedicated Server                       |✅|      |
-| ![logo](WindowsGSM/Images/Games/unt.png?raw=true)    | Unturned Dedicated Server                         |✅| A2S  |
-| ![logo](WindowsGSM/Images/Games/zps.png?raw=true)    | Zombie Panic Source Dedicated Server              |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/arma3.png?raw=true" alt="" height="24" /> | Arma 3 Dedicated Server |✅| A2S |
+| <img src="WindowsGSM/Images/Games/atm10.png?raw=true" alt="" height="24" /> | Minecraft: All the Mods 10 (ATM10) |✅| UT3 |
+| <img src="WindowsGSM/Images/Games/enshrouded.png?raw=true" alt="" height="24" /> | Enshrouded Dedicated Server |✅| A2S |
+| <img src="WindowsGSM/Images/Games/fs22.png?raw=true" alt="" height="24" /> | Farming Simulator 22 Dedicated Server |✅| |
+| <img src="WindowsGSM/Images/Games/fs25.png?raw=true" alt="" height="24" /> | Farming Simulator 25 Dedicated Server |✅| |
+| <img src="WindowsGSM/Images/Games/pz.png?raw=true" alt="" height="24" /> | Project Zomboid Dedicated Server |✅| A2S |
+| <img src="WindowsGSM/Images/Games/scpsl.png?raw=true" alt="" height="24" /> | SCP: Secret Laboratory Dedicated Server |✅| |
+| <img src="WindowsGSM/Images/Games/valheim.png?raw=true" alt="" height="24" /> | Valheim Dedicated Server |✅| A2S |
+| <img src="WindowsGSM/Images/Games/7dtd.png?raw=true" alt="" height="24" />   | 7 Days to Die Dedicated Server                    |✅|      |
+| <img src="WindowsGSM/Images/Games/arkse.png?raw=true" alt="" height="24" />  | ARK: Survival Evolved Dedicated Server            |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/avorion.png?raw=true" alt="" height="24" />| Avorion Dedicated Server                          |✅|      |
+| <img src="WindowsGSM/Images/Games/bt.png?raw=true" alt="" height="24" />     | Barotrauma Dedicated Server                       |✅|      |
+| <img src="WindowsGSM/Images/Games/bw.png?raw=true" alt="" height="24" />     | BlackWake Dedicated Server                        |✅|      |
+| <img src="WindowsGSM/Images/Games/ce.png?raw=true" alt="" height="24" />     | Conan Exiles Dedicated Server                     |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/cs.png?raw=true" alt="" height="24" />     | Counter-Strike: 1.6 Dedicated Server              |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/cscz.png?raw=true" alt="" height="24" />   | Counter-Strike: Condition Zero Dedicated Server   |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/csgo.png?raw=true" alt="" height="24" />   | Counter-Strike: Global Offensive Dedicated Server |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/css.png?raw=true" alt="" height="24" />    | Counter-Strike: Source Dedicated Server           |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/dod.png?raw=true" alt="" height="24" />    | Day of Defeat Dedicated Server                    |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/dods.png?raw=true" alt="" height="24" />   | Day of Defeat: Source Dedicated Server            |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/dayz.png?raw=true" alt="" height="24" />   | DayZ Dedicated Server                             |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/dmc.png?raw=true" alt="" height="24" />    | Deathmatch Classic Dedicated Server               |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/eco.png?raw=true" alt="" height="24" />    | Eco Dedicated Server                              |✅|      |
+| <img src="WindowsGSM/Images/Games/egs.png?raw=true" alt="" height="24" />    | Empyrion - Galactic Survival Dedicated Server     |✅|      |
+| <img src="WindowsGSM/Images/Games/gmod.png?raw=true" alt="" height="24" />   | Garry's Mod Dedicated Server                      |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/gta5.png?raw=true" alt="" height="24" />   | Grand Theft Auto V Dedicated Server ([FiveM](https://github.com/citizenfx/fivem))|✅| FIVEM |
+| <img src="WindowsGSM/Images/Games/hl2dm.png?raw=true" alt="" height="24" />  | Half-Life 2: Deathmatch Dedicated Server          |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/hlof.png?raw=true" alt="" height="24" />   | Half-Life: Opposing Force Dedicated Server        |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/heat.png?raw=true" alt="" height="24" />   | Heat Dedicated Server                             |✅|      |
+| <img src="WindowsGSM/Images/Games/ins.png?raw=true" alt="" height="24" />    | Insurgency Dedicated Server                       |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/inss.png?raw=true" alt="" height="24" />   | Insurgency: Sandstorm Dedicated Server            |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/l4d2.png?raw=true" alt="" height="24" />   | Left 4 Dead 2 Dedicated Server                    |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/mcbe.png?raw=true" alt="" height="24" />   | Minecraft: Bedrock Edition Server                 |✅|      |
+| <img src="WindowsGSM/Images/Games/mc.png?raw=true" alt="" height="24" />     | Minecraft: Java Edition Server                    |✅| UT3  |
+| <img src="WindowsGSM/Images/Games/mcpe.png?raw=true" alt="" height="24" />   | Minecraft: Pocket Edition Server ([PocketMine-MP](https://github.com/pmmp/PocketMine-MP)) |✅| UT3  |
+| <img src="WindowsGSM/Images/Games/mordhau.png?raw=true" alt="" height="24" />| Mordhau Dedicated Server                          |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/nmrih.png?raw=true" alt="" height="24" />  | No More Room in Hell Dedicated Server             |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/onset.png?raw=true" alt="" height="24" />  | Onset Dedicated Server                            |✅|      |
+| <img src="WindowsGSM/Images/Games/olow.png?raw=true" alt="" height="24" />   | Outlaws of the Old West Dedicated Server          |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/ps.png?raw=true" alt="" height="24" />     | Post Scriptum Dedicated Server                    |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/rok.png?raw=true" alt="" height="24" />    | Reign Of Kings Dedicated Server                   |✅|      |
+| <img src="WindowsGSM/Images/Games/rcc.png?raw=true" alt="" height="24" />    | Ricochet Dedicated Server                         |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/rcc.png?raw=true" alt="" height="24" />    | Risk of Rain 2 Dedicated Server                   |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/rust.png?raw=true" alt="" height="24" />   | Rust Dedicated Server                             |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/se.png?raw=true" alt="" height="24" />     | Space Engineers Dedicated Server                  |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/sq.png?raw=true" alt="" height="24" />     | Squad Dedicated Server                            |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/sw.png?raw=true" alt="" height="24" />     | Stormworks Dedicated Server                       |✅|      |
+| <img src="WindowsGSM/Images/Games/tf2.png?raw=true" alt="" height="24" />    | Team Fortress 2 Dedicated Server                  |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/tfc.png?raw=true" alt="" height="24" />    | Team Fortress Classic Dedicated Server            |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/tf.png?raw=true" alt="" height="24" />     | The Forest Dedicated Server                       |✅|      |
+| <img src="WindowsGSM/Images/Games/unt.png?raw=true" alt="" height="24" />    | Unturned Dedicated Server                         |✅| A2S  |
+| <img src="WindowsGSM/Images/Games/zps.png?raw=true" alt="" height="24" />    | Zombie Panic Source Dedicated Server              |✅| A2S  |
 
 |               | 🎮 Game Server  | Plugin supported | Query |
 | ------------- | --------------- | --------- | ----- |
-| ![logo](WindowsGSM/Images/Games/arma3.png?raw=true) | Arma 3 Dedicated Server |✅| A2S |
-| ![logo](WindowsGSM/Images/Games/atm10.png?raw=true) | Minecraft: All the Mods 10 (ATM10) |✅| UT3 |
-| ![logo](WindowsGSM/Images/Games/enshrouded.png?raw=true) | Enshrouded Dedicated Server |✅| A2S |
-| ![logo](WindowsGSM/Images/Games/fs22.png?raw=true) | Farming Simulator 22 Dedicated Server |✅| |
-| ![logo](WindowsGSM/Images/Games/fs25.png?raw=true) | Farming Simulator 25 Dedicated Server |✅| |
-| ![logo](WindowsGSM/Images/Games/pz.png?raw=true) | Project Zomboid Dedicated Server |✅| A2S |
-| ![logo](WindowsGSM/Images/Games/scpsl.png?raw=true) | SCP: Secret Laboratory Dedicated Server |✅| |
-| ![logo](WindowsGSM/Images/Games/valheim.png?raw=true) | Valheim Dedicated Server |✅| A2S |
-| <img src="https://github.com/DevVault/WindowsGSM.ARMA2/blob/master/ARMA2.cs/ARMA2.png?raw=true" width="16" height="16"/>   | Arma2   |✅| A2S     |
-| <img src="https://github.com/DevVault/WindowsGSM.ARMA2/blob/master/ARMA2OA.cs/ARMA2OA.png?raw=true" width="16" height="16"/>   | Arma2: OA   |✅| A2S     |
-| ![logo](https://github.com/1stian/imgrepo/blob/master/WindowsGSMrepo/arma3.png?raw=true)   | Arma3   |✅|      |
-| ![logo](https://github.com/1stian/imgrepo/blob/master/WindowsGSMrepo/astroneer.png?raw=true)   | ASTRONEER   |✅|      |
-| ![logo](https://github.com/1stian/imgrepo/blob/master/WindowsGSMrepo/deadmatter.png?raw=true)   | Dead Matter   |✅| UT3     |
-| ![logo](https://github.com/1stian/imgrepo/blob/master/WindowsGSMrepo/papermc.png?raw=true)   | PaperMC   |✅| A2S     |
-| <img src="https://github.com/DevVault/WindowsGSM.HLDM/blob/master/HLDM.cs/HLDM.png?raw=true" width="16" height="16"/>   | Half-Life: Deathmatch   |✅| A2S     |
-| <img src="https://github.com/DevVault/WindowsGSM.L4D/blob/master/L4D.cs/L4D.png?raw=true" width="16" height="16"/>   | Left 4 Dead   |✅| A2S     |
-| ![logo](https://github.com/1stian/imgrepo/blob/master/WindowsGSMrepo/waterfall.png?raw=true)   | PaperMC: Waterfall   |✅| A2S     |
-| ![logo](https://github.com/1stian/imgrepo/blob/master/WindowsGSMrepo/spigot.png?raw=true)   | Spigot   |✅| A2S     |
+| <img src="WindowsGSM/Images/Games/arma3.png?raw=true" alt="" height="24" /> | Arma 3 Dedicated Server |✅| A2S |
+| <img src="WindowsGSM/Images/Games/atm10.png?raw=true" alt="" height="24" /> | Minecraft: All the Mods 10 (ATM10) |✅| UT3 |
+| <img src="WindowsGSM/Images/Games/enshrouded.png?raw=true" alt="" height="24" /> | Enshrouded Dedicated Server |✅| A2S |
+| <img src="WindowsGSM/Images/Games/fs22.png?raw=true" alt="" height="24" /> | Farming Simulator 22 Dedicated Server |✅| |
+| <img src="WindowsGSM/Images/Games/fs25.png?raw=true" alt="" height="24" /> | Farming Simulator 25 Dedicated Server |✅| |
+| <img src="WindowsGSM/Images/Games/pz.png?raw=true" alt="" height="24" /> | Project Zomboid Dedicated Server |✅| A2S |
+| <img src="WindowsGSM/Images/Games/scpsl.png?raw=true" alt="" height="24" /> | SCP: Secret Laboratory Dedicated Server |✅| |
+| <img src="WindowsGSM/Images/Games/valheim.png?raw=true" alt="" height="24" /> | Valheim Dedicated Server |✅| A2S |
+| <img src="https://github.com/DevVault/WindowsGSM.ARMA2/blob/master/ARMA2.cs/ARMA2.png?raw=true" alt="" height="24" />   | Arma2   |✅| A2S     |
+| <img src="https://github.com/DevVault/WindowsGSM.ARMA2/blob/master/ARMA2OA.cs/ARMA2OA.png?raw=true" alt="" height="24" />   | Arma2: OA   |✅| A2S     |
+| <img src="https://github.com/1stian/imgrepo/blob/master/WindowsGSMrepo/arma3.png?raw=true" alt="" height="24" />   | Arma3   |✅|      |
+| <img src="https://github.com/1stian/imgrepo/blob/master/WindowsGSMrepo/astroneer.png?raw=true" alt="" height="24" />   | ASTRONEER   |✅|      |
+| <img src="https://github.com/1stian/imgrepo/blob/master/WindowsGSMrepo/deadmatter.png?raw=true" alt="" height="24" />   | Dead Matter   |✅| UT3     |
+| <img src="https://github.com/1stian/imgrepo/blob/master/WindowsGSMrepo/papermc.png?raw=true" alt="" height="24" />   | PaperMC   |✅| A2S     |
+| <img src="https://github.com/DevVault/WindowsGSM.HLDM/blob/master/HLDM.cs/HLDM.png?raw=true" alt="" height="24" />   | Half-Life: Deathmatch   |✅| A2S     |
+| <img src="https://github.com/DevVault/WindowsGSM.L4D/blob/master/L4D.cs/L4D.png?raw=true" alt="" height="24" />   | Left 4 Dead   |✅| A2S     |
+| <img src="https://github.com/1stian/imgrepo/blob/master/WindowsGSMrepo/waterfall.png?raw=true" alt="" height="24" />   | PaperMC: Waterfall   |✅| A2S     |
+| <img src="https://github.com/1stian/imgrepo/blob/master/WindowsGSMrepo/spigot.png?raw=true" alt="" height="24" />   | Spigot   |✅| A2S     |
 
 ## Features
   * **Easy Install** - No installation knowledge is required, download any game server by one-click install.
