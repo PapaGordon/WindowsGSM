@@ -1,6 +1,6 @@
 # Minecraft Java Edition (Vanilla)
 
-Made by PapaGordon. Select **Minecraft: Java Edition Server** in Install or Import. Existing servergame identifiers keep working; the standalone `[Minecraft_Java.cs]` identifier resolves to this built-in module too.
+Select **Minecraft: Java Edition Server** in Install or Import. Existing servergame identifiers keep working; the standalone `[Minecraft_Java.cs]` identifier resolves to this built-in module too.
 
 ## Installation and Java
 

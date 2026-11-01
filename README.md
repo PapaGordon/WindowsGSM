@@ -126,7 +126,7 @@ WindowsGSM is a powerful tool to manage game servers. Equipped with a GUI for se
 
 ### Plugins
 Allow support more game servers by installing plugins!
-##### Some available plugins (Made by [BattlefieldDuck](https://github.com/BattlefieldDuck) and [GTVolk](https://github.com/GTVolk)):
+##### Community plugins by [BattlefieldDuck](https://github.com/BattlefieldDuck) and [GTVolk](https://github.com/GTVolk):
 1. [WindowsGSM.ARMA2](https://github.com/DevVault/WindowsGSM.ARMA2)
 2. [WindowsGSM.ARMA2OA](https://github.com/DevVault/WindowsGSM.ARMA2)
 3. [WindowsGSM.ARMA3](https://github.com/BattlefieldDuck/WindowsGSM.ARMA3)
