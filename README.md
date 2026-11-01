@@ -21,7 +21,7 @@ You can save the Steam password encrypted for your Windows user. The release ZIP
 
 [![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/PapaGordon/WindowsGSM)
 [![Build status](https://github.com/PapaGordon/WindowsGSM/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/PapaGordon/WindowsGSM/actions/workflows/build.yml)
-[![GitHub license](https://img.shields.io/github/license/PapaGordon/WindowsGSM.svg)](https://github.com/PapaGordon/WindowsGSM/blob/main/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/PapaGordon/WindowsGSM.svg?label=license)](https://github.com/PapaGordon/WindowsGSM/blob/main/LICENSE)
 [![GitHub release](https://img.shields.io/github/release/PapaGordon/WindowsGSM.svg)](https://github.com/PapaGordon/WindowsGSM/releases/)
 [![Github all releases](https://img.shields.io/github/downloads/PapaGordon/WindowsGSM/total.svg)](https://github.com/PapaGordon/WindowsGSM/releases/)
 [![MeFriendos Discord](https://img.shields.io/badge/Discord-MeFriendos-5865F2?logo=discord&logoColor=white)](https://discord.gg/vNJPTWY3UW)
