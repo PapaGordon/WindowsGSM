@@ -2,7 +2,7 @@
 
 Our WindowsGSM build, based on [Raziel7893/WindowsGSM](https://github.com/Raziel7893/WindowsGSM).
 
-[Download the latest release](https://github.com/PapaGordon/WindowsGSM/releases/latest) | [Changelog](CHANGELOG.md) | [Development](DEVELOPMENT.md)
+[Download the latest release](https://github.com/PapaGordon/WindowsGSM/releases/latest) | [Changelog](CHANGELOG.md) | [Credits](CREDITS.md) | [Development](DEVELOPMENT.md)
 
 The Windows x64 release includes the .NET runtime. Stop WindowsGSM before replacing `WindowsGSM.exe`. Keep your existing server, plugin and configuration folders.
 
@@ -153,27 +153,18 @@ Keep the default log filename for embedded output. Old entries stay in the file 
   * Original WindowsGSM Steam group: <https://steamcommunity.com/groups/WindowsGSM>
 
 ## Authors & Credits
-  * **TatLead** - *Initial work* - [BattlefieldDuck](https://github.com/BattlefieldDuck)
-  * **Deathreus** - *Code optimization* - [Deathreus](https://github.com/Deathreus)
-  * **! AssaultLine** - *Mordhau server test*
-  * **Dennis** - *Mordhau server test*
-  * **Raziel** - *Various small improvements and external Plugins*
 
-### Give Love!
-If you like to thank me for the help over at the discord or the small changes in this fork, feel free to give me a tip:
+The MeFriendos fork, original developers, plugin authors and artwork credits are listed in [CREDITS.md](CREDITS.md).
 
-[Buy me a coffee](https://ko-fi.com/raziel7893)
+### Support upstream work
 
-[Paypal](https://paypal.me/raziel7893)
+To support Raziel's work on the parent fork: [Ko-fi](https://ko-fi.com/raziel7893) or [PayPal](https://paypal.me/raziel7893).
 
-For the Programm in general have a look over at its patreon:
-
-[WGSM_Patreon](https://www.patreon.com/join/WindowsGSM)
-
-
+To support the original WindowsGSM project: [WindowsGSM Patreon](https://www.patreon.com/join/WindowsGSM).
 
 ### License
-This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.
+
+This project uses the [MIT License](LICENSE), with the original copyright notice and a separate notice for the MeFriendos modifications. Imported code and artwork keep their own notices; see [CREDITS.md](CREDITS.md) and [licenses](licenses/).
 
 ## Stargazers over time
 [![Stargazers over time](https://starchart.cc/PapaGordon/WindowsGSM.svg)](https://starchart.cc/PapaGordon/WindowsGSM)

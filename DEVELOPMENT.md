@@ -32,3 +32,5 @@ msbuild WindowsGSM/WindowsGSM.csproj /restore /t:Publish /p:Configuration=Releas
 ```
 
 Create a new version tag on `main` and publish the executable on `PapaGordon/WindowsGSM`. Do not move an existing version tag.
+
+Include `LICENSE`, `CREDITS.md` and the `licenses` directory in release packages. Keep project and contributor credits in [CREDITS.md](CREDITS.md) instead of adding author bylines to user guides. Preserve copyright and license notices in imported code and artwork files.
