@@ -72,6 +72,6 @@ Valve provides **SteamCMD and Steam Workshop**. Mojang provides the **Minecraft 
 
 ## License and attribution
 
-The project uses the [MIT License](LICENSE). Its original **Copyright (c) 2019 TatLead** notice is retained. A separate notice identifies the MeFriendos modifications by **Brandon Hanke (PapaGordon / MeFriendos)**.
+The project uses the [MIT License](LICENSE). It retains **TatLead's** original copyright notice and includes separate notices for **Raziel7893's** contributions and the MeFriendos modifications by **Brandon Hanke (PapaGordon / MeFriendos)**.
 
 This credits file is the central project overview. It does not replace the copyright, permission or artwork notices in [LICENSE](LICENSE), [licenses](licenses/) or imported files. Keep those notices with redistributed copies.
