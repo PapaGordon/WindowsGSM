@@ -1,8 +1,6 @@
 # DayZ setup
 
-For optional Workshop downloads before each start, see [Workshop updates](WORKSHOP.md). Steam subscriptions alone do not update the server's mod folders.
-
-DayZ remains the existing built-in **DayZ Dedicated Server** entry. A Steam account with access to app 223350 is needed for installation and updates. WindowsGSM uses its saved Steam account settings, so an existing setup may not ask for credentials again.
+Select **DayZ Dedicated Server** under **Install** or **Import**. For installation and updates, WindowsGSM uses the saved Steam account. That account needs access to dedicated server app `223350`.
 
 ## Defaults
 
@@ -17,27 +15,27 @@ DayZ remains the existing built-in **DayZ Dedicated Server** entry. A Steam acco
 
 New instances use a port increment of 10. Assign non-overlapping ports when running more than one server. UDP forwarding on the router is still needed when hosting behind NAT. Auto Firewall handles Windows application rules.
 
-The default additional parameters are:
+WindowsGSM uses these extra launch parameters by default.
 
 ```text
 -config=serverDZ.cfg -profiles=profile -doLogs -adminLog -freezeCheck
 ```
 
-WindowsGSM inserts the current game port, IP and mission path. Network logging is optional; add -netLog when needed. No CPU count, mods or admin password are hardcoded.
+WindowsGSM adds the current game port, IP and mission path when it starts the server. Add `-netLog` if you need network logging.
 
 ## Configuration and mods
 
-The config is created locally if the default file is missing. Each start synchronizes hostname, maxPlayers and steamQueryPort with the WGSM fields. Passwords, gameplay settings, comments and mission classes stay in the file. Changed files receive a .bak backup; unchanged files are left alone.
+WindowsGSM creates the default config if it is missing. Each time the server starts, it updates `hostname`, `maxPlayers` and `steamQueryPort` to match the settings in the app. It makes a `.bak` copy before changing the file and keeps your passwords, gameplay settings, comments and mission classes.
 
-Custom paths work, including paths with spaces:
+Put quotes around a custom config or profile path that contains spaces.
 
 ```text
 -config="config\my server.cfg" -profiles="profiles\main" -doLogs -adminLog -freezeCheck
 ```
 
-A custom config must already exist. Give custom configs their own filename: SteamCMD validation can replace the shipped serverDZ.cfg. A mission folder must exist under mpmissions. For example, set Map to dayzOffline.enoch to select the installed Livonia mission. The launch mission takes precedence over the existing template value in the config.
+Create the custom config before pointing `-config` at it. Give it its own filename since SteamCMD validation can replace `serverDZ.cfg`. The mission you select in **Map** needs to exist under `mpmissions` and takes precedence over the mission in the config. For Livonia, select `dayzOffline.enoch`.
 
-The built-in Manage Addons selection and an explicit -mod list are combined into one argument, keeping their order and removing duplicates. -serverMod stays separate. Install the mod files and signing keys yourself, or use the optional [Workshop updater](WORKSHOP.md) to manage listed mods before each start.
+WindowsGSM combines **Manage Addons** and your explicit `-mod` list, keeping their order and removing duplicates. It handles `-serverMod` separately. To download listed mods and their keys before each start, use [Workshop updates](../operations/workshop.md).
 
 If DZSALModServer.exe is present, WindowsGSM launches it and central Auto Firewall handles both the launcher and DayZServer_x64.exe. Removing the launcher restores the native executable. The per-server firewall switch also removes both automatic rules when disabled.
 
@@ -45,7 +43,7 @@ If DZSALModServer.exe is present, WindowsGSM launches it and central Auto Firewa
 
 Enable **Embed Console** and restart the DayZ server to show its RPT output inside WindowsGSM. The plugin follows the active DayZ RPT under the configured -profiles folder. It handles partial writes, UTF-8 text, log changes and the final shutdown output. Old log sessions are skipped.
 
-RPT mode adds -doLogs when missing. Remove -noLogs if present. This view displays logs only; command entry is disabled. Use **Toggle Console** to show or hide the native DayZ window.
+RPT mode adds `-doLogs` when it is missing. Remove `-noLogs` if you use this mode. The embedded pane is a log view. Use **Toggle Console** to show or hide the native DayZ window.
 
 ## Stopping and verification
 
@@ -53,4 +51,8 @@ Stop first tries CTRL+C and waits for DayZ to exit, then tries closing its windo
 
 The local checks cover built-in registration, old plugin names, embedded icons, configuration preservation, Windows argument parsing, invalid inputs and per-instance paths. The DayZ setup and bundled server integration have also been tested successfully on the server. The tests/DayZConsole fixtures cover RPT output and hidden-window handling for the built-in server and standalone plugin.
 
-References: [DayZ server configuration](https://community.bistudio.com/wiki/DayZ:Server_Configuration), [DayZ server messages](https://community.bistudio.com/wiki/DayZ:Server_Messages), [DayZ SteamCMD installation](https://community.bistudio.com/wiki/DayZ:Hosting_a_Linux_Server).
+## Bohemia documentation
+
+- [DayZ server configuration](https://community.bistudio.com/wiki/DayZ:Server_Configuration)
+- [DayZ server messages](https://community.bistudio.com/wiki/DayZ:Server_Messages)
+- [DayZ SteamCMD installation](https://community.bistudio.com/wiki/DayZ:Hosting_a_Linux_Server)

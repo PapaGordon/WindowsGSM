@@ -6,6 +6,6 @@ echo.
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0tools\Set-SteamCredentials.ps1" -UserDataPath "%~dp0bin\steamcmd\userData.txt"
 set "wgsmExitCode=%ERRORLEVEL%"
 echo.
-if not "%wgsmExitCode%"=="0" echo Could not save the credentials. Read the error above and STEAM-CREDENTIALS.md.
+if not "%wgsmExitCode%"=="0" echo Could not save the credentials. Read the error above and docs\operations\steam-credentials.md.
 pause
 exit /b %wgsmExitCode%

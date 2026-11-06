@@ -9,7 +9,7 @@ PapaGordon maintains the MeFriendos changes, server integrations and standalone 
 | Project or contribution | Credit |
 | --- | --- |
 | Original WindowsGSM | **TatLead / [BattlefieldDuck](https://github.com/BattlefieldDuck)** and the [WindowsGSM contributors](https://github.com/WindowsGSM/WindowsGSM/graphs/contributors). The original copyright notice is retained in [LICENSE](LICENSE). |
-| Parent fork used by MeFriendos | **[Raziel7893](https://github.com/Raziel7893)** and the contributors to [Raziel7893/WindowsGSM](https://github.com/Raziel7893/WindowsGSM). This includes the .NET 8 base and the backup, crontab and webhook improvements described in [ChangesFromBase.md](ChangesFromBase.md). |
+| Parent fork used by MeFriendos | **[Raziel7893](https://github.com/Raziel7893)** and the contributors to [Raziel7893/WindowsGSM](https://github.com/Raziel7893/WindowsGSM). This includes the .NET 8 base and the backup, crontab and webhook improvements described in [upstream changes](docs/development/upstream-changes.md). |
 | Code optimization credited by the original project | **[Deathreus](https://github.com/Deathreus)**. |
 | Mordhau server testing credited by the original project | **! AssaultLine** and **Dennis**. |
 
@@ -31,9 +31,9 @@ The MeFriendos versions are maintained by PapaGordon. Imported code is credited 
 | ATM10 | **PapaGordon / MeFriendos**, [WindowsGSM.ATM10](https://github.com/PapaGordon/WindowsGSM.ATM10). The modpack itself is by the **All the Mods Team** and its mod authors. See [plugin license](licenses/WindowsGSM.ATM10.txt). |
 | Farming Simulator 22 and 25 | **PapaGordon / MeFriendos**, [FS22 plugin](https://github.com/PapaGordon/WindowsGSM.FarmingSimulator22) and [FS25 plugin](https://github.com/PapaGordon/WindowsGSM.FarmingSimulator25). See [FS22 license](licenses/WindowsGSM.FarmingSimulator22.txt) and [FS25 license](licenses/WindowsGSM.FarmingSimulator25.txt). |
 | Minecraft NeoForge | **PapaGordon / MeFriendos**, [WindowsGSM.Minecraft_NeoForge](https://github.com/PapaGordon/WindowsGSM.Minecraft_NeoForge). The NeoForge loader and installer are by the **NeoForged team and contributors**. |
-| DayZ and Vanilla Minecraft | Original WindowsGSM server support, with the current MeFriendos implementations and integration maintained by **PapaGordon**. See [DayZ](https://github.com/PapaGordon/WindowsGSM.DayZ) and the [built-in Vanilla module](MINECRAFT.md). |
+| DayZ and Vanilla Minecraft | Original WindowsGSM server support, with the current MeFriendos implementations and integration maintained by **PapaGordon**. See [DayZ](https://github.com/PapaGordon/WindowsGSM.DayZ) and the [built-in Vanilla module](docs/servers/minecraft-java.md). |
 
-Import revisions and links to the maintained plugins are recorded in [BUNDLED-SERVERS.md](BUNDLED-SERVERS.md). Other server modules and plugin examples inherited from WindowsGSM remain credited through their source and upstream history.
+Import revisions and links to the maintained plugins are recorded in the [built-in servers guide](docs/servers/built-in-servers.md). Other server modules and plugin examples inherited from WindowsGSM remain credited through their source and upstream history.
 
 ## Artwork and game assets
 

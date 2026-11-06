@@ -410,7 +410,7 @@ namespace WindowsGSM.Installer
                     textwriter.WriteLine("// For security and compatibility reasons, WindowsGSM suggests you to create a new steam account.");
                     textwriter.WriteLine("// More info: (https://docs.windowsgsm.com/installer/steamcmd)");
                     textwriter.WriteLine("// ");
-                    textwriter.WriteLine("// Use tools/Set-SteamCredentials.ps1 for an encrypted password (see STEAM-CREDENTIALS.md).");
+                    textwriter.WriteLine("// Use tools/Set-SteamCredentials.ps1 for an encrypted password (see docs/operations/steam-credentials.md).");
                     textwriter.WriteLine("// Username and password - No Steam Guard             (Supported + Auto update supported) (Recommended)");
                     textwriter.WriteLine("// Username and password - Steam Guard via Email      (Supported + Auto update supported)");
                     textwriter.WriteLine("// Username and password - Steam Guard via Smartphone (Supported + Auto update NOT supported)");

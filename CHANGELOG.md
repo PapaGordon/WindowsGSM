@@ -82,4 +82,4 @@ First MeFriendos release from our own development branch.
 - Shows the MeFriendos build name and version in the window title.
 - Ships a Windows x64 executable with the .NET runtime included.
 
-Based on Raziel7893/WindowsGSM v1.25.2.2. See [ChangesFromBase.md](ChangesFromBase.md) for the inherited changes from the original WindowsGSM project.
+Based on Raziel7893/WindowsGSM v1.25.2.2. See the [upstream changes](docs/development/upstream-changes.md) for what came from the parent fork.
