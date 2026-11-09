@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.25.4.8 - 2026-11-10
+
+- Uses SteamCMD's saved login for account-based installs, updates and Workshop downloads when it works for that account, avoiding repeated Steam Guard prompts. Falls back to the saved password otherwise.
+- The password helper now connects to Steam once after saving, so SteamCMD can keep the login.
+
 ## 1.25.4.7 - 2026-11-01
 
 - Keeps Source servers on a native Windows console and reads embedded output from their console log, avoiding Garry's Mod's GetNumberOfConsoleInputEvents crash after initialization.

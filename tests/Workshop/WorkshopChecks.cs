@@ -97,6 +97,16 @@ internal static class WorkshopChecks
         string parameters = WorkshopUpdater.Parameters("C:\\fixture", "221100", one);
         Check(parameters.Contains("+login \"fixture\" \"synthetic-pass\"") && parameters.Contains("+workshop_download_item 221100 123 validate") && !parameters.Contains("+app_update"), "Workshop commands use the host's encrypted login and client app ID");
         Check(WorkshopUpdater.Parameters("C:\\fixture", "107410", one).Contains("+workshop_download_item 107410 123 validate"), "Arma Workshop uses app 107410");
+        var steamCmd = typeof(WindowsGSM.Installer.SteamCMD);
+        const System.Reflection.BindingFlags hidden = System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static;
+        Func<string, bool> confirms = output => (bool)steamCmd.GetMethod("ConfirmsCachedLogin", hidden).Invoke(null, new object[] { output });
+        Func<bool, string> login = useCache => (string)steamCmd.GetMethod("BuildAccountLogin", hidden).Invoke(null, new object[] { "fixture", "synthetic-pass", useCache });
+        Check(login(true) == "+login \"fixture\"", "A confirmed cached login omits the password");
+        Check(login(false) == "+login \"fixture\" \"synthetic-pass\"", "An unconfirmed cached login keeps the password login");
+        Check(confirms("Logging in using cached credentials.\nAssertion Failed: Failed to write file after download\nLogging in user 'fixture' [U:1:1] to Steam Public...OK\nWaiting for user info...OK"), "A successful cached login is confirmed despite harmless assertion lines");
+        Check(!confirms("Logging in using cached credentials.\nLogging in user 'fixture' [U:1:1] to Steam Public...FAILED (Expired)"), "A rejected cached login falls back to the password");
+        Check(!confirms("Cached credentials not found.\nFAILED (No cached credentials and @NoPromptForPassword is set)"), "Missing cached credentials fall back to the password");
+        Check(!confirms("Logging in using username/password.\nWaiting for user info...OK"), "A password login does not count as a cached login");
         string cached = Path.Combine(config, "workshop-state-221100", "download", "steamapps", "workshop", "content", "221100", "123");
         Write(Path.Combine(cached, "addons", "fixture.pbo"), "downloaded");
         Func<string, string, Task<Tuple<int, string>>> ok = (exe, command) => Task.FromResult(Tuple.Create(0, "Success. Downloaded item 123 to \"" + cached + "\" (10 bytes)"));

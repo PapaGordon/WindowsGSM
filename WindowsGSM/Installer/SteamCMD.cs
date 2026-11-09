@@ -19,6 +19,7 @@ namespace WindowsGSM.Installer
         private static readonly string _exeFile = "steamcmd.exe";
         private static readonly string _installPath = ServerPath.GetBin("steamcmd");
         private static readonly string _userDataPath = Path.Combine(_installPath, "userData.txt");
+        private const int CachedLoginTimeoutMs = 120000;
         private string _param;
         public string Error;
 
@@ -73,7 +74,7 @@ namespace WindowsGSM.Installer
                     return;
                 }
 
-                _param += $" +login \"{steamUser}\" \"{steamPass}\"";
+                _param += " " + GetAccountLogin(steamUser, steamPass);
             }
 
             _param += (string.IsNullOrWhiteSpace(modName) ? string.Empty : $" +app_set_config 90 mod {modName}") + $" +app_update {appId}" + (validate ? " validate" : "");
@@ -107,7 +108,7 @@ namespace WindowsGSM.Installer
             {
                 var (username, password) = GetSteamUsernamePassword();
                 if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password)) { return null; }
-                sb.Append($" +login \"{username}\" \"{password}\"");
+                sb.Append(" " + GetAccountLogin(username, password));
             }
 
             // Set up app_set_config parameter
@@ -138,6 +139,66 @@ namespace WindowsGSM.Installer
         private static (string, string) GetSteamUsernamePassword()
         {
             return SteamCredentials.Read(_userDataPath);
+        }
+
+        // Passing the password makes SteamCMD bypass its cached session and can trigger Steam Guard again.
+        private static string GetAccountLogin(string username, string password)
+        {
+            return BuildAccountLogin(username, password, HasWorkingCachedLogin(username));
+        }
+
+        internal static string BuildAccountLogin(string username, string password, bool useCachedLogin)
+        {
+            return useCachedLogin ? $"+login \"{username}\"" : $"+login \"{username}\" \"{password}\"";
+        }
+
+        // Test login without a password, per account. Any doubt falls back to the password login.
+        private static bool HasWorkingCachedLogin(string username)
+        {
+            string exePath = Path.Combine(_installPath, _exeFile);
+            if (!File.Exists(exePath) || !File.Exists(Path.Combine(_installPath, "config", "config.vdf"))) { return false; }
+
+            try
+            {
+                using (var p = new Process())
+                {
+                    p.StartInfo = new ProcessStartInfo(exePath, $"+@ShutdownOnFailedCommand 1 +@NoPromptForPassword 1 +login \"{username}\" +quit -overrideminos")
+                    {
+                        WorkingDirectory = _installPath,
+                        UseShellExecute = false,
+                        CreateNoWindow = true,
+                        RedirectStandardInput = true,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        StandardOutputEncoding = Encoding.UTF8,
+                        StandardErrorEncoding = Encoding.UTF8
+                    };
+                    p.Start();
+                    p.StandardInput.Close();
+                    var stdout = p.StandardOutput.ReadToEndAsync();
+                    var stderr = p.StandardError.ReadToEndAsync();
+
+                    if (!p.WaitForExit(CachedLoginTimeoutMs))
+                    {
+                        p.Kill();
+                        return false;
+                    }
+
+                    return Task.WaitAll(new Task[] { stdout, stderr }, 5000) && ConfirmsCachedLogin(stdout.Result + "\n" + stderr.Result);
+                }
+            }
+            catch (Exception e) when (e is InvalidOperationException || e is System.ComponentModel.Win32Exception || e is IOException || e is AggregateException)
+            {
+                return false;
+            }
+        }
+
+        // Exit codes and "Assertion Failed" lines say nothing about the login, so only explicit receipts count.
+        internal static bool ConfirmsCachedLogin(string output)
+        {
+            return output != null
+                && Regex.IsMatch(output, @"Logging in using cached credentials", RegexOptions.IgnoreCase)
+                && Regex.IsMatch(output, @"(to Steam Public|Waiting for user info)\s*\.+\s*OK", RegexOptions.IgnoreCase);
         }
 
         public async Task<Process> Run()
@@ -188,7 +249,7 @@ namespace WindowsGSM.Installer
             // Fix the SteamCMD issue
             Directory.CreateDirectory(Path.Combine(ServerPath.GetServersServerFiles(serverId), "steamapps"));
 
-            SetParameter(ServerPath.GetServersServerFiles(serverId), modName, appId, validate, loginAnonymous);
+            await Task.Run(() => SetParameter(ServerPath.GetServersServerFiles(serverId), modName, appId, validate, loginAnonymous));
             Process p = await Run();
             SendEnterPreventFreeze(p);
             return p;
@@ -199,7 +260,7 @@ namespace WindowsGSM.Installer
         {
             if (string.IsNullOrWhiteSpace(custom) || !custom.Contains("-overrideminos"))
                 custom = custom + " -overrideminos";
-            string param = GetParameter(ServerPath.GetServersServerFiles(serverId), appId, validate, loginAnonymous, modName, custom);
+            string param = await Task.Run(() => GetParameter(ServerPath.GetServersServerFiles(serverId), appId, validate, loginAnonymous, modName, custom));
             if (param == null)
             {
                 return (null, "Steam account credentials missing or unreadable. Encrypted credentials require the Windows user that saved them.");
@@ -251,7 +312,7 @@ namespace WindowsGSM.Installer
         // Old
         public async Task<bool> Update(string serverId, string modName, string appId, bool validate, bool loginAnonymous = true)
         {
-            SetParameter(Functions.ServerPath.GetServersServerFiles(serverId), modName, appId, validate, loginAnonymous);
+            await Task.Run(() => SetParameter(Functions.ServerPath.GetServersServerFiles(serverId), modName, appId, validate, loginAnonymous));
 
             Process p = await Run();
             if (p == null)
@@ -376,7 +437,7 @@ namespace WindowsGSM.Installer
                 {
                     FileName = exePath,
                     //Sometimes it fails to get if appID < 90
-                    Arguments = $"+login anonymous -overrideminos +app_info_update 1 +app_info_print {appId} +app_info_print {appId} +app_info_print {appId} +app_info_print {appId} +logoff +quit",
+                    Arguments = $"+login anonymous -overrideminos +app_info_update 1 +app_info_print {appId} +app_info_print {appId} +app_info_print {appId} +app_info_print {appId} +quit",
                     WindowStyle = ProcessWindowStyle.Minimized,
                     CreateNoWindow = true,
                     UseShellExecute = false,

@@ -99,7 +99,7 @@ namespace WindowsGSM.GameServer.Engine
             using (var cacheLock = new FileStream(Path.Combine(steamRoot, "wgsm-workshop.lock"), FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))
             using (var serverLock = new FileStream(Path.Combine(state, "update.lock"), FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))
             {
-                string parameters = Parameters(cache, appId, items);
+                string parameters = await Task.Run(() => Parameters(cache, appId, items));
                 var result = await (runner == null ? Run(exe, parameters) : runner(exe, parameters));
                 if (result.Item1 != 0) throw new InvalidOperationException("SteamCMD Workshop update failed. Check account access, Steam Guard and network connectivity.");
                 var sources = new Dictionary<string, string>();
