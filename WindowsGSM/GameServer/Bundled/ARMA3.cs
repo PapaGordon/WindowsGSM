@@ -929,6 +929,7 @@ namespace WindowsGSM.GameServer.Bundled
         public async Task<Process> Start()
         {
             Error = null;
+            Notice = null;
             string exePath = ServerPath.GetServersServerFiles(_serverData.ServerID, StartPath);
             if (!File.Exists(exePath))
             {
@@ -945,7 +946,8 @@ namespace WindowsGSM.GameServer.Bundled
             try
             {
                 var workshop = await WorkshopUpdater.Update(ServerPath.GetServersServerFiles(_serverData.ServerID),
-                    ServerPath.GetServersConfigs(_serverData.ServerID), ServerPath.GetBin("steamcmd"), "107410");
+                    ServerPath.GetServersConfigs(_serverData.ServerID), ServerPath.GetBin("steamcmd"), "107410",
+                    notice: message => Notice = message);
                 commandLine = WorkshopUpdater.MergeArguments(commandLine, workshop);
             }
             catch (Exception e)

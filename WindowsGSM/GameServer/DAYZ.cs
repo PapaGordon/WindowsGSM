@@ -75,7 +75,8 @@ namespace WindowsGSM.GameServer
 
                 var startInfo = PrepareStart();
                 var workshop = await WorkshopUpdater.Update(startInfo.WorkingDirectory,
-                    ServerPath.GetServersConfigs(_serverData.ServerID), ServerPath.GetBin("steamcmd"), "221100");
+                    ServerPath.GetServersConfigs(_serverData.ServerID), ServerPath.GetBin("steamcmd"), "221100",
+                    notice: message => Notice = message);
                 startInfo.Arguments = WorkshopUpdater.MergeArguments(startInfo.Arguments, workshop);
                 startInfo.FileName = ServerPath.GetServersServerFiles(_serverData.ServerID, StartPath);
                 string profiles = ResolvePath(startInfo.WorkingDirectory,

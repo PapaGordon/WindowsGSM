@@ -14,6 +14,8 @@ If the helper reports that no login was saved, create it by hand:
 
 Before each account login, WGSM tests the saved session without a password. If that works, it logs in with the username only and the SteamCMD console shows `Logging in using cached credentials`. If the session is missing, expired or the test takes longer than two minutes, WGSM uses the saved password as before, so Steam Guard can ask again. The test adds a few seconds to each account update.
 
+SteamCMD keeps this login in `bin\steamcmd\config\config.vdf`. It can be lost when the drive runs full, so keep enough free space. DayZ and Arma 3 still start with their installed Workshop mods when the login fails. Repeat the steps above to save the login again.
+
 ## Set up the password helper
 
 1. Download the Windows x64 ZIP for the setup helper. [Latest MeFriendos release](https://github.com/PapaGordon/WindowsGSM/releases/latest)

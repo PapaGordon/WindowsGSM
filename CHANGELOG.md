@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.25.4.9 - 2026-11-22
+
+- DayZ and Arma 3 still start with the installed Workshop mods when SteamCMD cannot log in, download or confirm an update (for example while Steam Guard waits for confirmation). The skipped update is logged as a notice. A start is only cancelled when a configured mod folder is missing or a recovery is pending.
+- Workshop updates only replace mods whose files changed and keep only the latest backup in `.wgsm-workshop-backups`. Previously every start copied all mods into a new backup and could fill the drive.
+- Workshop updates leave at least 5 GB free and skip the update otherwise. A full drive could make SteamCMD lose its saved login, which then asked for Steam Guard again.
+- When SteamCMD exits before reaching the login (for example because another instance is still closing), the Workshop download is retried once. Parallel Workshop jobs wait up to ten minutes for each other.
+
 ## 1.25.4.8 - 2026-11-10
 
 - Uses SteamCMD's saved login for account-based installs, updates and Workshop downloads when it works for that account, avoiding repeated Steam Guard prompts. Falls back to the saved password otherwise.

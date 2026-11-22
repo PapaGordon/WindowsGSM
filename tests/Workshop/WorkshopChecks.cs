@@ -44,8 +44,14 @@ internal static class WorkshopChecks
         Directory.CreateDirectory(live);
         WorkshopUpdater.Deploy(live, state, "221100", items, items.Select((item, i) => new { item.Id, Source = sources[i] }).ToDictionary(x => x.Id, x => x.Source));
     }
+    private static string[] Backups(string live)
+    {
+        string path = Path.Combine(live, ".wgsm-workshop-backups");
+        return Directory.Exists(path) ? Directory.GetDirectories(path) : new string[0];
+    }
     private static async Task Run()
     {
+        WorkshopUpdater.RetryDelay = TimeSpan.Zero;
         Check(WorkshopUpdater.Read(Path.Combine(root, "absent.cfg")).Count == 0, "No config keeps Workshop disabled");
         var items = List("# comment", "123|@Client_Mod|mod", "456|@Server|servermod");
         Check(items.Count == 2 && items[1].Mode == "servermod", "Explicit IDs and client/server roles preserve list order");
@@ -74,9 +80,19 @@ internal static class WorkshopChecks
         Deploy(live, state, one, second);
         string newKey = Path.Combine(live, "keys", "wgsm_221100_123_new.bikey");
         Check(!File.Exists(oldKey) && File.ReadAllText(newKey) == "v2", "Only unchanged owned keys are rotated");
+        var kept = Backups(live);
+        Check(kept.Length == 1 && Directory.GetFiles(kept[0], "fixture.pbo", SearchOption.AllDirectories).Length == 1
+            && !Directory.Exists(Path.Combine(kept[0], "prepared")), "Only the latest backup is kept, without staged copies");
+        Deploy(live, state, one, second);
+        Check(Backups(live).SequenceEqual(kept), "Unchanged mods are not copied again and create no backup");
+        WorkshopUpdater.FreeSpace = path => 0;
+        Fails(() => Deploy(live, state, one, first), "Low disk space blocks a mod replacement before copying");
+        Check(File.ReadAllText(Path.Combine(live, "@Client_Mod", "addons", "fixture.pbo")) == "v2" && Backups(live).SequenceEqual(kept), "Low disk space leaves mods and backups unchanged");
+        WorkshopUpdater.FreeSpace = path => long.MaxValue;
         File.WriteAllText(newKey, "user-change");
         Fails(() => Deploy(live, state, one, first), "A locally changed managed key blocks deployment");
         Check(File.ReadAllText(Path.Combine(live, "@Client_Mod", "addons", "fixture.pbo")) == "v2", "Key conflict leaves the live mod unchanged");
+        Check(Backups(live).SequenceEqual(kept), "A refused deployment leaves no staged copy behind");
         File.WriteAllText(newKey, "v2");
         using (var locked = new FileStream(newKey, FileMode.Open, FileAccess.Read, FileShare.Read))
             Fails(() => Deploy(live, state, one, first), "A locked key triggers batch rollback after the folder swap");
@@ -112,11 +128,30 @@ internal static class WorkshopChecks
         Func<string, string, Task<Tuple<int, string>>> ok = (exe, command) => Task.FromResult(Tuple.Create(0, "Success. Downloaded item 123 to \"" + cached + "\" (10 bytes)"));
         await WorkshopUpdater.Update(live, config, steam, "221100", ok);
         Check(File.ReadAllText(Path.Combine(live, "@Client_Mod", "addons", "fixture.pbo")) == "downloaded", "Confirmed downloads deploy from the selected cache");
-        Fails(() => WorkshopUpdater.Update(live, config, steam, "221100", (a, b) => Task.FromResult(Tuple.Create(0, "ERROR! Download failed"))).GetAwaiter().GetResult(), "Exit zero without per-item confirmation is refused");
-        Fails(() => WorkshopUpdater.Update(live, config, steam, "221100", (a, b) => Task.FromResult(Tuple.Create(1, "failed"))).GetAwaiter().GetResult(), "Nonzero SteamCMD exit blocks startup");
-        Fails(() => WorkshopUpdater.Update(live, config, steam, "221100", (a, b) => Task.FromResult(Tuple.Create(0, "Success. Downloaded item 123 to C:\\unrelated"))).GetAwaiter().GetResult(), "Stale cache without a matching receipt path is refused");
+        kept = Backups(live);
+        await WorkshopUpdater.Update(live, config, steam, "221100", ok);
+        Check(kept.Length == 1 && Backups(live).SequenceEqual(kept), "Repeated starts without mod changes keep a single backup");
+        string skipped = null; int runs = 0;
+        Func<int, string, Func<string, string, Task<Tuple<int, string>>>> counted = (code, output) => (exe, command) => { runs++; return Task.FromResult(Tuple.Create(code, output)); };
+        await WorkshopUpdater.Update(live, config, steam, "221100", counted(0, "ERROR! Download failed"), m => skipped = m);
+        Check(skipped != null && skipped.Contains("did not confirm"), "Exit zero without per-item confirmation starts with the installed mods");
+        skipped = null; runs = 0;
+        await WorkshopUpdater.Update(live, config, steam, "221100", counted(1, "failed"), m => skipped = m);
+        Check(skipped != null && runs == 2, "SteamCMD failing before the login is retried once, then the installed mods are used");
+        skipped = null; runs = 0;
+        await WorkshopUpdater.Update(live, config, steam, "221100", counted(5, "Logging in user 'fixture' to Steam Public...\nFAILED"), m => skipped = m);
+        Check(skipped != null && runs == 1, "A failed Steam login is not repeated, so Steam Guard is asked only once");
+        skipped = null;
+        await WorkshopUpdater.Update(live, config, steam, "221100", counted(0, "Success. Downloaded item 123 to C:\\unrelated"), m => skipped = m);
+        Check(skipped != null, "Stale cache without a matching receipt path is not deployed");
+        skipped = null; runs = 0;
+        WorkshopUpdater.FreeSpace = path => 1024;
+        await WorkshopUpdater.Update(live, config, steam, "221100", counted(0, ""), m => skipped = m);
+        WorkshopUpdater.FreeSpace = path => long.MaxValue;
+        Check(skipped != null && skipped.Contains("free") && runs == 0, "Low disk space skips SteamCMD so its saved login is not damaged");
+        Check(File.ReadAllText(Path.Combine(live, "@Client_Mod", "addons", "fixture.pbo")) == "downloaded", "Skipped updates leave the live mods unchanged");
         Write(Path.Combine(config, "WorkshopMods.cfg"), "123|@Client_Mod|mod\n456|@Other|mod");
-        Fails(() => WorkshopUpdater.Update(live, config, steam, "221100", ok).GetAwaiter().GetResult(), "Missing confirmation for one item blocks the whole batch");
+        Fails(() => WorkshopUpdater.Update(live, config, steam, "221100", ok).GetAwaiter().GetResult(), "A missing mod folder still blocks the start when its download fails");
         Check(File.ReadAllText(Path.Combine(live, "@Client_Mod", "addons", "fixture.pbo")) == "downloaded", "Failed batches leave existing live mods unchanged");
         File.WriteAllText(Path.Combine(steam, "userData.txt"), "steamUser=fixture\nsteamPass=plain\nsteamPassEncrypted=broken!");
         Fails(() => WorkshopUpdater.Parameters("C:\\fixture", "221100", one), "Broken encryption never falls back to plaintext for Workshop downloads");
