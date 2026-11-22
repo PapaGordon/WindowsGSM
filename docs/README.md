@@ -1,26 +1,26 @@
 # WindowsGSM - MeFriendos docs
 
-The [project README](../README.md) has the Windows download, supported servers and standalone plugins.
+These guides cover what's different in our version of WindowsGSM. For download, supported games and plugins, see the [project README](../README.md).
 
-## Server setup
+## Setting up servers
 
-- Check what each game needs and how old plugin installs are picked up. [Built-in servers](servers/built-in-servers.md)
-- Set up ports, missions, mods and the RPT console. [DayZ](servers/dayz.md)
-- Choose a Java version, pin a release or adjust RAM. [Vanilla Minecraft](servers/minecraft-java.md)
-- Install the loader and manage version families and backups. [Minecraft NeoForge](servers/minecraft-neoforge.md)
+- [Built-in servers](servers/built-in-servers.md): which games are included and what some of them need before the first start.
+- [DayZ](servers/dayz.md): ports, missions, config, mods and the log console.
+- [Minecraft Java Edition (Vanilla)](servers/minecraft-java.md): Java, choosing the Minecraft version, RAM and updates.
+- [Minecraft NeoForge](servers/minecraft-neoforge.md): NeoForge versions, Java, updates and backups.
 
-## Running and updating servers
+## Running servers
 
-- Keep a DayZ or Arma 3 mod list up to date. [Workshop updates](operations/workshop.md)
-- Use the password helper included in the release ZIP. [Steam password encryption](operations/steam-credentials.md)
-- Schedule restarts, scripts and game commands. [Crontab](operations/crontab.md)
-- View embedded logs for Garry's Mod and other Source servers. [Source console](operations/source-console.md)
+- [Workshop mods for DayZ and Arma 3](operations/workshop.md): keep a list of mods up to date automatically.
+- [Steam account and password](operations/steam-credentials.md): save the password encrypted and stop repeated Steam Guard prompts.
+- [Scheduled tasks with Crontab](operations/crontab.md): restarts, scripts and game commands at fixed times.
+- [Console for Source servers](operations/source-console.md): see the output of Garry's Mod and other Source servers in WindowsGSM.
 
-## Development and releases
+## Development
 
-- [Building and releasing WindowsGSM](development/build-and-release.md)
-- [MeFriendos changelog](../CHANGELOG.md)
+- [Building and releasing](development/build-and-release.md)
+- [Changelog](../CHANGELOG.md)
 - [Changes inherited from Raziel7893](development/upstream-changes.md)
-- [Project and upstream credits](../CREDITS.md)
+- [Credits](../CREDITS.md)
 
-For general help with WindowsGSM, see the [original documentation](https://docs.windowsgsm.com/).
+For everything that works the same as in the original WindowsGSM, see the [WindowsGSM documentation](https://docs.windowsgsm.com/).

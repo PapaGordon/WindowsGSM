@@ -1,33 +1,49 @@
-# Minecraft: NeoForge
+# Minecraft NeoForge
 
-Select **Minecraft: NeoForge** under **Install** or **Import**. It installs the loader so you can build your own mod list in `mods/`. For the All the Mods 10 pack, choose **Minecraft: All the Mods 10 (ATM10)**.
+Pick **Minecraft: NeoForge** under **Install** or **Import**. It installs the NeoForge loader without any mods, so you can put together your own mod list in `mods/`. For the All the Mods 10 pack, pick **Minecraft: All the Mods 10 (ATM10)** instead.
 
-## Versions and Java
+## Choosing the version
 
-`serverfiles/neoforge-version.txt` controls which NeoForge version WindowsGSM installs or updates.
+`serverfiles/neoforge-version.txt` decides which NeoForge version WindowsGSM installs and updates to:
 
-- `21.1` is the default and follows the latest stable NeoForge for Minecraft 1.21.1.
-- A family such as `21.4` follows the latest stable build in that family.
-- A full version such as `21.1.265` stays on that release. You can pin an exact beta version too.
+- `21.1` (the default) follows the newest stable NeoForge for Minecraft 1.21.1.
+- Another family such as `21.4` follows the newest stable build of that family.
+- A full version such as `21.1.265` stays on exactly that build. This also works for beta builds.
 
-An imported runtime uses its own family by default. Updates never jump to another Minecraft family unless you edit the selector. NeoForge version numbers are not Minecraft version numbers. Use the [official version list](https://maven.neoforged.net/releases/net/neoforged/neoforge/) when selecting a build. Changing the family requires checking world and mod compatibility yourself.
+Imported servers stay on the family they already use. Updates never switch to another Minecraft version on their own. Note that NeoForge numbers are not Minecraft numbers. The [official version list](https://maven.neoforged.net/releases/net/neoforged/neoforge/) shows what exists. Before you change the family, check that your world and mods work with it.
 
-The plugin checks for a matching 64-bit Java major: Java 17 for NeoForge 20.2-20.4, Java 21 for 20.5-21.x, Java 25 for 26.x. Unsupported future families fail with an error. Set `JAVA_HOME` or add the matching Java installation to `PATH`. Common JDK installation directories are also checked. Java is not downloaded automatically.
+## Java
 
-Install asks for Minecraft EULA acceptance and downloads the installer from the official NeoForged Maven. Its SHA-256 is checked against the Maven checksum before `--installServer` runs. The installer still needs internet access to download its runtime dependencies. No CurseForge pack is needed.
+You install Java yourself. WindowsGSM picks the right 64-bit version for your NeoForge build:
 
-## Settings and updates
+| NeoForge | Java |
+| --- | --- |
+| 20.2 to 20.4 | 17 |
+| 20.5 to 21.x | 21 |
+| 26.x | 25 |
 
-Adjust RAM and Java options in `user_jvm_args.txt`. As with ATM10, additional WindowsGSM parameters are game arguments. WindowsGSM updates the ports and player limit in `server.properties` and keeps your MOTD. Auto Firewall uses separate TCP game and UDP query rules for each server.
+It looks in `JAVA_HOME`, `PATH` and the usual JDK folders. Newer NeoForge families that WindowsGSM doesn't know yet stop with an error.
 
-Stop the server before updating. Preparation makes a full copy of `serverfiles` beside the live folder and installs fresh runtime libraries there. Worlds, mods, configuration, lists and existing JVM arguments are retained. Allow enough disk space for another complete server copy. A successful activation retains the previous `serverfiles` in `neoforge-update-backups`. Failed preparation leaves the live files untouched and keeps the prepared directory for inspection. A recovery marker blocks startup if an interrupted activation needs manual attention.
+## Install
 
-Import requires `user_jvm_args.txt` and an installed `libraries/net/neoforged/neoforge/<version>/win_args.txt`. If you have several runtimes, put the installed version you want to use in `.wgsm-neoforge-version.txt`. Import existing ATM10 servers through the **Minecraft: All the Mods 10 (ATM10)** entry.
+WindowsGSM asks you to accept the Minecraft EULA, downloads the installer from the official NeoForged site, checks its SHA-256 checksum and runs it. The installer downloads more files itself, so the server needs internet access. You don't need a CurseForge pack.
 
-Local fixture checks cover version selection, Java requirements, import, configuration preservation, update activation/failure, locks and registration. On 2026-10-29, 39 fixture checks passed and the official NeoForge 21.1.265 installer was separately downloaded, checksum-verified and run with Java 21 in an isolated directory. The resulting runtime passed import validation. A live Minecraft session and production-server deployment are not part of those checks.
+## Settings
+
+Set RAM and other Java options in `user_jvm_args.txt`. Extra start parameters in WindowsGSM are passed to the game, not to Java. WindowsGSM keeps ports and player slots in `server.properties` in sync and leaves your MOTD alone. With **Auto Firewall** on, each server gets a TCP rule for the game and a UDP rule for the query port.
+
+## Updates
+
+Stop the server before you update. You need enough free space for a second complete copy of the server. Updates stop with an error if `eula.txt` doesn't contain `eula=true`.
+
+WindowsGSM first builds the new version in a copy of `serverfiles` next to the live server and keeps your worlds, mods, configs, player lists and Java settings. Only when that worked does it swap the folders. The old `serverfiles` then stays in `servers/<server ID>/neoforge-update-backups/`. WindowsGSM doesn't delete these backups, so clean them up from time to time. If preparing the update fails, your server stays untouched and the prepared copy is kept so you can see what went wrong. If an update gets interrupted halfway, a marker file stops the server from starting until you've had a look.
+
+## Importing an existing server
+
+The server folder needs `user_jvm_args.txt` and an installed `libraries/net/neoforged/neoforge/<version>/win_args.txt`. If it contains several NeoForge versions, write the one to use into `.wgsm-neoforge-version.txt`. Import ATM10 servers through **Minecraft: All the Mods 10 (ATM10)**.
 
 ## NeoForge documentation
 
-- [Server installation](https://docs.neoforged.net/user/docs/server/)
+- [Installing a server](https://docs.neoforged.net/user/docs/server/)
 - [Java requirements](https://docs.neoforged.net/user/docs/)
-- [Java 25 migration](https://neoforged.net/news/26.1release/)
+- [Moving to Java 25](https://neoforged.net/news/26.1release/)

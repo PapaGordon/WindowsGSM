@@ -1,38 +1,33 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Something in WindowsGSM doesn't work as expected
 title: ''
 labels: ''
 assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+**What happened?**
+Describe the problem in a few sentences.
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+**What did you expect instead?**
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+**How can we reproduce it?**
+1.
+2.
+3.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**Your setup**
+- WindowsGSM version (shown in the title bar):
+- Game server, and whether it's built in or a plugin:
+- Windows version:
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+**Log**
+Paste the relevant lines from `logs/L<date>.log` or the server console. Please remove passwords, Steam login names and IP addresses you don't want to share.
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+```text
 
-**Additional context**
-Add any other context about the problem here.
+```
+
+**Anything else?**
+Screenshots, config snippets or what you already tried.

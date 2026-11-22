@@ -1,34 +1,39 @@
-# Schedule server tasks with Crontab
+# Scheduled tasks with Crontab
 
-Use a CSV schedule to restart a server, run a Windows command or send a command to the game while it is running.
+With Crontab files you can restart a server at fixed times, run a program or script on the host, or send a command to the running game, for example a restart warning.
 
-1. Start the server once so WindowsGSM can create `servers/<id>/configs/Crontab/`.
-2. Select the server and open **Browse > Server Configs**. Put one or more `.csv` files in the `Crontab` folder.
-3. Enable **Restart Crontab** for that server. Restart the server after editing the files so WindowsGSM reloads them.
+## Set it up
 
-The restart schedule you enter in the WindowsGSM window is a separate entry. The **Restart Crontab** switch enables it and the CSV schedules.
+1. Start the server once, so WindowsGSM creates the folder `servers/<server ID>/configs/Crontab/`. Only administrators can change files in it, because the tasks run programs on the host.
+2. Select the server and open **Browse > Server Configs**. Put one or more `.csv` files into the `Crontab` folder.
+3. Turn on **Restart Crontab** for the server.
+4. Restart the server. WindowsGSM reads the files when the server starts, so restart it again after every change.
 
-## File format
+The restart time you enter in the WindowsGSM window is a separate schedule. The **Restart Crontab** switch turns on both, that one and your files.
 
-Put one entry on each line. Start with a five-field cron expression, then add the action and any arguments, separated by semicolons. Lines starting with `//` are comments. Schedules use the Windows host's local time.
+## How a line looks
 
-| Action | What goes after it |
+Each line starts with a schedule in the usual cron format (minute, hour, day, month, weekday), followed by what should happen. The parts are separated by semicolons. Lines starting with `//` are comments. Times are the local time of the Windows host.
+
+| Action | What follows it |
 | --- | --- |
-| `restart` | The line ends after the action. |
-| `exec` | The executable and then its arguments, if needed. |
-| `ServerConsoleCommand` | The command to send to the server console. |
-| `RconCommand` | The command to send over RCON. |
+| `restart` | Nothing. The server restarts. |
+| `exec` | A program and its arguments. |
+| `ServerConsoleCommand` | A command for the server console. |
+| `RconCommand` | A command sent over RCON. |
+
+[Crontab Guru](https://crontab.guru/) helps you read and check a schedule.
 
 ## Examples
 
-Restart once a day at 02:00 and run a local script once a day at 01:05.
+Restart every day at 02:00 and run a backup script every day at 01:05:
 
 ```csv
 0 2 * * *;restart
 5 1 * * *;exec;cmd.exe;/C "C:\Scripts\backup.bat"
 ```
 
-For ARK, send a five-minute warning, save the world and then restart at 06:10.
+For ARK: warn the players, save the world and restart at 06:10:
 
 ```csv
 5 6 * * *;ServerConsoleCommand;cheat serverchat Server will restart in 5 minutes
@@ -36,9 +41,10 @@ For ARK, send a five-minute warning, save the world and then restart at 06:10.
 10 6 * * *;restart
 ```
 
-## RCON setup
+## Commands over RCON
 
-Enable RCON in the game server first. Close WindowsGSM, then set the RCON host, port and password in that server's `configs/WindowsGSM.cfg`. Use the address the game actually listens on. If the plugin already generated an RCON password, use that value.
+1. Turn on RCON in the game server's own settings.
+2. Close WindowsGSM and add the RCON address, port and password to the server's `configs/WindowsGSM.cfg`. Use the address the game really listens on. If the server already has an RCON password, use that one.
 
 ```ini
 rconip="127.0.0.1"
@@ -46,14 +52,19 @@ rconport="25575"
 rconpassword="YOUR_RCON_PASSWORD"
 ```
 
-After starting WindowsGSM again, this schedule sends a message at five minutes past every hour.
+3. Start WindowsGSM again. This line now sends a message five minutes past every hour:
 
 ```csv
 5 * * * *;RconCommand;say This message runs every hour
 ```
 
-Some games use a different RCON protocol. If the game's own client works and WindowsGSM logs a timeout, you can run that client with `exec`.
+The server's answer appears in the WindowsGSM log. If the RCON port is missing in `WindowsGSM.cfg`, the log says so instead.
 
-Leave enough time between tasks. Use commands that finish on their own, since WindowsGSM otherwise keeps them running until the server restarts. Programs launched by `exec` run as the WindowsGSM user.
+Some games speak their own RCON dialect. If the game's own RCON tool works but WindowsGSM reports a timeout, run that tool with `exec` instead.
 
-Use [Crontab Guru](https://crontab.guru/) to read or check a cron expression.
+## Good to know
+
+- Tasks only run while the server is running.
+- Leave enough time between tasks that depend on each other.
+- Use commands that finish on their own. WindowsGSM doesn't stop them and they keep running until the server restarts.
+- Programs started with `exec` run as the Windows user that runs WindowsGSM. Their output is saved in `logs/Server_<server ID>_<program>_execLog.log`.

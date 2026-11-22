@@ -1,37 +1,39 @@
 # Built-in MeFriendos servers
 
-Pick a server from **Install** or **Import** in the MeFriendos build. The standalone plugins are for people using another compatible WindowsGSM build. [MeFriendos add-ons](../../README.md#mefriendos-add-ons)
+Our WindowsGSM build already contains Arma 3, ATM10, DayZ, Enshrouded, Farming Simulator 22 and 25, Minecraft NeoForge, Project Zomboid, SCP: Secret Laboratory and Valheim. Pick the game under **Install** or **Import**, no plugin needed. We publish the same servers as standalone plugins for people who use another WindowsGSM build. [Overview with plugin links](../../README.md#mefriendos-add-ons)
 
-## Existing servers
+## Servers you set up with a plugin
 
-WindowsGSM recognizes old plugin entries such as `Enshrouded Dedicated Server [Enshrouded.cs]` and runs them with the built-in server module. There is no need to edit the server config or import it again. Installed plugin copies still appear in plugin management, while **Install** and **Import** show a single entry for the game.
+You don't need to change anything. Servers that were installed with one of our plugins, for example as `Enshrouded Dedicated Server [Enshrouded.cs]`, are picked up by the built-in version automatically. There's no need to import them again or edit their config. The plugin still shows up in plugin management, but **Install** and **Import** only list the game once.
 
-DayZ uses the existing **DayZ Dedicated Server** entry and recognizes old `DayZ Dedicated Server [DayZ.cs]` entries too. Its built-in module includes the settings, console and Workshop handling from our standalone DayZ plugin. [DayZ setup](dayz.md)
+DayZ works the same way: old `DayZ Dedicated Server [DayZ.cs]` entries run with the built-in **DayZ Dedicated Server**, which includes everything from our DayZ plugin. [DayZ setup](dayz.md)
 
-## Game requirements
+## What some games need
 
-- **ATM10** needs the CurseForge server pack. Put the server ZIP in the WindowsGSM root or in `serverfiles`.
-- **Minecraft NeoForge** starts with the loader and an empty mod list. Add the server mods you want to run. [NeoForge setup](minecraft-neoforge.md)
-- **Farming Simulator 22 and 25** need the matching game license and dedicated server setup.
-- **Valheim** needs a new server password in place of the default placeholder.
+- **ATM10** needs the server pack from CurseForge. Download `ServerFiles-<version>.zip` and put it into the WindowsGSM folder or the server's `serverfiles` folder before you click **Install** or **Update**.
+- **Minecraft NeoForge** starts with the loader and no mods. Add the mods you want yourself. [NeoForge setup](minecraft-neoforge.md)
+- **Farming Simulator 22 and 25** are installed through Steam together with the game, so the saved Steam account has to own it.
+- **Valheim** needs a server password of at least 5 characters. Replace `CHANGE_ME` after `-password` in the start parameters before the first start.
+- **SCP: Secret Laboratory** asks you to accept Northwood's EULA in LocalAdmin. WindowsGSM doesn't do that for you on purpose.
+- **DayZ, Arma 3 and Farming Simulator** download with a Steam account. [Steam account and password](../operations/steam-credentials.md)
 
-For DayZ and Arma 3 mods, see [Workshop updates](../operations/workshop.md). Servers using your Steam account can use the [encrypted password setup](../operations/steam-credentials.md).
+DayZ and Arma 3 can also keep a list of Workshop mods up to date. [Workshop mods](../operations/workshop.md)
 
-Auto Firewall covers the game processes started by the Farming Simulator managers and SCP:SL LocalAdmin. ATM10 uses a TCP game rule and a UDP query rule named for each server instance.
+**Auto Firewall** also covers the processes that the Farming Simulator manager and SCP:SL LocalAdmin start. ATM10 gets one TCP rule for the game and one UDP rule for the query port per server.
 
-## Imported code
+## Where the built-in servers come from
 
-The imported modules live in `WindowsGSM/GameServer/Bundled` and use the `WindowsGSM.GameServer.Bundled` namespace. Keep the standalone copies in sync when changing shared server behavior. NeoForge uses ATM10's Java runtime helpers and has its own installer and update flow.
+The code lives in `WindowsGSM/GameServer/Bundled` (namespace `WindowsGSM.GameServer.Bundled`). When we change how one of these servers behaves, we update the standalone plugin too. NeoForge shares the Java helpers with ATM10 but has its own installer and updates.
 
-The table records the initial imports. The original plugin notices are embedded in the assembly and kept in [licenses](../../licenses/). See the [changelog](../../CHANGELOG.md) for later changes.
+The table shows the plugin version each server was first imported from. The original license notices are kept in [licenses](../../licenses/). Later changes are in the [changelog](../../CHANGELOG.md).
 
-| Server | Standalone repository | Original import revision |
+| Server | Standalone plugin | First imported from |
 | --- | --- | --- |
-| Arma 3 Dedicated Server | [WindowsGSM.ARMA3-MeFriendos](https://github.com/PapaGordon/WindowsGSM.ARMA3) | `76f58baade48a349328459d5b65420a3294ec9df` |
-| Minecraft: All the Mods 10 (ATM10) | [WindowsGSM.ATM10-MeFriendos](https://github.com/PapaGordon/WindowsGSM.ATM10) | `e372350094ee2b09c56fa8ee2fe2f8213278be91` |
+| Arma 3 Dedicated Server | [WindowsGSM.ARMA3](https://github.com/PapaGordon/WindowsGSM.ARMA3) | `76f58baade48a349328459d5b65420a3294ec9df` |
+| Minecraft: All the Mods 10 (ATM10) | [WindowsGSM.ATM10](https://github.com/PapaGordon/WindowsGSM.ATM10) | `e372350094ee2b09c56fa8ee2fe2f8213278be91` |
 | Enshrouded Dedicated Server | [WindowsGSM.Enshrouded](https://github.com/PapaGordon/WindowsGSM.Enshrouded) | `57e7d5c5a783a4973f767a1c0d2f6c4adeea8c4f` |
 | Farming Simulator 22 Dedicated Server | [WindowsGSM.FarmingSimulator22](https://github.com/PapaGordon/WindowsGSM.FarmingSimulator22) | `ee7459d100f46d9491079a5f15cd720e344f6a5d` |
 | Farming Simulator 25 Dedicated Server | [WindowsGSM.FarmingSimulator25](https://github.com/PapaGordon/WindowsGSM.FarmingSimulator25) | `3e988c7742180266b7691b699c7d1c294b6d6c67` |
-| Project Zomboid Dedicated Server | [WindowsGSM.ProjectZomboid-MeFriendos](https://github.com/PapaGordon/WindowsGSM.ProjectZomboid) | `7915c73255dbd8edcb84faa57ba5dc754d24b9fc` |
-| SCP: Secret Laboratory Dedicated Server | [WindowsGSM.SCPSL-MeFriendos](https://github.com/PapaGordon/WindowsGSM.SCPSL) | `8a207683cc3f363caab101c7db150e16112ac159` |
-| Valheim Dedicated Server | [WindowsGSM.Valheim-MeFriendos](https://github.com/PapaGordon/WindowsGSM.Valheim) | `3536aa02111167377f8864eb050cee400df0978f` |
+| Project Zomboid Dedicated Server | [WindowsGSM.ProjectZomboid](https://github.com/PapaGordon/WindowsGSM.ProjectZomboid) | `7915c73255dbd8edcb84faa57ba5dc754d24b9fc` |
+| SCP: Secret Laboratory Dedicated Server | [WindowsGSM.SCPSL](https://github.com/PapaGordon/WindowsGSM.SCPSL) | `8a207683cc3f363caab101c7db150e16112ac159` |
+| Valheim Dedicated Server | [WindowsGSM.Valheim](https://github.com/PapaGordon/WindowsGSM.Valheim) | `3536aa02111167377f8864eb050cee400df0978f` |

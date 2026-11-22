@@ -1,8 +1,8 @@
 # WindowsGSM - MeFriendos
 
-This is the MeFriendos fork of WindowsGSM. Use it to install, import and run dedicated game servers from one Windows app. We started from [Raziel7893's fork](https://github.com/Raziel7893/WindowsGSM).
+WindowsGSM installs, updates and runs dedicated game servers on Windows, all from one app. This is the version we use for the [MeFriendos](https://mefriendos.de/) community servers. It builds on [Raziel7893's fork](https://github.com/Raziel7893/WindowsGSM) and adds our own server integrations and fixes.
 
-[Download](#download) | [Fork features](#fork-features) | [MeFriendos add-ons](#mefriendos-add-ons) | [Supported servers](#supported-servers) | [Docs](#documentation) | [Credits](#credits)
+[Download](#download) | [What's different](#whats-different-in-our-version) | [MeFriendos add-ons](#mefriendos-add-ons) | [Supported servers](#supported-servers) | [Docs](#documentation) | [Credits](#credits)
 
 [![Latest release](https://img.shields.io/github/v/release/PapaGordon/WindowsGSM)](https://github.com/PapaGordon/WindowsGSM/releases/latest)
 [![Build status](https://github.com/PapaGordon/WindowsGSM/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/PapaGordon/WindowsGSM/actions/workflows/build.yml)
@@ -12,25 +12,25 @@ This is the MeFriendos fork of WindowsGSM. Use it to install, import and run ded
 
 ## Download
 
-Get the Windows x64 ZIP from the [latest MeFriendos release](https://github.com/PapaGordon/WindowsGSM/releases/latest). The .NET runtime is bundled in `WindowsGSM.exe`. The ZIP also includes the Steam password setup helper.
+Download the ZIP for Windows x64 from the [latest release](https://github.com/PapaGordon/WindowsGSM/releases/latest). `WindowsGSM.exe` already contains the .NET runtime, so there's nothing else to install. The ZIP also includes the docs and the helper for saving your Steam password encrypted.
 
-- For a fresh install, extract the ZIP to its own folder and run `WindowsGSM.exe`. Use **Install** for a new server or **Import** for an existing one.
-- To update, close WindowsGSM and back up your old `WindowsGSM.exe` before replacing it. Keep your `servers`, `configs`, `plugins` and `bin` folders.
+- **New installation:** extract the ZIP into its own folder and start `WindowsGSM.exe`. Use **Install** for a new server or **Import** for one you already have.
+- **Update:** close WindowsGSM, keep a copy of the old `WindowsGSM.exe` and replace it with the new one. Your `servers`, `configs`, `plugins` and `bin` folders stay as they are. Running game servers keep running while WindowsGSM is closed.
 
-## Fork features
+## What's different in our version
 
-- **Auto Firewall** can be turned on or off for each server. WindowsGSM saves the setting and applies it when you change the switch and before the server starts.
-- **DayZ** syncs the server name, player slots and query port with the server config. You can pick the mission and view the RPT log in WindowsGSM.
-- **Workshop updates** can download configured mods for DayZ and Arma 3 before each start.
-- **Minecraft** has separate entries for Vanilla, NeoForge and ATM10. Vanilla can pin a Mojang release, NeoForge can stay on a Minecraft version family, and ATM10 stages pack updates while keeping extra mods with separate mod IDs.
-- **Source servers** such as Garry's Mod keep their native console and show new lines from the game log in **Embed Console**.
-- **Steam passwords** can be saved encrypted for the Windows account that runs WindowsGSM.
+- **Workshop mods for DayZ and Arma 3** are updated before every start. If Steam can't be reached, the server still starts with the mods it has. [Workshop mods](docs/operations/workshop.md)
+- **Steam passwords** can be saved encrypted for the Windows user that runs WindowsGSM. [Steam account and password](docs/operations/steam-credentials.md)
+- **DayZ** keeps the server name, player slots and query port in its config in sync, lets you pick the mission and shows the server log inside WindowsGSM. [DayZ](docs/servers/dayz.md)
+- **Minecraft** comes as Vanilla, NeoForge and ATM10. Vanilla can stay on one Minecraft release, NeoForge on one version family, and ATM10 keeps your extra mods when the pack updates.
+- **Garry's Mod and other Source servers** keep their own console window and show their output in WindowsGSM as well. [Source console](docs/operations/source-console.md)
+- **Auto Firewall** can be switched on or off per server and is applied whenever you change it and before the server starts.
 
-You can also back up and restore server files, set up automatic updates and restarts, schedule commands, and start servers on login. WindowsGSM has Discord alerts and remote control, CPU priority and affinity settings, and tools for managing mods and plugins.
+Everything else from WindowsGSM is still there: backups and restores, automatic updates and restarts, scheduled commands, starting servers when you sign in, Discord alerts and remote control, CPU priority and affinity, and mod and plugin management.
 
 ## MeFriendos add-ons
 
-Every server in this table is already built into our fork. Select it under **Install** or **Import**. We also publish the plugins separately for anyone who uses a different compatible WindowsGSM build. Each plugin repository has its own setup steps and requirements.
+These servers are built into our version. Just pick them under **Install** or **Import**. If you use a different WindowsGSM build, you can add them as standalone plugins instead. Each plugin has its own setup notes.
 
 | | Built-in server | Query | Standalone plugin |
 | --- | --- | --- | --- |
@@ -104,29 +104,29 @@ For more games, see the [community plugins in the original WindowsGSM README](ht
 
 ## Documentation
 
-[Browse the docs folder](docs/README.md)
+All guides are also listed in the [docs folder](docs/README.md).
 
-### Server setup
+**Setting up servers**
 
-- [Built-in servers and their requirements](docs/servers/built-in-servers.md)
-- [DayZ settings, missions and console](docs/servers/dayz.md)
-- [Vanilla Minecraft setup](docs/servers/minecraft-java.md)
-- [Minecraft NeoForge setup](docs/servers/minecraft-neoforge.md)
+- [Built-in servers and what they need](docs/servers/built-in-servers.md)
+- [DayZ](docs/servers/dayz.md)
+- [Minecraft Java Edition (Vanilla)](docs/servers/minecraft-java.md)
+- [Minecraft NeoForge](docs/servers/minecraft-neoforge.md)
 
-### Running and updating servers
+**Running servers**
 
-- [Workshop updates for DayZ and Arma 3](docs/operations/workshop.md)
-- [Steam password encryption](docs/operations/steam-credentials.md)
-- [Scheduling commands with Crontab](docs/operations/crontab.md)
-- [Embedded console for Garry's Mod and other Source servers](docs/operations/source-console.md)
+- [Workshop mods for DayZ and Arma 3](docs/operations/workshop.md)
+- [Steam account and password](docs/operations/steam-credentials.md)
+- [Scheduled tasks with Crontab](docs/operations/crontab.md)
+- [Console for Garry's Mod and other Source servers](docs/operations/source-console.md)
 
-### Development and releases
+**Development**
 
-- [Build and release instructions](docs/development/build-and-release.md)
-- [MeFriendos changelog](CHANGELOG.md)
+- [Building and releasing](docs/development/build-and-release.md)
+- [Changelog](CHANGELOG.md)
 - [Changes inherited from Raziel7893](docs/development/upstream-changes.md)
 
-For general WindowsGSM help, see the [original WindowsGSM documentation](https://docs.windowsgsm.com/).
+For everything that works the same as in the original WindowsGSM, see the [WindowsGSM documentation](https://docs.windowsgsm.com/).
 
 ## Community
 

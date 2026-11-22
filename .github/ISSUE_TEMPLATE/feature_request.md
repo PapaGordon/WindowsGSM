@@ -1,20 +1,19 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
+about: Suggest an idea for WindowsGSM
 title: ''
 labels: ''
 assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+**What would you like to do?**
+Describe what you're trying to achieve and what's in the way today.
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+**How could it work?**
+Your idea for a solution. Rough is fine.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+**Which game servers does it affect?**
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+**Anything else?**
+Alternatives you considered, screenshots or examples from other tools.
