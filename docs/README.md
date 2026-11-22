@@ -4,10 +4,17 @@ These guides cover what's different in our version of WindowsGSM. For download, 
 
 ## Setting up servers
 
-- [Built-in servers](servers/built-in-servers.md): which games are included and what some of them need before the first start.
+- [Built-in servers](servers/built-in-servers.md): which games are included and what they need before the first start.
+- [Arma 3](servers/arma3.md): ports, `server.cfg`, mods and the two consoles.
+- [ATM10](servers/atm10.md): the server pack, updates, your own mods and configs.
 - [DayZ](servers/dayz.md): ports, missions, config, mods and the log console.
+- [Enshrouded](servers/enshrouded.md): config, ports and player roles with their passwords.
+- [Farming Simulator 22 and 25](servers/farming-simulator.md): Steam account, GIANTS web panel and ports.
 - [Minecraft Java Edition (Vanilla)](servers/minecraft-java.md): Java, choosing the Minecraft version, RAM and updates.
 - [Minecraft NeoForge](servers/minecraft-neoforge.md): NeoForge versions, Java, updates and backups.
+- [Project Zomboid](servers/project-zomboid.md): first start, server INI, memory and ports.
+- [SCP: Secret Laboratory](servers/scp-secret-laboratory.md): EULA, game config and LocalAdmin.
+- [Valheim](servers/valheim.md): password, world, BepInEx mods and ports.
 
 ## Running servers
 

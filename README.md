@@ -109,9 +109,8 @@ All guides are also listed in the [docs folder](docs/README.md).
 **Setting up servers**
 
 - [Built-in servers and what they need](docs/servers/built-in-servers.md)
-- [DayZ](docs/servers/dayz.md)
-- [Minecraft Java Edition (Vanilla)](docs/servers/minecraft-java.md)
-- [Minecraft NeoForge](docs/servers/minecraft-neoforge.md)
+- [Arma 3](docs/servers/arma3.md), [ATM10](docs/servers/atm10.md), [DayZ](docs/servers/dayz.md), [Enshrouded](docs/servers/enshrouded.md), [Farming Simulator 22 and 25](docs/servers/farming-simulator.md)
+- [Minecraft Java Edition](docs/servers/minecraft-java.md), [Minecraft NeoForge](docs/servers/minecraft-neoforge.md), [Project Zomboid](docs/servers/project-zomboid.md), [SCP: Secret Laboratory](docs/servers/scp-secret-laboratory.md), [Valheim](docs/servers/valheim.md)
 
 **Running servers**
 

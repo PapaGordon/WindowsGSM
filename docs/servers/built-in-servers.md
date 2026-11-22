@@ -1,6 +1,21 @@
 # Built-in MeFriendos servers
 
-Our WindowsGSM build already contains Arma 3, ATM10, DayZ, Enshrouded, Farming Simulator 22 and 25, Minecraft NeoForge, Project Zomboid, SCP: Secret Laboratory and Valheim. Pick the game under **Install** or **Import**, no plugin needed. We publish the same servers as standalone plugins for people who use another WindowsGSM build. [Overview with plugin links](../../README.md#mefriendos-add-ons)
+Besides the games from the original WindowsGSM, our build contains the servers below. Pick them under **Install** or **Import**, no plugin needed. We publish the same servers as standalone plugins for people who use another WindowsGSM build. [Overview with plugin links](../../README.md#mefriendos-add-ons)
+
+| Game | Guide | Good to know before the first start |
+| --- | --- | --- |
+| Arma 3 | [Arma 3](arma3.md) | Needs a Steam account. Max Players and Map are set in `server.cfg`. |
+| ATM10 | [ATM10](atm10.md) | Needs the `ServerFiles-<version>.zip` from CurseForge and Java 21. |
+| DayZ | [DayZ](dayz.md) | Needs a Steam account. |
+| Enshrouded | [Enshrouded](enshrouded.md) | Creates separate passwords for four player roles. |
+| Farming Simulator 22 and 25 | [Farming Simulator](farming-simulator.md) | The Steam account has to own the game. Settings are made in the GIANTS web panel. |
+| Minecraft Java Edition | [Minecraft Vanilla](minecraft-java.md) | Needs the matching Java version. |
+| Minecraft NeoForge | [NeoForge](minecraft-neoforge.md) | Starts without mods. Needs the matching Java version. |
+| Project Zomboid | [Project Zomboid](project-zomboid.md) | Always starts with 16 GB RAM. Asks for an admin password on the first start. |
+| SCP: Secret Laboratory | [SCP: Secret Laboratory](scp-secret-laboratory.md) | You accept Northwood's EULA yourself in LocalAdmin. |
+| Valheim | [Valheim](valheim.md) | Replace the `CHANGE_ME` password before the first start. |
+
+The other games, such as Garry's Mod, Rust or Counter-Strike, work the same as in the original WindowsGSM. They're listed in the [README](../../README.md#supported-servers), and the [WindowsGSM documentation](https://docs.windowsgsm.com/) covers them. For Garry's Mod and other Source servers we improved the console. [Source console](../operations/source-console.md)
 
 ## Servers you set up with a plugin
 
@@ -8,18 +23,11 @@ You don't need to change anything. Servers that were installed with one of our p
 
 DayZ works the same way: old `DayZ Dedicated Server [DayZ.cs]` entries run with the built-in **DayZ Dedicated Server**, which includes everything from our DayZ plugin. [DayZ setup](dayz.md)
 
-## What some games need
+## Steam account, mods and firewall
 
-- **ATM10** needs the server pack from CurseForge. Download `ServerFiles-<version>.zip` and put it into the WindowsGSM folder or the server's `serverfiles` folder before you click **Install** or **Update**.
-- **Minecraft NeoForge** starts with the loader and no mods. Add the mods you want yourself. [NeoForge setup](minecraft-neoforge.md)
-- **Farming Simulator 22 and 25** are installed through Steam together with the game, so the saved Steam account has to own it.
-- **Valheim** needs a server password of at least 5 characters. Replace `CHANGE_ME` after `-password` in the start parameters before the first start.
-- **SCP: Secret Laboratory** asks you to accept Northwood's EULA in LocalAdmin. WindowsGSM doesn't do that for you on purpose.
-- **DayZ, Arma 3 and Farming Simulator** download with a Steam account. [Steam account and password](../operations/steam-credentials.md)
-
-DayZ and Arma 3 can also keep a list of Workshop mods up to date. [Workshop mods](../operations/workshop.md)
-
-**Auto Firewall** also covers the processes that the Farming Simulator manager and SCP:SL LocalAdmin start. ATM10 gets one TCP rule for the game and one UDP rule for the query port per server.
+- **Steam account:** DayZ, Arma 3 and Farming Simulator download with a Steam account. [Steam account and password](../operations/steam-credentials.md)
+- **Workshop mods:** DayZ and Arma 3 can keep a list of Workshop mods up to date. [Workshop mods](../operations/workshop.md)
+- **Auto Firewall:** For most games, WindowsGSM allows the server's program in the Windows firewall. For DayZ, Farming Simulator and SCP:SL it allows both programs involved. For Minecraft, NeoForge and ATM10 it creates a TCP rule for the game port and a UDP rule for the query port instead, so Java isn't allowed in general. Router port forwarding is always up to you.
 
 ## Where the built-in servers come from
 

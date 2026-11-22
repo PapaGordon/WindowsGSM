@@ -36,7 +36,7 @@ Set RAM and other Java options in `user_jvm_args.txt`. Extra start parameters in
 
 Stop the server before you update. You need enough free space for a second complete copy of the server. Updates stop with an error if `eula.txt` doesn't contain `eula=true`.
 
-WindowsGSM first builds the new version in a copy of `serverfiles` next to the live server and keeps your worlds, mods, configs, player lists and Java settings. Only when that worked does it swap the folders. The old `serverfiles` then stays in `servers/<server ID>/neoforge-update-backups/`. WindowsGSM doesn't delete these backups, so clean them up from time to time. If preparing the update fails, your server stays untouched and the prepared copy is kept so you can see what went wrong. If an update gets interrupted halfway, a marker file stops the server from starting until you've had a look.
+WindowsGSM first builds the new version in a copy of `serverfiles` next to the live server and keeps your worlds, mods, configs, player lists and Java settings. Only when that worked does it swap the folders. The old `serverfiles` then stays in `servers/<server ID>/neoforge-update-backups/`. WindowsGSM doesn't delete these backups, so clean them up from time to time. If preparing the update fails, your server stays untouched and the prepared copy is kept so you can see what went wrong. `wgsm-neoforge-installer.log` inside it shows what the installer said. If an update gets interrupted halfway, `.wgsm-neoforge-update-recovery.txt` next to `serverfiles` lists what to restore and stops the server from starting until you've had a look.
 
 ## Importing an existing server
 
