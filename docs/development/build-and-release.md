@@ -1,18 +1,6 @@
 # Development and releases
 
-## Branches
-
-Use `main` for development and releases in `PapaGordon/WindowsGSM`. The `origin` remote points to our fork, and `upstream` points to Raziel7893's fork.
-
-To bring in changes from Raziel's `master` branch, run these commands from the repository root.
-
-```powershell
-git switch main
-git fetch upstream
-git merge upstream/master
-```
-
-Resolve any conflicts and check our version numbers and release URLs before building. To send selected changes to Raziel, start a separate contribution branch from `upstream/master` and apply only the commits that belong in the pull request.
+We develop and release from `main` in `PapaGordon/WindowsGSM` and no longer merge changes from Raziel7893's fork. Earlier imports are listed in [upstream changes](upstream-changes.md).
 
 ## Build and publish locally
 
@@ -34,6 +22,8 @@ Keep these files and folders at their original paths inside the ZIP.
 - `Encrypt-SteamPassword.cmd` and `tools/Set-SteamCredentials.ps1`.
 - `LICENSE`, `CREDITS.md` and `licenses/`.
 
-Extract the ZIP into an empty folder and check the packaged EXE, docs and Steam helper. Run the checks for the server modules changed in that release. Use a new tag on `main` and publish the artifacts on [PapaGordon/WindowsGSM Releases](https://github.com/PapaGordon/WindowsGSM/releases).
+Name it `WindowsGSM-v<version>-win-x64.zip` and use `/` as the path separator inside it. `Compress-Archive` in Windows PowerShell 5.1 writes `\` instead, which some tools extract as file names.
+
+Extract the ZIP into an empty folder and check the packaged EXE, docs and Steam helper. Run the checks for the server modules changed in that release. Use a new tag on `main` and publish the artifacts on [PapaGordon/WindowsGSM Releases](https://github.com/PapaGordon/WindowsGSM/releases): `WindowsGSM.exe`, the ZIP and `WindowsGSM-v<version>-SHA256SUMS.txt` with one `<sha256>  <file name>` line for each. The release text comes from `releases/v<version>.md`.
 
 Keep project and contributor credits in [CREDITS.md](../../CREDITS.md). Preserve the original copyright and artwork notices in the imported files and [licenses](../../licenses/).
