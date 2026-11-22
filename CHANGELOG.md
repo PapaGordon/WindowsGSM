@@ -1,8 +1,9 @@
 # Changelog
 
-## Unreleased
+## 1.25.4.10 - 2026-11-22
 
 - Project Zomboid's RAM can be set with `-Xmx` (and `-Xms`) in the start parameters. Without them it stays at 16 GB as before.
+- The docs are rewritten to be easier to follow, and every built-in game now has its own guide.
 
 ## 1.25.4.9 - 2026-11-22
 
