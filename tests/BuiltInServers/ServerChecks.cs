@@ -343,6 +343,30 @@ internal static class ServerChecks
         Check(((IEnumerable)portMethod.Invoke(null, new object[] { settings, false })).Cast<object>().Count() == 2, "Vanilla firewall disable works even with an invalid saved port");
     }
 
+    // Project Zomboid: RAM aus den Startparametern, sonst 16 GB.
+    private static void CheckZomboid(string id)
+    {
+        object pz = Create("Project Zomboid Dedicated Server", Settings(id));
+        Type type = pz.GetType();
+        var split = type.GetMethod("SplitMemory", BindingFlags.NonPublic | BindingFlags.Static);
+        Func<string, string[]> run = text => { var args = new object[] { text, null }; string memory = (string)split.Invoke(null, args); return new[] { memory, (string)args[1] }; };
+        var result = run("");
+        Check(result[0] == "-Xms16g -Xmx16g" && result[1] == "", "Project Zomboid keeps 16 GB when no memory is set");
+        result = run("-Xms4g -Xmx8g -servername \"My  Server\"");
+        Check(result[0] == "-Xms4g -Xmx8g" && result[1] == "-servername \"My  Server\"", "Project Zomboid moves -Xms and -Xmx to Java and keeps the game parameters unchanged");
+        result = run("-servername test -Xmx6G");
+        Check(result[0] == "-Xms6G -Xmx6G" && result[1] == "-servername test", "Project Zomboid uses a single memory value for both limits");
+        result = run("-Xmx -servername -Xmx8gb");
+        Check(result[0] == "-Xms16g -Xmx16g" && result[1] == "-Xmx -servername -Xmx8gb", "Project Zomboid ignores malformed memory values");
+        var settings = Settings(id);
+        settings.ServerPort = "16261";
+        settings.ServerParam = "-Xmx8g -servername test";
+        object configured = Create("Project Zomboid Dedicated Server", settings);
+        string line = (string)type.GetMethod("GetParameters", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(configured, null);
+        Check(line.Contains(" -Xms8g -Xmx8g ") && !line.Contains("16g") && line.IndexOf("-Xmx8g", StringComparison.Ordinal) < line.IndexOf("zombie.network.GameServer", StringComparison.Ordinal)
+            && line.TrimEnd().EndsWith("-port 16261 -servername test", StringComparison.Ordinal), "Project Zomboid passes memory to Java and the rest to the game");
+    }
+
     private static void CheckVanillaPlugin(string path)
     {
         var references = ((string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES")).Split(Path.PathSeparator)
@@ -368,6 +392,7 @@ internal static class ServerChecks
         {
             CheckCatalog();
             CheckVanilla(id);
+            CheckZomboid(id);
             if (args.Length > 1) CheckVanillaPlugin(args[1]);
             CheckFirewallIntegration(id);
             CheckFailedSteamUpdate(id).GetAwaiter().GetResult();

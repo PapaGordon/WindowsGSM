@@ -14,7 +14,7 @@ Pick **Project Zomboid Dedicated Server** under **Install** or **Import**. Windo
 | --- | --- |
 | Game port | `16261` (UDP). WindowsGSM passes it as `-port`. |
 | Server name | `servertest`. Add `-servername <name>` to the start parameters for another name. |
-| Memory | Always 16 GB, see below |
+| Memory | 16 GB, see below |
 
 **Max Players** from WindowsGSM is not passed to the server. Set the player limit and everything else in the server's INI file.
 
@@ -27,7 +27,7 @@ They appear after the first start. Only edit them while the server is stopped. S
 
 ### Memory
 
-The server always starts with 16 GB of RAM (`-Xms16g -Xmx16g`). That's fixed and can't be changed in WindowsGSM. If the machine has less free memory, the server won't start or runs slowly.
+By default the server gets 16 GB of RAM. To change that, add `-Xmx` to the start parameters, for example `-Xmx8g -servername MyServer`. WindowsGSM hands `-Xms` and `-Xmx` to Java and everything else to Project Zomboid. If you only set one of them, it's used for both. Restart the server after changing it. If the machine doesn't have enough free memory for the value, the server won't start or runs slowly.
 
 ## Console and stopping
 

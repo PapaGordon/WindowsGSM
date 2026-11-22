@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WindowsGSM.Functions;
 using WindowsGSM.GameServer.Engine;
@@ -33,8 +34,8 @@ namespace WindowsGSM.GameServer.Bundled
 			name = "WindowsGSM.ProjectZomboid",
 			author = "MeFriendos",
 			description = "WindowsGSM plugin for Project Zomboid Dedicated Server (MeFriendos build)",
-			version = "0.1.2",
-			url = "https://github.com/PapaGordon/WindowsGSM.ProjectZomboid-MeFriendos",
+			version = "0.1.4",
+			url = "https://github.com/PapaGordon/WindowsGSM.ProjectZomboid",
 			color = "#38CDD4"
 		};
 
@@ -68,17 +69,35 @@ namespace WindowsGSM.GameServer.Bundled
         {
             var param = new StringBuilder();
             DirectoryInfo homePath = new DirectoryInfo(ServerPath.GetServersServerFiles(serverData.ServerID));
+            string gameParameters;
+            string memory = SplitMemory(serverData.ServerParam, out gameParameters);
             param.Append($"\"-Djava.awt.headless=true\" \"-Dzomboid.steam=1\" \"-Dzomboid.znetlog=1\" \"-Duser.home={homePath.Parent.FullName}\"");
             param.Append(" \"-XX:+UseZGC\" \"-XX:-CreateCoredumpOnCrash\" \"-XX:-OmitStackTraceInFastThrow\"");
-            //if you have Memory issues you can try to edit -Xms16g -Xmx16g to better suite your system
-            param.Append(" -Xms16g -Xmx16g \"-Djava.library.path=natives/;natives/win64/;.\" \"-Dstatistic=0\"");
+            param.Append(" " + memory + " \"-Djava.library.path=natives/;natives/win64/;.\" \"-Dstatistic=0\"");
             //java classpath copied from startScript
             param.Append(" -cp \"java/;java/projectzomboid.jar/\"");
             //actual start class
             param.Append(" zombie.network.GameServer");
             //add custom parameters and ports
-            param.Append($" -port {serverData.ServerPort} {serverData.ServerParam} ");
+            param.Append($" -port {serverData.ServerPort} {gameParameters} ");
             return param.ToString();
+        }
+
+        // RAM kommt aus -Xms/-Xmx in den Startparametern, sonst wie bisher 16 GB.
+        // Steht nur einer der beiden Werte da, gilt er für beide. Alles andere geht an das Spiel.
+        internal static string SplitMemory(string parameters, out string gameParameters)
+        {
+            const string pattern = @"(?:^|\s+)-Xm([sx])([1-9][0-9]*[kKmMgG]?)(?=\s|$)";
+            string text = parameters ?? string.Empty;
+            string xms = null, xmx = null;
+            foreach (Match match in Regex.Matches(text, pattern))
+            {
+                if (match.Groups[1].Value == "s") xms = match.Groups[2].Value;
+                else xmx = match.Groups[2].Value;
+            }
+            gameParameters = Regex.Replace(text, pattern, string.Empty).Trim();
+            if (xms == null && xmx == null) return "-Xms16g -Xmx16g";
+            return "-Xms" + (xms ?? xmx) + " -Xmx" + (xmx ?? xms);
         }
 
 		// - Start server function, return its Process to WindowsGSM

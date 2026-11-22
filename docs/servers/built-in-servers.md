@@ -11,7 +11,7 @@ Besides the games from the original WindowsGSM, our build contains the servers b
 | Farming Simulator 22 and 25 | [Farming Simulator](farming-simulator.md) | The Steam account has to own the game. Settings are made in the GIANTS web panel. |
 | Minecraft Java Edition | [Minecraft Vanilla](minecraft-java.md) | Needs the matching Java version. |
 | Minecraft NeoForge | [NeoForge](minecraft-neoforge.md) | Starts without mods. Needs the matching Java version. |
-| Project Zomboid | [Project Zomboid](project-zomboid.md) | Always starts with 16 GB RAM. Asks for an admin password on the first start. |
+| Project Zomboid | [Project Zomboid](project-zomboid.md) | Uses 16 GB RAM unless you set `-Xmx`. Asks for an admin password on the first start. |
 | SCP: Secret Laboratory | [SCP: Secret Laboratory](scp-secret-laboratory.md) | You accept Northwood's EULA yourself in LocalAdmin. |
 | Valheim | [Valheim](valheim.md) | Replace the `CHANGE_ME` password before the first start. |
 

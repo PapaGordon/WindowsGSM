@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Project Zomboid's RAM can be set with `-Xmx` (and `-Xms`) in the start parameters. Without them it stays at 16 GB as before.
+
 ## 1.25.4.9 - 2026-11-22
 
 - DayZ and Arma 3 still start with the installed Workshop mods when SteamCMD cannot log in, download or confirm an update (for example while Steam Guard waits for confirmation). The skipped update is logged as a notice. A start is only cancelled when a configured mod folder is missing or a recovery is pending.
