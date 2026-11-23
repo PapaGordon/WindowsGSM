@@ -76,8 +76,8 @@ namespace WindowsGSM.GameServer.Engine
                 + string.Concat(items.Select(i => " +workshop_download_item " + appId + " " + i.Id + " validate")) + " +quit";
         }
 
-        // Freier Platz, der nach Download und Austausch immer übrig bleiben muss.
-        // Bei voller Platte verliert SteamCMD sein gespeichertes Login (config.vdf) und fragt wieder nach Steam Guard.
+        // Free space that must always be left after the download and the swap.
+        // On a full disk SteamCMD loses its saved login (config.vdf) and asks for Steam Guard again.
         internal static long Reserve = 5L * 1024 * 1024 * 1024;
         internal static Func<string, long> FreeSpace = path =>
         {
@@ -87,7 +87,7 @@ namespace WindowsGSM.GameServer.Engine
         internal static TimeSpan RetryDelay = TimeSpan.FromSeconds(15);
         internal static TimeSpan LockWait = TimeSpan.FromMinutes(10);
 
-        // notice erhält eine Meldung, wenn der Server ohne Workshop-Update mit den vorhandenen Mods startet.
+        // notice gets a message when the server starts with the installed mods because the Workshop update was skipped.
         internal static async Task<List<Item>> Update(string serverRoot, string configRoot, string steamRoot, string appId,
             Func<string, string, Task<Tuple<int, string>>> runner = null, Action<string> notice = null)
         {
@@ -103,7 +103,7 @@ namespace WindowsGSM.GameServer.Engine
             {
                 await Download(serverRoot, state, steamRoot, appId, items, runner);
             }
-            // Ohne halb fertigen Austausch startet der Server mit den installierten Mods statt gar nicht.
+            // Without a half-finished swap, the server starts with the installed mods instead of not at all.
             catch (Exception e) when (!File.Exists(pending) && Installed(serverRoot, items))
             {
                 notice?.Invoke("Workshop update skipped, the server uses the installed mods. " + e.Message);
@@ -134,7 +134,7 @@ namespace WindowsGSM.GameServer.Engine
                 {
                     string parameters = await Task.Run(() => Parameters(cache, appId, items));
                     result = await (runner == null ? Run(exe, parameters) : runner(exe, parameters));
-                    // Einmal wiederholen, wenn SteamCMD gar nicht bis zum Login kam (z. B. noch laufende Instanz).
+                    // Retry once if SteamCMD never got as far as the login (for example, another instance was still running).
                     if (result.Item1 == 0 || result.Item2.IndexOf("Logging in", StringComparison.OrdinalIgnoreCase) >= 0) break;
                     if (attempt == 0) await Task.Delay(RetryDelay);
                 }
@@ -155,7 +155,7 @@ namespace WindowsGSM.GameServer.Engine
             }
         }
 
-        // Wartet, bis ein anderer Workshop-Job mit demselben SteamCMD fertig ist.
+        // Waits until another Workshop job using the same SteamCMD has finished.
         private static async Task<FileStream> Lock(string path)
         {
             var deadline = DateTime.UtcNow + LockWait;
@@ -237,8 +237,8 @@ namespace WindowsGSM.GameServer.Engine
                 return BitConverter.ToString(sha.ComputeHash(stream)).Replace("-", "").ToLowerInvariant();
         }
 
-        // Fasst nur geänderte Mods an. Ein fehlgeschlagener Austausch wird vor dem Start zurückgerollt.
-        // Als Backup bleibt nur der letzte Austausch liegen, ältere werden danach gelöscht.
+        // Only touches mods that changed. A failed swap is rolled back before the server starts.
+        // Only the latest swap is kept as a backup; older ones are deleted afterwards.
         internal static void Deploy(string root, string state, string appId, List<Item> items, Dictionary<string, string> sources)
         {
             NoLinks(root); NoLinks(state);
@@ -264,7 +264,7 @@ namespace WindowsGSM.GameServer.Engine
             }
             catch
             {
-                // Vorbereitete Kopien nicht liegen lassen, solange keine Wiederherstellung offen ist.
+                // Clean up prepared copies unless a restore is still pending.
                 if (!File.Exists(pending)) Remove(transaction);
                 throw;
             }
@@ -289,7 +289,7 @@ namespace WindowsGSM.GameServer.Engine
             return oldKeys;
         }
 
-        // Gleiche Dateien (Name, Größe, Änderungszeit) und unveränderte Schlüssel: nichts zu tun.
+        // Same files (name, size, modified time) and unchanged keys: nothing to do.
         private static bool Unchanged(string root, string appId, Item item, string source, Dictionary<string, string> oldKeys)
         {
             try
@@ -318,7 +318,7 @@ namespace WindowsGSM.GameServer.Engine
             catch (UnauthorizedAccessException) { return false; }
         }
 
-        // Alle Dateien eines Ordners mit relativem Pfad. null bei fehlendem Ordner oder Links darin.
+        // All files in a folder with their relative paths. Returns null if the folder is missing or contains links.
         private static Dictionary<string, FileInfo> Files(string folder)
         {
             var start = new DirectoryInfo(Path.GetFullPath(folder).TrimEnd(Path.DirectorySeparatorChar));
@@ -342,7 +342,7 @@ namespace WindowsGSM.GameServer.Engine
             return files == null ? 0 : files.Values.Sum(f => f.Length);
         }
 
-        // Löscht einen Ordner, ohne Links zu folgen. Fehler sind hier nicht kritisch.
+        // Deletes a folder without following links. Errors here are not critical.
         private static void Remove(string path)
         {
             try

@@ -83,8 +83,8 @@ namespace WindowsGSM.GameServer.Bundled
             return param.ToString();
         }
 
-        // RAM kommt aus -Xms/-Xmx in den Startparametern, sonst wie bisher 16 GB.
-        // Steht nur einer der beiden Werte da, gilt er für beide. Alles andere geht an das Spiel.
+        // RAM comes from -Xms/-Xmx in the start parameters, otherwise it stays at 16 GB as before.
+        // If only one of the two is given, it is used for both. Everything else is passed to the game.
         internal static string SplitMemory(string parameters, out string gameParameters)
         {
             const string pattern = @"(?:^|\s+)-Xm([sx])([1-9][0-9]*[kKmMgG]?)(?=\s|$)";
