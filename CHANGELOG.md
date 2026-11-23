@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.25.4.11 - 2026-11-23
+
+- The console of Source servers such as Garry's Mod stays hidden when Toggle Console is off. SRCDS shows its console again shortly after start, and when WindowsGSM had hidden it before that, the window stayed visible. WindowsGSM now keeps it in line with Toggle Console for as long as the server runs.
+
 ## 1.25.4.10 - 2026-11-22
 
 - Project Zomboid's RAM can be set with `-Xmx` (and `-Xms`) in the start parameters. Without them it stays at 16 GB as before.
