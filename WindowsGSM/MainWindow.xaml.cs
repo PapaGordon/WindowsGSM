@@ -49,6 +49,12 @@ namespace WindowsGSM
         [DllImport("user32.dll")]
         private static extern int SetWindowText(IntPtr hWnd, string windowName);
 
+        [DllImport("user32.dll")]
+        private static extern bool IsWindowVisible(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        private static extern bool IsWindow(IntPtr hWnd);
+
         private static class RegistryKeyName
         {
             public const string HardWareAcceleration = "HardWareAcceleration";
@@ -2027,25 +2033,38 @@ namespace WindowsGSM
             }
         }
 
+        // Made by PapaGordon: finds the server window, then keeps it in line with Toggle Console.
+        // SRCDS shows its console again shortly after start, so hiding it once is not enough.
         private static async Task RegisterNativeWindow(Process process, string serverId, string title)
         {
             if (process.StartInfo.CreateNoWindow) return;
-            var metadata = _serverMetadata[int.Parse(serverId)];
+            int id = int.Parse(serverId);
             try
             {
-                for (int attempt = 0; attempt < 60 && !process.HasExited; attempt++)
+                IntPtr window = IntPtr.Zero;
+                for (int attempt = 0; !process.HasExited; attempt++)
                 {
-                    if (metadata.Process != process) return;
-                    process.Refresh();
-                    IntPtr window = metadata.MainWindow;
-                    if (window == IntPtr.Zero) window = process.MainWindowHandle;
-                    if (window != IntPtr.Zero)
+                    // Stop once the server was stopped or replaced by a restart.
+                    if (!_serverMetadata.TryGetValue(id, out var metadata) || metadata.Process != process) return;
+                    // Follow a handle that a game module (DayZ, Arma 3) found on its own.
+                    if (metadata.MainWindow != IntPtr.Zero && metadata.MainWindow != window && IsWindow(metadata.MainWindow)) window = metadata.MainWindow;
+                    if (window == IntPtr.Zero || !IsWindow(window))
                     {
-                        metadata.MainWindow = window;
-                        ServerCache.SaveWindowsIntPtr(serverId, window);
-                        SetWindowText(window, title);
+                        // Give up searching after 15 seconds, like before.
+                        if (window == IntPtr.Zero && attempt >= 60) return;
+                        process.Refresh();
+                        window = metadata.MainWindow != IntPtr.Zero && IsWindow(metadata.MainWindow) ? metadata.MainWindow : process.MainWindowHandle;
+                        if (window != IntPtr.Zero)
+                        {
+                            metadata.MainWindow = window;
+                            ServerCache.SaveWindowsIntPtr(serverId, window);
+                            SetWindowText(window, title);
+                            ShowWindow(window, metadata.ShowConsole ? WindowShowStyle.ShowNormal : WindowShowStyle.Hide);
+                        }
+                    }
+                    else if (IsWindowVisible(window) != metadata.ShowConsole)
+                    {
                         ShowWindow(window, metadata.ShowConsole ? WindowShowStyle.ShowNormal : WindowShowStyle.Hide);
-                        return;
                     }
                     await Task.Delay(250);
                 }

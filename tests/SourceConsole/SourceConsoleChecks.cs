@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using WindowsGSM;
 using WindowsGSM.Functions;
 using WindowsGSM.GameServer.Engine;
 
@@ -163,17 +164,69 @@ internal static class SourceConsoleChecks
         }
     }
 
+    [DllImport("user32.dll")] private static extern bool IsWindowVisible(IntPtr window);
+
+    // SRCDS shows its console again shortly after WGSM hid it. WGSM must keep it hidden.
+    private static void WindowChecks(string id)
+    {
+        int number = int.Parse(id);
+        string root = ServerPath.GetServersServerFiles(id);
+        Directory.CreateDirectory(root);
+        string marker = Path.Combine(root, "probe.txt");
+        var start = new ProcessStartInfo(Path.Combine(ProbeDirectory, "ConsoleProbe.exe"), "-probe=\"" + marker + "\"")
+        {
+            WorkingDirectory = root, UseShellExecute = false, WindowStyle = ProcessWindowStyle.Minimized
+        };
+        using (var process = Process.Start(start))
+        {
+            var metadata = new MainWindow.ServerMetadata { Process = process, ServerConsole = new ServerConsole(number), ShowConsole = false };
+            MainWindow._serverMetadata[number] = metadata;
+            try
+            {
+                var register = (Task)typeof(MainWindow).GetMethod("RegisterNativeWindow", BindingFlags.NonPublic | BindingFlags.Static)
+                    .Invoke(null, new object[] { process, id, "Source fixture" });
+                Wait(() => metadata.MainWindow != IntPtr.Zero && !IsWindowVisible(metadata.MainWindow));
+                IntPtr window = metadata.MainWindow;
+                Check(File.ReadAllText(ServerPath.GetServersCache(id, "windowsIntPtr")) == window.ToString(), "The console handle reaches the WGSM cache");
+                // Same as SRCDS: the console shows itself again, minimized, after WGSM hid it.
+                ShowWindow(window, 7);
+                Check(IsWindowVisible(window), "The fixture console can show itself again");
+                Wait(() => !IsWindowVisible(window));
+                Check(!register.IsCompleted, "A console that shows itself again is hidden again");
+                metadata.ShowConsole = true;
+                Wait(() => IsWindowVisible(window));
+                metadata.ShowConsole = false;
+                Wait(() => !IsWindowVisible(window));
+                Check(metadata.MainWindow == window, "Toggle Console still controls the same window");
+                metadata.Process = null;
+                Wait(() => register.IsCompleted);
+                register.GetAwaiter().GetResult();
+                Check(true, "Window watching stops when a restart replaces the process");
+            }
+            finally
+            {
+                MainWindow._serverMetadata.Remove(number);
+                if (!process.HasExited) process.Kill(true);
+                process.WaitForExit(5000);
+            }
+        }
+    }
+
     [STAThread]
     private static int Main(string[] args)
     {
         string id = "source-check-" + Guid.NewGuid().ToString("N");
         string root = ServerPath.GetServers(id);
+        // Window watching needs a numeric server ID, like real WGSM servers.
+        string windowId = Random.Shared.Next(900000000, 999999999).ToString();
+        string windowRoot = ServerPath.GetServers(windowId);
         int exit = 0;
         try
         {
             Check(GetConsoleWindow() == IntPtr.Zero, "Regression runner has no console, matching WindowsGSM's GUI process");
             Check(SetStdHandle(-10, new IntPtr(-1)), "GUI fixture has no inherited console input handle");
             StartChecks(id);
+            WindowChecks(windowId);
             LogChecks(Path.Combine(root, "log-check"));
             report.AppendLine(passed + " Source console checks passed. No game server was started.");
         }
@@ -183,7 +236,8 @@ internal static class SourceConsoleChecks
             string safe = Path.GetFullPath(Path.Combine(HostDirectory, "servers")) + Path.DirectorySeparatorChar;
             try
             {
-                if (Path.GetFullPath(root).StartsWith(safe, StringComparison.OrdinalIgnoreCase) && Directory.Exists(root)) Directory.Delete(root, true);
+                foreach (string folder in new[] { root, windowRoot })
+                    if (Path.GetFullPath(folder).StartsWith(safe, StringComparison.OrdinalIgnoreCase) && Directory.Exists(folder)) Directory.Delete(folder, true);
             }
             catch (Exception e) { report.AppendLine("FAIL cleanup: " + e.Message); exit = 1; }
             File.WriteAllText(args[0], report.ToString());

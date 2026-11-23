@@ -96,12 +96,13 @@ internal static class ConsoleChecks
             Wait(() => metadata.MainWindow == child.Window, "Native monitor repairs a missing cached handle");
             Task register = (Task)typeof(MainWindow).GetMethod("RegisterNativeWindow", BindingFlags.NonPublic | BindingFlags.Static)
                 .Invoke(null, new object[] { child.Process, id.ToString(), "DayZ fixture" });
-            Wait(() => register.IsCompleted, "Core window registration accepts the plugin's hidden window handle");
-            register.GetAwaiter().GetResult();
+            Thread.Sleep(1000);
+            Check(!register.IsCompleted && metadata.MainWindow == child.Window, "Core window registration keeps watching the plugin's hidden window handle");
             Check(!IsWindowVisible(child.Window), "Core registration keeps the saved hidden state");
             metadata.Process = null;
-            Wait(() => monitor.IsCompleted, "Native monitor stops when WGSM replaces its process");
+            Wait(() => monitor.IsCompleted && register.IsCompleted, "Both window monitors stop when WGSM replaces its process");
             monitor.GetAwaiter().GetResult();
+            register.GetAwaiter().GetResult();
             child.Close();
             Check((IntPtr)Method(type, "FindNativeWindow").Invoke(null, new object[] { child.Process }) == IntPtr.Zero, "An exited process cannot select another server window");
             MainWindow._serverMetadata.Remove(id);
